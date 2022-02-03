@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.31911.260
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StarRepo.Server", "Server\StarRepo.Server.csproj", "{A84F3230-E2E5-4BE1-BCBE-20563B954154}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StarRepo.Server", "Server\StarRepo.Server.csproj", "{A84F3230-E2E5-4BE1-BCBE-20563B954154}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StarRepo.Client", "Client\StarRepo.Client.csproj", "{F17E4418-9D54-4EEF-A8E9-E5E55A898561}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StarRepo.Client", "Client\StarRepo.Client.csproj", "{F17E4418-9D54-4EEF-A8E9-E5E55A898561}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StarRepo.Shared", "Shared\StarRepo.Shared.csproj", "{BDF13DBE-CF48-4365-AF05-1118653D3015}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StarRepo.Shared", "Shared\StarRepo.Shared.csproj", "{BDF13DBE-CF48-4365-AF05-1118653D3015}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StarRepo.Domain", "StarRepo.Domain\StarRepo.Domain.csproj", "{77828268-1AD0-4A40-903A-ABC085F75E23}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StarRepo.Domain", "StarRepo.Domain\StarRepo.Domain.csproj", "{77828268-1AD0-4A40-903A-ABC085F75E23}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StarRepo.Data", "StarRepo.Data\StarRepo.Data.csproj", "{EBC2B5EE-CC00-4FCD-A601-92118C7BD118}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StarRepo.Data", "StarRepo.Data\StarRepo.Data.csproj", "{EBC2B5EE-CC00-4FCD-A601-92118C7BD118}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

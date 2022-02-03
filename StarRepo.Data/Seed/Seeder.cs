@@ -36,14 +36,14 @@ namespace StarRepo.Data.Seed
                     t.Model == o[2]).SingleAsync();
                 var target = await context.Targets.Where(t =>
                     t.Name == o[3]).SingleAsync();
-                var guid = Guid.NewGuid();
+                var (fileId, ext) = imageHandler.ProcessForObservation(file);
                 var observation = new Observation
                 {
-                    Id = guid,
                     Target = target,
                     Telescope = telescope,
                     ObservationDate = date,
-                    Extension = imageHandler.ProcessForObservation(guid, file),
+                    FileId = fileId,
+                    Extension = ext
                 };
                 context.Observations.Add(observation);
             }

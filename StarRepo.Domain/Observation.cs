@@ -21,6 +21,11 @@
         public string? Extension { get; set; }
 
         /// <summary>
+        /// Gets or sets the file unique identifier.
+        /// </summary>
+        public Guid FileId { get; set; } = default!;
+
+        /// <summary>
         /// Gets or sets the telescope used for the observation.
         /// </summary>
         public Telescope? Telescope { get; set; }

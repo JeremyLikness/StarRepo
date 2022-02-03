@@ -45,10 +45,11 @@ namespace StarRepo.Data
         /// <param name="observationId">The id of the observation.</param>
         /// <param name="path">The path to the source file.</param>
         /// <returns>The extension.</returns>
-        public string ProcessForObservation(Guid observationId, string path)
+        public (Guid fileId, string ext) ProcessForObservation(string path)
         {
             var ext = GetFileExtension(path);
-            var (filename, thumbname) = GetFilenames(observationId, ext);
+            var fileId = Guid.NewGuid();
+            var (filename, thumbname) = GetFilenames(fileId, ext);
             File.Copy(path, filename, true);
 
 #pragma warning disable CA1416 // Validate platform compatibility
@@ -59,7 +60,7 @@ namespace StarRepo.Data
             thumb.Save(thumbname);
 #pragma warning restore CA1416 // Validate platform compatibility
 
-            return ext;
+            return (fileId, ext);
         }
 
         /// <summary>
@@ -68,9 +69,9 @@ namespace StarRepo.Data
         /// <param name="obs">The observation.</param>
         /// <param name="thumbnail">A value indicating whether to fetch the full image or the thumbnail.</param>
         /// <returns>The bytes for the image.</returns>
-        public async Task<byte[]> GetFileForObservation(Observation obs, bool thumbnail = false)
+        public async Task<byte[]> GetFileForObservationAsync(Observation obs, bool thumbnail = false)
         {
-            var (full, thumb) = GetFilenames(obs.Id, obs.Extension ?? string.Empty);
+            var (full, thumb) = GetFilenames(obs.FileId, obs.Extension ?? string.Empty);
             return await File.ReadAllBytesAsync(thumbnail ? thumb : full);
         }            
     }

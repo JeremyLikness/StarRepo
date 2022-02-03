@@ -1,7 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using StarRepo.Data;
 using StarRepo.Data.Seed;
+using StarRepo.Domain;
 using StarRepo.Server;
+using StarRepo.Server.GraphQL;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,33 +20,47 @@ if (!string.IsNullOrEmpty(dp.Database)
 
 builder.Services.AddScoped<ImageHandler>(
     sp => new ImageHandler(dp.Images ?? string.Empty, dp.CreateIfNotExists));
-builder.Services.AddScoped<Seeder>();
-var db = Path.Combine(dp.Database ?? string.Empty, "stardb.sqlite");
-builder.Services.AddDbContextFactory<StarContext>(opts =>
+var db = System.IO.Path.Combine(dp.Database ?? string.Empty, "stardb.sqlite");
+builder.Services.AddPooledDbContextFactory<StarContext>(opts =>
     opts.UseSqlite($"Data Source={db}"));
+builder.Services.AddTransient<QueryRepo>();
 
-builder.Services.AddControllersWithViews();
+builder.Services.AddGraphQLServer()
+    .AddProjections()
+    .AddFiltering()
+    .AddSorting()
+    .AddQueryType<Query>()
+    .AddTypeExtension<ObservationTypeExtensions>();
+    
 builder.Services.AddRazorPages();
 
 var app = builder.Build();
 
 // seed the database - this is !!DEMO ONLY!! code
-using (var ctx = app.Services.CreateScope().ServiceProvider.GetService<StarContext>())
+var provider = app.Services.CreateScope().ServiceProvider;
+var factory = provider.GetService<IDbContextFactory<StarContext>>();
+using (var ctx = factory!.CreateDbContext())
 {
-    await ctx!.CheckAndSeedAsync();
+    if (await ctx!.Database.EnsureCreatedAsync())
+    {
+        var seeder = new Seeder(provider.GetService<ImageHandler>()!);
+        await seeder.SeedAsync(ctx);
+    }
 }
 
-    // Configure the HTTP request pipeline.
-    if (app.Environment.IsDevelopment())
-    {
-        app.UseWebAssemblyDebugging();
-    }
-    else
-    {
-        app.UseExceptionHandler("/Error");
-        // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-        app.UseHsts();
-    }
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseWebAssemblyDebugging();
+}
+else
+{
+    app.UseExceptionHandler("/Error");
+    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+    app.UseHsts();
+}
+
+app.MapGraphQL();
 
 app.UseHttpsRedirection();
 

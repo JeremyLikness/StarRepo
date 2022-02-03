@@ -1,0 +1,11 @@
+﻿@page "/Edit"
+@page "/Edit/{ObservationId}"
+
+<h3>@title</h3>
+
+@code {
+    private string title => string.IsNullOrWhiteSpace(ObservationId) ? "Add" : "Edit";
+
+    [Parameter]
+    public string? ObservationId { get; set; }
+}
