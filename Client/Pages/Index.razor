@@ -1,5 +1,23 @@
 ﻿@page "/"
+@inject GraphQL.StarClientService StarClientService
 
 <PageTitle>Star Repo</PageTitle>
 
 <h1>Star Repo</h1>
+
+@if (scopes != null)
+{
+    foreach (var scope in scopes)
+    {
+        <p>(@scope.Manufacturer) @scope.Model (@scope.FocalLengthMM mm / @scope.ApertureMM mm ) f-@scope.FStop</p>
+    }
+}
+@code {
+    private Telescope[]? scopes = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        scopes = null;
+        scopes = await StarClientService.GetTelescopesAsync();
+    }
+}

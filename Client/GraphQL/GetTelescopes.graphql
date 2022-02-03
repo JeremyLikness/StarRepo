@@ -1,0 +1,11 @@
+﻿query GetTelescopes {
+	telescopes(
+    order: { manufacturer: ASC, model: ASC })
+    {
+      id,
+      manufacturer,
+      model,
+      focalLengthMM,
+      apertureMM
+    }
+}

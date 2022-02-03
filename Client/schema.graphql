@@ -1,0 +1,174 @@
+﻿schema {
+  query: Query
+}
+
+type Query {
+  telescopes(where: TelescopeFilterInput order: [TelescopeSortInput!]): [Telescope!]!
+  targets(where: TargetFilterInput order: [TargetSortInput!]): [Target!]!
+  observations(where: ObservationFilterInput order: [ObservationSortInput!]): [Observation!]!
+}
+
+scalar UUID
+
+"The `DateTime` scalar represents an ISO-8601 compliant date time type."
+scalar DateTime
+
+type Telescope {
+  id: UUID!
+  manufacturer: String
+  model: String
+  focalLengthMM: Int!
+  apertureMM: Int!
+  fStop: Float!
+}
+
+type Target {
+  id: UUID!
+  name: String
+  description: String
+}
+
+input TelescopeFilterInput {
+  and: [TelescopeFilterInput!]
+  or: [TelescopeFilterInput!]
+  id: ComparableGuidOperationFilterInput
+  manufacturer: StringOperationFilterInput
+  model: StringOperationFilterInput
+  focalLengthMM: ComparableInt32OperationFilterInput
+  apertureMM: ComparableInt32OperationFilterInput
+  fStop: ComparableDoubleOperationFilterInput
+}
+
+input TelescopeSortInput {
+  id: SortEnumType
+  manufacturer: SortEnumType
+  model: SortEnumType
+  focalLengthMM: SortEnumType
+  apertureMM: SortEnumType
+  fStop: SortEnumType
+}
+
+input TargetFilterInput {
+  and: [TargetFilterInput!]
+  or: [TargetFilterInput!]
+  id: ComparableGuidOperationFilterInput
+  name: StringOperationFilterInput
+  description: StringOperationFilterInput
+}
+
+input TargetSortInput {
+  id: SortEnumType
+  name: SortEnumType
+  description: SortEnumType
+}
+
+input ObservationFilterInput {
+  and: [ObservationFilterInput!]
+  or: [ObservationFilterInput!]
+  id: ComparableGuidOperationFilterInput
+  observationDate: ComparableDateTimeOffsetOperationFilterInput
+  extension: StringOperationFilterInput
+  fileId: ComparableGuidOperationFilterInput
+  telescope: TelescopeFilterInput
+  target: TargetFilterInput
+}
+
+input ObservationSortInput {
+  id: SortEnumType
+  observationDate: SortEnumType
+  extension: SortEnumType
+  fileId: SortEnumType
+  telescope: TelescopeSortInput
+  target: TargetSortInput
+}
+
+input ComparableGuidOperationFilterInput {
+  eq: UUID
+  neq: UUID
+  in: [UUID!]
+  nin: [UUID!]
+  gt: UUID
+  ngt: UUID
+  gte: UUID
+  ngte: UUID
+  lt: UUID
+  nlt: UUID
+  lte: UUID
+  nlte: UUID
+}
+
+input StringOperationFilterInput {
+  and: [StringOperationFilterInput!]
+  or: [StringOperationFilterInput!]
+  eq: String
+  neq: String
+  contains: String
+  ncontains: String
+  in: [String]
+  nin: [String]
+  startsWith: String
+  nstartsWith: String
+  endsWith: String
+  nendsWith: String
+}
+
+input ComparableInt32OperationFilterInput {
+  eq: Int
+  neq: Int
+  in: [Int!]
+  nin: [Int!]
+  gt: Int
+  ngt: Int
+  gte: Int
+  ngte: Int
+  lt: Int
+  nlt: Int
+  lte: Int
+  nlte: Int
+}
+
+input ComparableDoubleOperationFilterInput {
+  eq: Float
+  neq: Float
+  in: [Float!]
+  nin: [Float!]
+  gt: Float
+  ngt: Float
+  gte: Float
+  ngte: Float
+  lt: Float
+  nlt: Float
+  lte: Float
+  nlte: Float
+}
+
+enum SortEnumType {
+  ASC
+  DESC
+}
+
+input ComparableDateTimeOffsetOperationFilterInput {
+  eq: DateTime
+  neq: DateTime
+  in: [DateTime!]
+  nin: [DateTime!]
+  gt: DateTime
+  ngt: DateTime
+  gte: DateTime
+  ngte: DateTime
+  lt: DateTime
+  nlt: DateTime
+  lte: DateTime
+  nlte: DateTime
+}
+
+type Observation {
+  id: UUID!
+  observationDate: DateTime!
+  extension: String
+  fileId: UUID!
+  telescope: Telescope
+  target: Target
+  image: String
+  thumbnail: String
+}
