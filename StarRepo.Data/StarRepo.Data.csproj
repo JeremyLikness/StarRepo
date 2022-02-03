@@ -1,0 +1,60 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Seed\observations.csv" />
+    <None Remove="Seed\orion-belt-336.jpg" />
+	<None Remove="Seed\m13.jpg" />
+	<None Remove="Seed\m31-camera.jpg" />
+	<None Remove="Seed\m33.jpg" />
+	<None Remove="Seed\maia.jpg" />
+	<None Remove="Seed\milkyway-field.jpg" />
+	<None Remove="Seed\targets.csv" />
+    <None Remove="Seed\telescopes.csv" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Seed\observations.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Seed\orion-belt-336.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+	<Content Include="Seed\m13.jpg">
+		<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	</Content>
+	<Content Include="Seed\m31-camera.jpg">
+		<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	</Content>
+	<Content Include="Seed\m33.jpg">
+		<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	</Content>
+	<Content Include="Seed\maia.jpg">
+		<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	</Content>
+	<Content Include="Seed\milkyway-field.jpg">
+		<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	</Content>
+	<Content Include="Seed\targets.csv">
+		<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Seed\telescopes.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.1" />
+	<PackageReference Include="System.Drawing.Common" Version="6.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\StarRepo.Domain\StarRepo.Domain.csproj" />
+  </ItemGroup>
+
+</Project>
