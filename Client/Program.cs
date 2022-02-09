@@ -10,6 +10,7 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 builder.Services.AddStarClient() 
     .ConfigureHttpClient(client => client.BaseAddress = new Uri($"{builder.HostEnvironment.BaseAddress}graphql"))
+    // the address for websocket must be wss://yourserver:port/graphql or ws://yourserver:port/graphql
     .ConfigureWebSocketClient(client => client.Uri = new Uri($"{builder.HostEnvironment.BaseAddress}graphql"));
 builder.Services.AddScoped<StarClientService>();
 await builder.Build().RunAsync();
