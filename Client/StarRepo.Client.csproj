@@ -7,33 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <GraphQL Remove="GraphQL\GetImage.graphql" />
-    <GraphQL Remove="GraphQL\GetObservations.graphql" />
-    <GraphQL Remove="GraphQL\GetTelescopes.graphql" />
-    <GraphQL Remove="GraphQL\GetThumbnail.graphql" />
-    <GraphQL Remove="GraphQL\TelescopeModified.graphql" />
-    <GraphQL Remove="GraphQL\UpsertTelescope.graphql" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="GraphQL\GetImage.graphql" />
-    <None Remove="GraphQL\GetObservations.graphql" />
-    <None Remove="GraphQL\GetTelescopes.graphql" />
-    <None Remove="GraphQL\GetThumbnail.graphql" />
-    <None Remove="GraphQL\TelescopeModified.graphql" />
-    <None Remove="GraphQL\UpsertTelescope.graphql" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <AdditionalFiles Include="GraphQL\GetImage.graphql" />
-    <AdditionalFiles Include="GraphQL\GetObservations.graphql" />
-    <AdditionalFiles Include="GraphQL\GetTelescopes.graphql" />
-    <AdditionalFiles Include="GraphQL\GetThumbnail.graphql" />
-    <AdditionalFiles Include="GraphQL\TelescopeModified.graphql" />
-    <AdditionalFiles Include="GraphQL\UpsertTelescope.graphql" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.0" PrivateAssets="all" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
