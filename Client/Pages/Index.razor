@@ -1,6 +1,11 @@
 ﻿@page "/"
+@using StarRepo.Client.GraphQL
+@using StrawberryShake
 @inject GraphQL.StarClientService StarClientService
+@inject StarClient StarClient
 @inject NavigationManager Navigation
+
+@implements IDisposable
 
 <PageTitle>Star Repo</PageTitle>
 
@@ -89,12 +94,16 @@ else
     private bool loading = false;
     private int sort = 0;
     private bool sortAscending = true;
-    
+    private IDisposable? watcher, observer;
+
     protected override async Task OnInitializedAsync()
     {
-        await RefreshAsync();
+        observer ??= new TelescopeModifiedObserver(OnNext);
+        watcher ??= StarClient.TelescopeModified.Watch().Subscribe(
+            (IObserver<IOperationResult<ITelescopeModifiedResult>>)observer);
+        await RefreshAsync();        
         await base.OnInitializedAsync();
-    }
+    }    
 
     private async Task RefreshAsync()
     {
@@ -146,4 +155,30 @@ else
         }
         await RefreshAsync();
     }    
+
+    private void OnNext(ITelescopeModified_TelescopeModified modifiedScope)
+    {
+        if (observations == null)
+        { 
+            return;
+        }
+
+        if (modifiedScope != null)
+        {
+            var telescopes = observations.Select(o => o.Telescope).Where(t => t != null && t.Id == modifiedScope.Id);
+            foreach (var telescope in telescopes)
+            {
+                telescope!.Manufacturer = modifiedScope.Manufacturer;
+                telescope!.Model = modifiedScope.Model;
+                telescope!.FocalLengthMM = modifiedScope.FocalLengthMM;
+            }
+            StateHasChanged();
+        }        
+    }
+
+    public void Dispose()
+    {
+        watcher?.Dispose();
+        observer?.Dispose();    
+    }
 }

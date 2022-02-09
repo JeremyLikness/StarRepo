@@ -19,6 +19,7 @@ namespace Microsoft.Extensions.DependencyInjection
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StarRepo.GraphQL.GetObservationsQuery>(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<ClientServiceProvider>(sp)));
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StarRepo.GraphQL.GetTelescopesQuery>(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<ClientServiceProvider>(sp)));
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StarRepo.GraphQL.GetThumbnailQuery>(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<ClientServiceProvider>(sp)));
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StarRepo.GraphQL.TelescopeModifiedSubscription>(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<ClientServiceProvider>(sp)));
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StarRepo.GraphQL.UpsertTelescopeMutation>(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<ClientServiceProvider>(sp)));
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StarRepo.GraphQL.StarClient>(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<ClientServiceProvider>(sp)));
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StarRepo.GraphQL.IStarClient>(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<ClientServiceProvider>(sp)));
@@ -29,6 +30,11 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             global::Microsoft.Extensions.DependencyInjection.Extensions.ServiceCollectionDescriptorExtensions.TryAddSingleton<global::StrawberryShake.IEntityStore, global::StrawberryShake.EntityStore>(services);
             global::Microsoft.Extensions.DependencyInjection.Extensions.ServiceCollectionDescriptorExtensions.TryAddSingleton<global::StrawberryShake.IOperationStore>(services, sp => new global::StrawberryShake.OperationStore(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StrawberryShake.IEntityStore>(sp)));
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.Transport.WebSockets.IWebSocketConnection>(services, sp =>
+            {
+                var sessionPool = global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StrawberryShake.Transport.WebSockets.ISessionPool>(parentServices);
+                return new global::StrawberryShake.Transport.WebSockets.WebSocketConnection(async ct => await sessionPool.CreateAsync("StarClient", ct));
+            });
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.Transport.Http.IHttpConnection>(services, sp =>
             {
                 var clientFactory = global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::System.Net.Http.IHttpClientFactory>(parentServices);
@@ -40,6 +46,7 @@ namespace Microsoft.Extensions.DependencyInjection
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IEntityMapper<global::StarRepo.GraphQL.State.TargetEntity, global::StarRepo.GraphQL.GetObservations_Observations_Target_Target>, global::StarRepo.GraphQL.State.GetObservations_Observations_Target_TargetFromTargetEntityMapper>(services);
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IEntityMapper<global::StarRepo.GraphQL.State.TelescopeEntity, global::StarRepo.GraphQL.GetTelescopes_Telescopes_Telescope>, global::StarRepo.GraphQL.State.GetTelescopes_Telescopes_TelescopeFromTelescopeEntityMapper>(services);
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IEntityMapper<global::StarRepo.GraphQL.State.ObservationEntity, global::StarRepo.GraphQL.GetThumbnail_Observations_Observation>, global::StarRepo.GraphQL.State.GetThumbnail_Observations_ObservationFromObservationEntityMapper>(services);
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IEntityMapper<global::StarRepo.GraphQL.State.TelescopeEntity, global::StarRepo.GraphQL.TelescopeModified_TelescopeModified_Telescope>, global::StarRepo.GraphQL.State.TelescopeModified_TelescopeModified_TelescopeFromTelescopeEntityMapper>(services);
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IEntityMapper<global::StarRepo.GraphQL.State.TelescopeMutationResponseEntity, global::StarRepo.GraphQL.UpsertTelescope_ModifyTelescope_TelescopeMutationResponse>, global::StarRepo.GraphQL.State.UpsertTelescope_ModifyTelescope_TelescopeMutationResponseFromTelescopeMutationResponseEntityMapper>(services);
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.Serialization.ISerializer, global::StarRepo.GraphQL.SortEnumTypeSerializer>(services);
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.Serialization.ISerializer, global::StrawberryShake.Serialization.StringSerializer>(services);
@@ -99,6 +106,13 @@ namespace Microsoft.Extensions.DependencyInjection
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IOperationExecutor<global::StarRepo.GraphQL.IGetThumbnailResult>>(services, sp => new global::StrawberryShake.OperationExecutor<global::System.Text.Json.JsonDocument, global::StarRepo.GraphQL.IGetThumbnailResult>(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StrawberryShake.Transport.Http.IHttpConnection>(sp), () => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StrawberryShake.IOperationResultBuilder<global::System.Text.Json.JsonDocument, global::StarRepo.GraphQL.IGetThumbnailResult>>(sp), global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StrawberryShake.IOperationStore>(sp), strategy));
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StarRepo.GraphQL.GetThumbnailQuery>(services);
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StarRepo.GraphQL.IGetThumbnailQuery>(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StarRepo.GraphQL.GetThumbnailQuery>(sp));
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IOperationResultDataFactory<global::StarRepo.GraphQL.ITelescopeModifiedResult>, global::StarRepo.GraphQL.State.TelescopeModifiedResultFactory>(services);
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IOperationResultDataFactory>(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StrawberryShake.IOperationResultDataFactory<global::StarRepo.GraphQL.ITelescopeModifiedResult>>(sp));
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IOperationRequestFactory>(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StarRepo.GraphQL.ITelescopeModifiedSubscription>(sp));
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IOperationResultBuilder<global::System.Text.Json.JsonDocument, global::StarRepo.GraphQL.ITelescopeModifiedResult>, global::StarRepo.GraphQL.State.TelescopeModifiedBuilder>(services);
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IOperationExecutor<global::StarRepo.GraphQL.ITelescopeModifiedResult>>(services, sp => new global::StrawberryShake.OperationExecutor<global::System.Text.Json.JsonDocument, global::StarRepo.GraphQL.ITelescopeModifiedResult>(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StrawberryShake.Transport.WebSockets.IWebSocketConnection>(sp), () => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StrawberryShake.IOperationResultBuilder<global::System.Text.Json.JsonDocument, global::StarRepo.GraphQL.ITelescopeModifiedResult>>(sp), global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StrawberryShake.IOperationStore>(sp), strategy));
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StarRepo.GraphQL.TelescopeModifiedSubscription>(services);
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StarRepo.GraphQL.ITelescopeModifiedSubscription>(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StarRepo.GraphQL.TelescopeModifiedSubscription>(sp));
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IOperationResultDataFactory<global::StarRepo.GraphQL.IUpsertTelescopeResult>, global::StarRepo.GraphQL.State.UpsertTelescopeResultFactory>(services);
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IOperationResultDataFactory>(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StrawberryShake.IOperationResultDataFactory<global::StarRepo.GraphQL.IUpsertTelescopeResult>>(sp));
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IOperationRequestFactory>(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StarRepo.GraphQL.IUpsertTelescopeMutation>(sp));
@@ -450,12 +464,15 @@ namespace StarRepo.GraphQL
     [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
     public partial class GetObservations_Observations_Telescope_Telescope : global::System.IEquatable<GetObservations_Observations_Telescope_Telescope>, IGetObservations_Observations_Telescope_Telescope
     {
-        public GetObservations_Observations_Telescope_Telescope(global::System.String? manufacturer, global::System.String? model, global::System.Int32 focalLengthMM)
+        public GetObservations_Observations_Telescope_Telescope(global::System.Guid id, global::System.String? manufacturer, global::System.String? model, global::System.Int32 focalLengthMM)
         {
+            Id = id;
             Manufacturer = manufacturer;
             Model = model;
             FocalLengthMM = focalLengthMM;
         }
+
+        public global::System.Guid Id { get; }
 
         public global::System.String? Manufacturer { get; }
 
@@ -480,7 +497,7 @@ namespace StarRepo.GraphQL
                 return false;
             }
 
-            return (((Manufacturer is null && other.Manufacturer is null) || Manufacturer != null && Manufacturer.Equals(other.Manufacturer))) && ((Model is null && other.Model is null) || Model != null && Model.Equals(other.Model)) && FocalLengthMM == other.FocalLengthMM;
+            return (Id.Equals(other.Id)) && ((Manufacturer is null && other.Manufacturer is null) || Manufacturer != null && Manufacturer.Equals(other.Manufacturer)) && ((Model is null && other.Model is null) || Model != null && Model.Equals(other.Model)) && FocalLengthMM == other.FocalLengthMM;
         }
 
         public override global::System.Boolean Equals(global::System.Object? obj)
@@ -508,6 +525,7 @@ namespace StarRepo.GraphQL
             unchecked
             {
                 int hash = 5;
+                hash ^= 397 * Id.GetHashCode();
                 if (Manufacturer != null)
                 {
                     hash ^= 397 * Manufacturer.GetHashCode();
@@ -623,6 +641,8 @@ namespace StarRepo.GraphQL
     [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
     public partial interface IGetObservations_Observations_Telescope
     {
+        public global::System.Guid Id { get; }
+
         public global::System.String? Manufacturer { get; }
 
         public global::System.String? Model { get; }
@@ -983,6 +1003,175 @@ namespace StarRepo.GraphQL
 
     [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
     public partial interface IGetThumbnail_Observations_Observation : IGetThumbnail_Observations
+    {
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class TelescopeModifiedResult : global::System.IEquatable<TelescopeModifiedResult>, ITelescopeModifiedResult
+    {
+        public TelescopeModifiedResult(global::StarRepo.GraphQL.ITelescopeModified_TelescopeModified? telescopeModified)
+        {
+            TelescopeModified = telescopeModified;
+        }
+
+        public global::StarRepo.GraphQL.ITelescopeModified_TelescopeModified? TelescopeModified { get; }
+
+        public virtual global::System.Boolean Equals(TelescopeModifiedResult? other)
+        {
+            if (ReferenceEquals(null, other))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, other))
+            {
+                return true;
+            }
+
+            if (other.GetType() != GetType())
+            {
+                return false;
+            }
+
+            return (((TelescopeModified is null && other.TelescopeModified is null) || TelescopeModified != null && TelescopeModified.Equals(other.TelescopeModified)));
+        }
+
+        public override global::System.Boolean Equals(global::System.Object? obj)
+        {
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            if (obj.GetType() != GetType())
+            {
+                return false;
+            }
+
+            return Equals((TelescopeModifiedResult)obj);
+        }
+
+        public override global::System.Int32 GetHashCode()
+        {
+            unchecked
+            {
+                int hash = 5;
+                if (TelescopeModified != null)
+                {
+                    hash ^= 397 * TelescopeModified.GetHashCode();
+                }
+
+                return hash;
+            }
+        }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class TelescopeModified_TelescopeModified_Telescope : global::System.IEquatable<TelescopeModified_TelescopeModified_Telescope>, ITelescopeModified_TelescopeModified_Telescope
+    {
+        public TelescopeModified_TelescopeModified_Telescope(global::System.Guid id, global::System.String? manufacturer, global::System.String? model, global::System.Int32 focalLengthMM)
+        {
+            Id = id;
+            Manufacturer = manufacturer;
+            Model = model;
+            FocalLengthMM = focalLengthMM;
+        }
+
+        public global::System.Guid Id { get; }
+
+        public global::System.String? Manufacturer { get; }
+
+        public global::System.String? Model { get; }
+
+        public global::System.Int32 FocalLengthMM { get; }
+
+        public virtual global::System.Boolean Equals(TelescopeModified_TelescopeModified_Telescope? other)
+        {
+            if (ReferenceEquals(null, other))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, other))
+            {
+                return true;
+            }
+
+            if (other.GetType() != GetType())
+            {
+                return false;
+            }
+
+            return (Id.Equals(other.Id)) && ((Manufacturer is null && other.Manufacturer is null) || Manufacturer != null && Manufacturer.Equals(other.Manufacturer)) && ((Model is null && other.Model is null) || Model != null && Model.Equals(other.Model)) && FocalLengthMM == other.FocalLengthMM;
+        }
+
+        public override global::System.Boolean Equals(global::System.Object? obj)
+        {
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            if (obj.GetType() != GetType())
+            {
+                return false;
+            }
+
+            return Equals((TelescopeModified_TelescopeModified_Telescope)obj);
+        }
+
+        public override global::System.Int32 GetHashCode()
+        {
+            unchecked
+            {
+                int hash = 5;
+                hash ^= 397 * Id.GetHashCode();
+                if (Manufacturer != null)
+                {
+                    hash ^= 397 * Manufacturer.GetHashCode();
+                }
+
+                if (Model != null)
+                {
+                    hash ^= 397 * Model.GetHashCode();
+                }
+
+                hash ^= 397 * FocalLengthMM.GetHashCode();
+                return hash;
+            }
+        }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial interface ITelescopeModifiedResult
+    {
+        public global::StarRepo.GraphQL.ITelescopeModified_TelescopeModified? TelescopeModified { get; }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial interface ITelescopeModified_TelescopeModified
+    {
+        public global::System.Guid Id { get; }
+
+        public global::System.String? Manufacturer { get; }
+
+        public global::System.String? Model { get; }
+
+        public global::System.Int32 FocalLengthMM { get; }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial interface ITelescopeModified_TelescopeModified_Telescope : ITelescopeModified_TelescopeModified
     {
     }
 
@@ -6090,6 +6279,7 @@ namespace StarRepo.GraphQL
     ///     observationDate
     ///     telescope {
     ///       __typename
+    ///       id
     ///       manufacturer
     ///       model
     ///       focalLengthMM
@@ -6121,8 +6311,8 @@ namespace StarRepo.GraphQL
 
         public static GetObservationsQueryDocument Instance { get; } = new GetObservationsQueryDocument();
         public global::StrawberryShake.OperationKind Kind => global::StrawberryShake.OperationKind.Query;
-        public global::System.ReadOnlySpan<global::System.Byte> Body => new global::System.Byte[]{0x71, 0x75, 0x65, 0x72, 0x79, 0x20, 0x47, 0x65, 0x74, 0x4f, 0x62, 0x73, 0x65, 0x72, 0x76, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x28, 0x24, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x3a, 0x20, 0x5b, 0x4f, 0x62, 0x73, 0x65, 0x72, 0x76, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x53, 0x6f, 0x72, 0x74, 0x49, 0x6e, 0x70, 0x75, 0x74, 0x21, 0x5d, 0x2c, 0x20, 0x24, 0x77, 0x68, 0x65, 0x72, 0x65, 0x3a, 0x20, 0x4f, 0x62, 0x73, 0x65, 0x72, 0x76, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x46, 0x69, 0x6c, 0x74, 0x65, 0x72, 0x49, 0x6e, 0x70, 0x75, 0x74, 0x29, 0x20, 0x7b, 0x20, 0x6f, 0x62, 0x73, 0x65, 0x72, 0x76, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x28, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x3a, 0x20, 0x24, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x2c, 0x20, 0x77, 0x68, 0x65, 0x72, 0x65, 0x3a, 0x20, 0x24, 0x77, 0x68, 0x65, 0x72, 0x65, 0x29, 0x20, 0x7b, 0x20, 0x5f, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x6e, 0x61, 0x6d, 0x65, 0x20, 0x69, 0x64, 0x20, 0x6f, 0x62, 0x73, 0x65, 0x72, 0x76, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x44, 0x61, 0x74, 0x65, 0x20, 0x74, 0x65, 0x6c, 0x65, 0x73, 0x63, 0x6f, 0x70, 0x65, 0x20, 0x7b, 0x20, 0x5f, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x6e, 0x61, 0x6d, 0x65, 0x20, 0x6d, 0x61, 0x6e, 0x75, 0x66, 0x61, 0x63, 0x74, 0x75, 0x72, 0x65, 0x72, 0x20, 0x6d, 0x6f, 0x64, 0x65, 0x6c, 0x20, 0x66, 0x6f, 0x63, 0x61, 0x6c, 0x4c, 0x65, 0x6e, 0x67, 0x74, 0x68, 0x4d, 0x4d, 0x20, 0x2e, 0x2e, 0x2e, 0x20, 0x6f, 0x6e, 0x20, 0x54, 0x65, 0x6c, 0x65, 0x73, 0x63, 0x6f, 0x70, 0x65, 0x20, 0x7b, 0x20, 0x69, 0x64, 0x20, 0x7d, 0x20, 0x7d, 0x20, 0x74, 0x61, 0x72, 0x67, 0x65, 0x74, 0x20, 0x7b, 0x20, 0x5f, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x6e, 0x61, 0x6d, 0x65, 0x20, 0x6e, 0x61, 0x6d, 0x65, 0x20, 0x64, 0x65, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x20, 0x2e, 0x2e, 0x2e, 0x20, 0x6f, 0x6e, 0x20, 0x54, 0x61, 0x72, 0x67, 0x65, 0x74, 0x20, 0x7b, 0x20, 0x69, 0x64, 0x20, 0x7d, 0x20, 0x7d, 0x20, 0x2e, 0x2e, 0x2e, 0x20, 0x6f, 0x6e, 0x20, 0x4f, 0x62, 0x73, 0x65, 0x72, 0x76, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x20, 0x7b, 0x20, 0x69, 0x64, 0x20, 0x7d, 0x20, 0x7d, 0x20, 0x7d};
-        public global::StrawberryShake.DocumentHash Hash { get; } = new global::StrawberryShake.DocumentHash("md5Hash", "ee8dfca905fb5f814e1c704802dcac56");
+        public global::System.ReadOnlySpan<global::System.Byte> Body => new global::System.Byte[]{0x71, 0x75, 0x65, 0x72, 0x79, 0x20, 0x47, 0x65, 0x74, 0x4f, 0x62, 0x73, 0x65, 0x72, 0x76, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x28, 0x24, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x3a, 0x20, 0x5b, 0x4f, 0x62, 0x73, 0x65, 0x72, 0x76, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x53, 0x6f, 0x72, 0x74, 0x49, 0x6e, 0x70, 0x75, 0x74, 0x21, 0x5d, 0x2c, 0x20, 0x24, 0x77, 0x68, 0x65, 0x72, 0x65, 0x3a, 0x20, 0x4f, 0x62, 0x73, 0x65, 0x72, 0x76, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x46, 0x69, 0x6c, 0x74, 0x65, 0x72, 0x49, 0x6e, 0x70, 0x75, 0x74, 0x29, 0x20, 0x7b, 0x20, 0x6f, 0x62, 0x73, 0x65, 0x72, 0x76, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x28, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x3a, 0x20, 0x24, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x2c, 0x20, 0x77, 0x68, 0x65, 0x72, 0x65, 0x3a, 0x20, 0x24, 0x77, 0x68, 0x65, 0x72, 0x65, 0x29, 0x20, 0x7b, 0x20, 0x5f, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x6e, 0x61, 0x6d, 0x65, 0x20, 0x69, 0x64, 0x20, 0x6f, 0x62, 0x73, 0x65, 0x72, 0x76, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x44, 0x61, 0x74, 0x65, 0x20, 0x74, 0x65, 0x6c, 0x65, 0x73, 0x63, 0x6f, 0x70, 0x65, 0x20, 0x7b, 0x20, 0x5f, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x6e, 0x61, 0x6d, 0x65, 0x20, 0x69, 0x64, 0x20, 0x6d, 0x61, 0x6e, 0x75, 0x66, 0x61, 0x63, 0x74, 0x75, 0x72, 0x65, 0x72, 0x20, 0x6d, 0x6f, 0x64, 0x65, 0x6c, 0x20, 0x66, 0x6f, 0x63, 0x61, 0x6c, 0x4c, 0x65, 0x6e, 0x67, 0x74, 0x68, 0x4d, 0x4d, 0x20, 0x2e, 0x2e, 0x2e, 0x20, 0x6f, 0x6e, 0x20, 0x54, 0x65, 0x6c, 0x65, 0x73, 0x63, 0x6f, 0x70, 0x65, 0x20, 0x7b, 0x20, 0x69, 0x64, 0x20, 0x7d, 0x20, 0x7d, 0x20, 0x74, 0x61, 0x72, 0x67, 0x65, 0x74, 0x20, 0x7b, 0x20, 0x5f, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x6e, 0x61, 0x6d, 0x65, 0x20, 0x6e, 0x61, 0x6d, 0x65, 0x20, 0x64, 0x65, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x20, 0x2e, 0x2e, 0x2e, 0x20, 0x6f, 0x6e, 0x20, 0x54, 0x61, 0x72, 0x67, 0x65, 0x74, 0x20, 0x7b, 0x20, 0x69, 0x64, 0x20, 0x7d, 0x20, 0x7d, 0x20, 0x2e, 0x2e, 0x2e, 0x20, 0x6f, 0x6e, 0x20, 0x4f, 0x62, 0x73, 0x65, 0x72, 0x76, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x20, 0x7b, 0x20, 0x69, 0x64, 0x20, 0x7d, 0x20, 0x7d, 0x20, 0x7d};
+        public global::StrawberryShake.DocumentHash Hash { get; } = new global::StrawberryShake.DocumentHash("md5Hash", "c2de62676768fab25bfc2786b402c54c");
         public override global::System.String ToString()
         {
 #if NETSTANDARD2_0
@@ -6143,6 +6333,7 @@ namespace StarRepo.GraphQL
     ///     observationDate
     ///     telescope {
     ///       __typename
+    ///       id
     ///       manufacturer
     ///       model
     ///       focalLengthMM
@@ -6255,6 +6446,7 @@ namespace StarRepo.GraphQL
     ///     observationDate
     ///     telescope {
     ///       __typename
+    ///       id
     ///       manufacturer
     ///       model
     ///       focalLengthMM
@@ -6528,6 +6720,116 @@ namespace StarRepo.GraphQL
     }
 
     /// <summary>
+    /// Represents the operation service of the TelescopeModified GraphQL operation
+    /// <code>
+    /// subscription TelescopeModified {
+    ///   telescopeModified {
+    ///     __typename
+    ///     id
+    ///     manufacturer
+    ///     model
+    ///     focalLengthMM
+    ///     ... on Telescope {
+    ///       id
+    ///     }
+    ///   }
+    /// }
+    /// </code>
+    /// </summary>
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class TelescopeModifiedSubscriptionDocument : global::StrawberryShake.IDocument
+    {
+        private TelescopeModifiedSubscriptionDocument()
+        {
+        }
+
+        public static TelescopeModifiedSubscriptionDocument Instance { get; } = new TelescopeModifiedSubscriptionDocument();
+        public global::StrawberryShake.OperationKind Kind => global::StrawberryShake.OperationKind.Subscription;
+        public global::System.ReadOnlySpan<global::System.Byte> Body => new global::System.Byte[]{0x73, 0x75, 0x62, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x20, 0x54, 0x65, 0x6c, 0x65, 0x73, 0x63, 0x6f, 0x70, 0x65, 0x4d, 0x6f, 0x64, 0x69, 0x66, 0x69, 0x65, 0x64, 0x20, 0x7b, 0x20, 0x74, 0x65, 0x6c, 0x65, 0x73, 0x63, 0x6f, 0x70, 0x65, 0x4d, 0x6f, 0x64, 0x69, 0x66, 0x69, 0x65, 0x64, 0x20, 0x7b, 0x20, 0x5f, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x6e, 0x61, 0x6d, 0x65, 0x20, 0x69, 0x64, 0x20, 0x6d, 0x61, 0x6e, 0x75, 0x66, 0x61, 0x63, 0x74, 0x75, 0x72, 0x65, 0x72, 0x20, 0x6d, 0x6f, 0x64, 0x65, 0x6c, 0x20, 0x66, 0x6f, 0x63, 0x61, 0x6c, 0x4c, 0x65, 0x6e, 0x67, 0x74, 0x68, 0x4d, 0x4d, 0x20, 0x2e, 0x2e, 0x2e, 0x20, 0x6f, 0x6e, 0x20, 0x54, 0x65, 0x6c, 0x65, 0x73, 0x63, 0x6f, 0x70, 0x65, 0x20, 0x7b, 0x20, 0x69, 0x64, 0x20, 0x7d, 0x20, 0x7d, 0x20, 0x7d};
+        public global::StrawberryShake.DocumentHash Hash { get; } = new global::StrawberryShake.DocumentHash("md5Hash", "3034859e5bb0cf160554855b3ee2927a");
+        public override global::System.String ToString()
+        {
+#if NETSTANDARD2_0
+        return global::System.Text.Encoding.UTF8.GetString(Body.ToArray());
+#else
+            return global::System.Text.Encoding.UTF8.GetString(Body);
+#endif
+        }
+    }
+
+    /// <summary>
+    /// Represents the operation service of the TelescopeModified GraphQL operation
+    /// <code>
+    /// subscription TelescopeModified {
+    ///   telescopeModified {
+    ///     __typename
+    ///     id
+    ///     manufacturer
+    ///     model
+    ///     focalLengthMM
+    ///     ... on Telescope {
+    ///       id
+    ///     }
+    ///   }
+    /// }
+    /// </code>
+    /// </summary>
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class TelescopeModifiedSubscription : global::StarRepo.GraphQL.ITelescopeModifiedSubscription
+    {
+        private readonly global::StrawberryShake.IOperationExecutor<ITelescopeModifiedResult> _operationExecutor;
+        public TelescopeModifiedSubscription(global::StrawberryShake.IOperationExecutor<ITelescopeModifiedResult> operationExecutor)
+        {
+            _operationExecutor = operationExecutor ?? throw new global::System.ArgumentNullException(nameof(operationExecutor));
+        }
+
+        global::System.Type global::StrawberryShake.IOperationRequestFactory.ResultType => typeof(ITelescopeModifiedResult);
+        public global::System.IObservable<global::StrawberryShake.IOperationResult<ITelescopeModifiedResult>> Watch(global::StrawberryShake.ExecutionStrategy? strategy = null)
+        {
+            var request = CreateRequest();
+            return _operationExecutor.Watch(request, strategy);
+        }
+
+        private global::StrawberryShake.OperationRequest CreateRequest()
+        {
+            return CreateRequest(null);
+        }
+
+        private global::StrawberryShake.OperationRequest CreateRequest(global::System.Collections.Generic.IReadOnlyDictionary<global::System.String, global::System.Object?>? variables)
+        {
+            return new global::StrawberryShake.OperationRequest(id: TelescopeModifiedSubscriptionDocument.Instance.Hash.Value, name: "TelescopeModified", document: TelescopeModifiedSubscriptionDocument.Instance, strategy: global::StrawberryShake.RequestStrategy.Default);
+        }
+
+        global::StrawberryShake.OperationRequest global::StrawberryShake.IOperationRequestFactory.Create(global::System.Collections.Generic.IReadOnlyDictionary<global::System.String, global::System.Object?>? variables)
+        {
+            return CreateRequest();
+        }
+    }
+
+    /// <summary>
+    /// Represents the operation service of the TelescopeModified GraphQL operation
+    /// <code>
+    /// subscription TelescopeModified {
+    ///   telescopeModified {
+    ///     __typename
+    ///     id
+    ///     manufacturer
+    ///     model
+    ///     focalLengthMM
+    ///     ... on Telescope {
+    ///       id
+    ///     }
+    ///   }
+    /// }
+    /// </code>
+    /// </summary>
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial interface ITelescopeModifiedSubscription : global::StrawberryShake.IOperationRequestFactory
+    {
+        global::System.IObservable<global::StrawberryShake.IOperationResult<ITelescopeModifiedResult>> Watch(global::StrawberryShake.ExecutionStrategy? strategy = null);
+    }
+
+    /// <summary>
     /// Represents the operation service of the UpsertTelescope GraphQL operation
     /// <code>
     /// mutation UpsertTelescope($telescope: TelescopeInput!) {
@@ -6665,13 +6967,15 @@ namespace StarRepo.GraphQL
         private readonly global::StarRepo.GraphQL.IGetObservationsQuery _getObservations;
         private readonly global::StarRepo.GraphQL.IGetTelescopesQuery _getTelescopes;
         private readonly global::StarRepo.GraphQL.IGetThumbnailQuery _getThumbnail;
+        private readonly global::StarRepo.GraphQL.ITelescopeModifiedSubscription _telescopeModified;
         private readonly global::StarRepo.GraphQL.IUpsertTelescopeMutation _upsertTelescope;
-        public StarClient(global::StarRepo.GraphQL.IGetImageQuery getImage, global::StarRepo.GraphQL.IGetObservationsQuery getObservations, global::StarRepo.GraphQL.IGetTelescopesQuery getTelescopes, global::StarRepo.GraphQL.IGetThumbnailQuery getThumbnail, global::StarRepo.GraphQL.IUpsertTelescopeMutation upsertTelescope)
+        public StarClient(global::StarRepo.GraphQL.IGetImageQuery getImage, global::StarRepo.GraphQL.IGetObservationsQuery getObservations, global::StarRepo.GraphQL.IGetTelescopesQuery getTelescopes, global::StarRepo.GraphQL.IGetThumbnailQuery getThumbnail, global::StarRepo.GraphQL.ITelescopeModifiedSubscription telescopeModified, global::StarRepo.GraphQL.IUpsertTelescopeMutation upsertTelescope)
         {
             _getImage = getImage ?? throw new global::System.ArgumentNullException(nameof(getImage));
             _getObservations = getObservations ?? throw new global::System.ArgumentNullException(nameof(getObservations));
             _getTelescopes = getTelescopes ?? throw new global::System.ArgumentNullException(nameof(getTelescopes));
             _getThumbnail = getThumbnail ?? throw new global::System.ArgumentNullException(nameof(getThumbnail));
+            _telescopeModified = telescopeModified ?? throw new global::System.ArgumentNullException(nameof(telescopeModified));
             _upsertTelescope = upsertTelescope ?? throw new global::System.ArgumentNullException(nameof(upsertTelescope));
         }
 
@@ -6680,6 +6984,7 @@ namespace StarRepo.GraphQL
         public global::StarRepo.GraphQL.IGetObservationsQuery GetObservations => _getObservations;
         public global::StarRepo.GraphQL.IGetTelescopesQuery GetTelescopes => _getTelescopes;
         public global::StarRepo.GraphQL.IGetThumbnailQuery GetThumbnail => _getThumbnail;
+        public global::StarRepo.GraphQL.ITelescopeModifiedSubscription TelescopeModified => _telescopeModified;
         public global::StarRepo.GraphQL.IUpsertTelescopeMutation UpsertTelescope => _upsertTelescope;
     }
 
@@ -6696,6 +7001,8 @@ namespace StarRepo.GraphQL
         global::StarRepo.GraphQL.IGetTelescopesQuery GetTelescopes { get; }
 
         global::StarRepo.GraphQL.IGetThumbnailQuery GetThumbnail { get; }
+
+        global::StarRepo.GraphQL.ITelescopeModifiedSubscription TelescopeModified { get; }
 
         global::StarRepo.GraphQL.IUpsertTelescopeMutation UpsertTelescope { get; }
     }
@@ -6738,22 +7045,22 @@ namespace StarRepo.GraphQL.State
     [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
     public partial class TelescopeEntity
     {
-        public TelescopeEntity(global::System.String? manufacturer = default !, global::System.String? model = default !, global::System.Int32 focalLengthMM = default !, global::System.Guid id = default !, global::System.Int32 apertureMM = default !)
+        public TelescopeEntity(global::System.Guid id = default !, global::System.String? manufacturer = default !, global::System.String? model = default !, global::System.Int32 focalLengthMM = default !, global::System.Int32 apertureMM = default !)
         {
+            Id = id;
             Manufacturer = manufacturer;
             Model = model;
             FocalLengthMM = focalLengthMM;
-            Id = id;
             ApertureMM = apertureMM;
         }
+
+        public global::System.Guid Id { get; }
 
         public global::System.String? Manufacturer { get; }
 
         public global::System.String? Model { get; }
 
         public global::System.Int32 FocalLengthMM { get; }
-
-        public global::System.Guid Id { get; }
 
         public global::System.Int32 ApertureMM { get; }
     }
@@ -7041,7 +7348,7 @@ namespace StarRepo.GraphQL.State
                 snapshot = _entityStore.CurrentSnapshot;
             }
 
-            return new GetObservations_Observations_Telescope_Telescope(entity.Manufacturer, entity.Model, entity.FocalLengthMM);
+            return new GetObservations_Observations_Telescope_Telescope(entity.Id, entity.Manufacturer, entity.Model, entity.FocalLengthMM);
         }
     }
 
@@ -7264,6 +7571,96 @@ namespace StarRepo.GraphQL.State
             }
 
             return new GetThumbnail_Observations_Observation(entity.FileId, entity.Extension, entity.Thumbnail);
+        }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class TelescopeModifiedResultFactory : global::StrawberryShake.IOperationResultDataFactory<global::StarRepo.GraphQL.TelescopeModifiedResult>
+    {
+        private readonly global::StrawberryShake.IEntityStore _entityStore;
+        private readonly global::StrawberryShake.IEntityMapper<global::StarRepo.GraphQL.State.TelescopeEntity, TelescopeModified_TelescopeModified_Telescope> _telescopeModified_TelescopeModified_TelescopeFromTelescopeEntityMapper;
+        public TelescopeModifiedResultFactory(global::StrawberryShake.IEntityStore entityStore, global::StrawberryShake.IEntityMapper<global::StarRepo.GraphQL.State.TelescopeEntity, TelescopeModified_TelescopeModified_Telescope> telescopeModified_TelescopeModified_TelescopeFromTelescopeEntityMapper)
+        {
+            _entityStore = entityStore ?? throw new global::System.ArgumentNullException(nameof(entityStore));
+            _telescopeModified_TelescopeModified_TelescopeFromTelescopeEntityMapper = telescopeModified_TelescopeModified_TelescopeFromTelescopeEntityMapper ?? throw new global::System.ArgumentNullException(nameof(telescopeModified_TelescopeModified_TelescopeFromTelescopeEntityMapper));
+        }
+
+        global::System.Type global::StrawberryShake.IOperationResultDataFactory.ResultType => typeof(global::StarRepo.GraphQL.ITelescopeModifiedResult);
+        public TelescopeModifiedResult Create(global::StrawberryShake.IOperationResultDataInfo dataInfo, global::StrawberryShake.IEntityStoreSnapshot? snapshot = null)
+        {
+            if (snapshot is null)
+            {
+                snapshot = _entityStore.CurrentSnapshot;
+            }
+
+            if (dataInfo is TelescopeModifiedResultInfo info)
+            {
+                return new TelescopeModifiedResult(MapITelescopeModified_TelescopeModified(info.TelescopeModified, snapshot));
+            }
+
+            throw new global::System.ArgumentException("TelescopeModifiedResultInfo expected.");
+        }
+
+        private global::StarRepo.GraphQL.ITelescopeModified_TelescopeModified? MapITelescopeModified_TelescopeModified(global::StrawberryShake.EntityId? entityId, global::StrawberryShake.IEntityStoreSnapshot snapshot)
+        {
+            if (entityId is null)
+            {
+                return null;
+            }
+
+            if (entityId.Value.Name.Equals("Telescope", global::System.StringComparison.Ordinal))
+            {
+                return _telescopeModified_TelescopeModified_TelescopeFromTelescopeEntityMapper.Map(snapshot.GetEntity<global::StarRepo.GraphQL.State.TelescopeEntity>(entityId.Value) ?? throw new global::StrawberryShake.GraphQLClientException());
+            }
+
+            throw new global::System.NotSupportedException();
+        }
+
+        global::System.Object global::StrawberryShake.IOperationResultDataFactory.Create(global::StrawberryShake.IOperationResultDataInfo dataInfo, global::StrawberryShake.IEntityStoreSnapshot? snapshot)
+        {
+            return Create(dataInfo, snapshot);
+        }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class TelescopeModifiedResultInfo : global::StrawberryShake.IOperationResultDataInfo
+    {
+        private readonly global::System.Collections.Generic.IReadOnlyCollection<global::StrawberryShake.EntityId> _entityIds;
+        private readonly global::System.UInt64 _version;
+        public TelescopeModifiedResultInfo(global::StrawberryShake.EntityId? telescopeModified, global::System.Collections.Generic.IReadOnlyCollection<global::StrawberryShake.EntityId> entityIds, global::System.UInt64 version)
+        {
+            TelescopeModified = telescopeModified;
+            _entityIds = entityIds ?? throw new global::System.ArgumentNullException(nameof(entityIds));
+            _version = version;
+        }
+
+        public global::StrawberryShake.EntityId? TelescopeModified { get; }
+
+        public global::System.Collections.Generic.IReadOnlyCollection<global::StrawberryShake.EntityId> EntityIds => _entityIds;
+        public global::System.UInt64 Version => _version;
+        public global::StrawberryShake.IOperationResultDataInfo WithVersion(global::System.UInt64 version)
+        {
+            return new TelescopeModifiedResultInfo(TelescopeModified, _entityIds, version);
+        }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class TelescopeModified_TelescopeModified_TelescopeFromTelescopeEntityMapper : global::StrawberryShake.IEntityMapper<global::StarRepo.GraphQL.State.TelescopeEntity, TelescopeModified_TelescopeModified_Telescope>
+    {
+        private readonly global::StrawberryShake.IEntityStore _entityStore;
+        public TelescopeModified_TelescopeModified_TelescopeFromTelescopeEntityMapper(global::StrawberryShake.IEntityStore entityStore)
+        {
+            _entityStore = entityStore ?? throw new global::System.ArgumentNullException(nameof(entityStore));
+        }
+
+        public TelescopeModified_TelescopeModified_Telescope Map(global::StarRepo.GraphQL.State.TelescopeEntity entity, global::StrawberryShake.IEntityStoreSnapshot? snapshot = null)
+        {
+            if (snapshot is null)
+            {
+                snapshot = _entityStore.CurrentSnapshot;
+            }
+
+            return new TelescopeModified_TelescopeModified_Telescope(entity.Id, entity.Manufacturer, entity.Model, entity.FocalLengthMM);
         }
     }
 
@@ -7894,11 +8291,11 @@ namespace StarRepo.GraphQL.State
             {
                 if (session.CurrentSnapshot.TryGetEntity(entityId, out global::StarRepo.GraphQL.State.TelescopeEntity? entity))
                 {
-                    session.SetEntity(entityId, new global::StarRepo.GraphQL.State.TelescopeEntity(DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "manufacturer")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "model")), DeserializeNonNullableInt32(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "focalLengthMM")), entity.Id, entity.ApertureMM));
+                    session.SetEntity(entityId, new global::StarRepo.GraphQL.State.TelescopeEntity(DeserializeNonNullableGuid(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "id")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "manufacturer")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "model")), DeserializeNonNullableInt32(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "focalLengthMM")), entity.ApertureMM));
                 }
                 else
                 {
-                    session.SetEntity(entityId, new global::StarRepo.GraphQL.State.TelescopeEntity(DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "manufacturer")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "model")), DeserializeNonNullableInt32(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "focalLengthMM")), default !, default !));
+                    session.SetEntity(entityId, new global::StarRepo.GraphQL.State.TelescopeEntity(DeserializeNonNullableGuid(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "id")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "manufacturer")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "model")), DeserializeNonNullableInt32(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "focalLengthMM")), default !));
                 }
 
                 return entityId;
@@ -8057,11 +8454,11 @@ namespace StarRepo.GraphQL.State
             {
                 if (session.CurrentSnapshot.TryGetEntity(entityId, out global::StarRepo.GraphQL.State.TelescopeEntity? entity))
                 {
-                    session.SetEntity(entityId, new global::StarRepo.GraphQL.State.TelescopeEntity(DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "manufacturer")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "model")), DeserializeNonNullableInt32(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "focalLengthMM")), DeserializeNonNullableGuid(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "id")), DeserializeNonNullableInt32(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "apertureMM"))));
+                    session.SetEntity(entityId, new global::StarRepo.GraphQL.State.TelescopeEntity(DeserializeNonNullableGuid(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "id")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "manufacturer")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "model")), DeserializeNonNullableInt32(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "focalLengthMM")), DeserializeNonNullableInt32(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "apertureMM"))));
                 }
                 else
                 {
-                    session.SetEntity(entityId, new global::StarRepo.GraphQL.State.TelescopeEntity(DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "manufacturer")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "model")), DeserializeNonNullableInt32(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "focalLengthMM")), DeserializeNonNullableGuid(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "id")), DeserializeNonNullableInt32(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "apertureMM"))));
+                    session.SetEntity(entityId, new global::StarRepo.GraphQL.State.TelescopeEntity(DeserializeNonNullableGuid(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "id")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "manufacturer")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "model")), DeserializeNonNullableInt32(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "focalLengthMM")), DeserializeNonNullableInt32(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "apertureMM"))));
                 }
 
                 return entityId;
@@ -8233,6 +8630,137 @@ namespace StarRepo.GraphQL.State
             }
 
             return _stringParser.Parse(obj.Value.GetString()!);
+        }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class TelescopeModifiedBuilder : global::StrawberryShake.IOperationResultBuilder<global::System.Text.Json.JsonDocument, global::StarRepo.GraphQL.ITelescopeModifiedResult>
+    {
+        private readonly global::StrawberryShake.IEntityStore _entityStore;
+        private readonly global::StrawberryShake.IEntityIdSerializer _idSerializer;
+        private readonly global::StrawberryShake.IOperationResultDataFactory<global::StarRepo.GraphQL.ITelescopeModifiedResult> _resultDataFactory;
+        private readonly global::StrawberryShake.Serialization.ILeafValueParser<global::System.String, global::System.Guid> _uUIDParser;
+        private readonly global::StrawberryShake.Serialization.ILeafValueParser<global::System.String, global::System.String> _stringParser;
+        private readonly global::StrawberryShake.Serialization.ILeafValueParser<global::System.Int32, global::System.Int32> _intParser;
+        public TelescopeModifiedBuilder(global::StrawberryShake.IEntityStore entityStore, global::StrawberryShake.IEntityIdSerializer idSerializer, global::StrawberryShake.IOperationResultDataFactory<global::StarRepo.GraphQL.ITelescopeModifiedResult> resultDataFactory, global::StrawberryShake.Serialization.ISerializerResolver serializerResolver)
+        {
+            _entityStore = entityStore ?? throw new global::System.ArgumentNullException(nameof(entityStore));
+            _idSerializer = idSerializer ?? throw new global::System.ArgumentNullException(nameof(idSerializer));
+            _resultDataFactory = resultDataFactory ?? throw new global::System.ArgumentNullException(nameof(resultDataFactory));
+            _uUIDParser = serializerResolver.GetLeafValueParser<global::System.String, global::System.Guid>("UUID") ?? throw new global::System.ArgumentException("No serializer for type `UUID` found.");
+            _stringParser = serializerResolver.GetLeafValueParser<global::System.String, global::System.String>("String") ?? throw new global::System.ArgumentException("No serializer for type `String` found.");
+            _intParser = serializerResolver.GetLeafValueParser<global::System.Int32, global::System.Int32>("Int") ?? throw new global::System.ArgumentException("No serializer for type `Int` found.");
+        }
+
+        public global::StrawberryShake.IOperationResult<ITelescopeModifiedResult> Build(global::StrawberryShake.Response<global::System.Text.Json.JsonDocument> response)
+        {
+            (ITelescopeModifiedResult Result, TelescopeModifiedResultInfo Info)? data = null;
+            global::System.Collections.Generic.IReadOnlyList<global::StrawberryShake.IClientError>? errors = null;
+            if (response.Exception is null)
+            {
+                try
+                {
+                    if (response.Body != null)
+                    {
+                        if (response.Body.RootElement.TryGetProperty("data", out global::System.Text.Json.JsonElement dataElement) && dataElement.ValueKind == global::System.Text.Json.JsonValueKind.Object)
+                        {
+                            data = BuildData(dataElement);
+                        }
+
+                        if (response.Body.RootElement.TryGetProperty("errors", out global::System.Text.Json.JsonElement errorsElement))
+                        {
+                            errors = global::StrawberryShake.Json.JsonErrorParser.ParseErrors(errorsElement);
+                        }
+                    }
+                }
+                catch (global::System.Exception ex)
+                {
+                    errors = new global::StrawberryShake.IClientError[]{new global::StrawberryShake.ClientError(ex.Message, exception: ex, extensions: new global::System.Collections.Generic.Dictionary<global::System.String, global::System.Object?>{{"body", response.Body?.RootElement.ToString()}})};
+                }
+            }
+            else
+            {
+                if (response.Body != null && response.Body.RootElement.TryGetProperty("errors", out global::System.Text.Json.JsonElement errorsElement))
+                {
+                    errors = global::StrawberryShake.Json.JsonErrorParser.ParseErrors(errorsElement);
+                }
+                else
+                {
+                    errors = new global::StrawberryShake.IClientError[]{new global::StrawberryShake.ClientError(response.Exception.Message, exception: response.Exception, extensions: new global::System.Collections.Generic.Dictionary<global::System.String, global::System.Object?>{{"body", response.Body?.RootElement.ToString()}})};
+                }
+            }
+
+            return new global::StrawberryShake.OperationResult<ITelescopeModifiedResult>(data?.Result, data?.Info, _resultDataFactory, errors);
+        }
+
+        private (ITelescopeModifiedResult, TelescopeModifiedResultInfo) BuildData(global::System.Text.Json.JsonElement obj)
+        {
+            var entityIds = new global::System.Collections.Generic.HashSet<global::StrawberryShake.EntityId>();
+            global::StrawberryShake.IEntityStoreSnapshot snapshot = default !;
+            global::StrawberryShake.EntityId? telescopeModifiedId = default !;
+            _entityStore.Update(session =>
+            {
+                telescopeModifiedId = UpdateITelescopeModified_TelescopeModifiedEntity(session, global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "telescopeModified"), entityIds);
+                snapshot = session.CurrentSnapshot;
+            });
+            var resultInfo = new TelescopeModifiedResultInfo(telescopeModifiedId, entityIds, snapshot.Version);
+            return (_resultDataFactory.Create(resultInfo), resultInfo);
+        }
+
+        private global::StrawberryShake.EntityId? UpdateITelescopeModified_TelescopeModifiedEntity(global::StrawberryShake.IEntityStoreUpdateSession session, global::System.Text.Json.JsonElement? obj, global::System.Collections.Generic.ISet<global::StrawberryShake.EntityId> entityIds)
+        {
+            if (!obj.HasValue)
+            {
+                return null;
+            }
+
+            global::StrawberryShake.EntityId entityId = _idSerializer.Parse(obj.Value);
+            entityIds.Add(entityId);
+            if (entityId.Name.Equals("Telescope", global::System.StringComparison.Ordinal))
+            {
+                if (session.CurrentSnapshot.TryGetEntity(entityId, out global::StarRepo.GraphQL.State.TelescopeEntity? entity))
+                {
+                    session.SetEntity(entityId, new global::StarRepo.GraphQL.State.TelescopeEntity(DeserializeNonNullableGuid(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "id")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "manufacturer")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "model")), DeserializeNonNullableInt32(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "focalLengthMM")), entity.ApertureMM));
+                }
+                else
+                {
+                    session.SetEntity(entityId, new global::StarRepo.GraphQL.State.TelescopeEntity(DeserializeNonNullableGuid(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "id")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "manufacturer")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "model")), DeserializeNonNullableInt32(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "focalLengthMM")), default !));
+                }
+
+                return entityId;
+            }
+
+            throw new global::System.NotSupportedException();
+        }
+
+        private global::System.Guid DeserializeNonNullableGuid(global::System.Text.Json.JsonElement? obj)
+        {
+            if (!obj.HasValue)
+            {
+                throw new global::System.ArgumentNullException();
+            }
+
+            return _uUIDParser.Parse(obj.Value.GetString()!);
+        }
+
+        private global::System.String? DeserializeString(global::System.Text.Json.JsonElement? obj)
+        {
+            if (!obj.HasValue)
+            {
+                return null;
+            }
+
+            return _stringParser.Parse(obj.Value.GetString()!);
+        }
+
+        private global::System.Int32 DeserializeNonNullableInt32(global::System.Text.Json.JsonElement? obj)
+        {
+            if (!obj.HasValue)
+            {
+                throw new global::System.ArgumentNullException();
+            }
+
+            return _intParser.Parse(obj.Value.GetInt32()!);
         }
     }
 

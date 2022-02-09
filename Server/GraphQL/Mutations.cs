@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using HotChocolate.Subscriptions;
+using Microsoft.EntityFrameworkCore;
 using StarRepo.Data;
 using StarRepo.Domain;
 
@@ -8,7 +9,8 @@ namespace StarRepo.Server.GraphQL
     {
         public async Task<TelescopeMutationResponse> ModifyTelescope(
             Telescope scope,
-            [Service]IDbContextFactory<StarContext> factory)
+            [Service]IDbContextFactory<StarContext> factory,
+            [Service] ITopicEventSender eventSender)
         {
             using var ctx = factory.CreateDbContext();
             var resp = new TelescopeMutationResponse();
@@ -27,6 +29,7 @@ namespace StarRepo.Server.GraphQL
                 await ctx.SaveChangesAsync();
                 resp.Id = scope.Id;
                 resp.Success = true;
+                await eventSender.SendAsync(SubscriptionsType.telescopeModified, scope);
             }
             catch (Exception ex)
             {

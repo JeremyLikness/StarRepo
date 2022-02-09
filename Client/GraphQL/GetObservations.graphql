@@ -5,6 +5,7 @@
     id,
     observationDate,
     telescope {
+      id,
       manufacturer,
       model,
       focalLengthMM

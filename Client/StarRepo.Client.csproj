@@ -11,6 +11,7 @@
     <GraphQL Remove="GraphQL\GetObservations.graphql" />
     <GraphQL Remove="GraphQL\GetTelescopes.graphql" />
     <GraphQL Remove="GraphQL\GetThumbnail.graphql" />
+    <GraphQL Remove="GraphQL\TelescopeModified.graphql" />
     <GraphQL Remove="GraphQL\UpsertTelescope.graphql" />
   </ItemGroup>
 
@@ -19,6 +20,7 @@
     <None Remove="GraphQL\GetObservations.graphql" />
     <None Remove="GraphQL\GetTelescopes.graphql" />
     <None Remove="GraphQL\GetThumbnail.graphql" />
+    <None Remove="GraphQL\TelescopeModified.graphql" />
     <None Remove="GraphQL\UpsertTelescope.graphql" />
   </ItemGroup>
 
@@ -27,6 +29,7 @@
     <AdditionalFiles Include="GraphQL\GetObservations.graphql" />
     <AdditionalFiles Include="GraphQL\GetTelescopes.graphql" />
     <AdditionalFiles Include="GraphQL\GetThumbnail.graphql" />
+    <AdditionalFiles Include="GraphQL\TelescopeModified.graphql" />
     <AdditionalFiles Include="GraphQL\UpsertTelescope.graphql" />
   </ItemGroup>
 
@@ -37,6 +40,7 @@
     <PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0" />
     <PackageReference Include="StrawberryShake.CodeGeneration.CSharp.Analyzers" Version="12.6.0" />
     <PackageReference Include="StrawberryShake.Transport.Http" Version="12.6.0" />
+    <PackageReference Include="StrawberryShake.Transport.WebSockets" Version="12.7.0-preview.14" />
   </ItemGroup>
 
   <ItemGroup>

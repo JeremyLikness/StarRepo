@@ -31,7 +31,9 @@ builder.Services.AddGraphQLServer()
     .AddSorting()
     .AddQueryType<Query>()
     .AddMutationType<Mutations>()
-    .AddTypeExtension<ObservationTypeExtensions>();
+    .AddTypeExtension<ObservationTypeExtensions>()
+    .AddSubscriptionType<SubscriptionsType>()
+    .AddInMemorySubscriptions();
     
 builder.Services.AddRazorPages();
 
@@ -70,6 +72,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseWebSockets();
 
 app.MapRazorPages();
 app.MapControllers();

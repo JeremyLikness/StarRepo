@@ -1,0 +1,8 @@
+﻿subscription telescopeModified {
+  telescopeModified {
+    id,
+    manufacturer,
+    model,
+    focalLengthMM
+  }
+}

@@ -107,6 +107,7 @@ namespace StarRepo.Client.GraphQL
                 ObservationDate = ob.ObservationDate,
                 Telescope = new Telescope
                 {
+                    Id = ob.Telescope!.Id,
                     Manufacturer = ob.Telescope!.Manufacturer,
                     Model = ob.Telescope!.Model,
                     FocalLengthMM = ob.Telescope!.FocalLengthMM
