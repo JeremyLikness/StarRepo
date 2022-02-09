@@ -1,0 +1,27 @@
+﻿@if (Observation != null)
+{
+<div class="card bg-light mb-3" style="max-width: 300px;">
+  <div class="card-header">@header</div>
+  <div class="card-body">
+    <h5 class="card-title">@Observation.Target?.Description</h5>
+    <div class="card-img">
+        <Thumbnail Id="@Observation.Id" Description="@Observation.Target?.Description"/>
+    </div>
+    <p class="card-text">
+        @title
+    </p>
+    <p><a class="card-link stretched-link" href="/View/@Observation.Id"><i class="oi oi-eye"></i> View Full Screen</a></p>
+  </div>
+</div>    
+}
+
+@code {
+    [Parameter]
+    public Observation? Observation { get; set; }
+
+    private string header => Observation == null ? string.Empty :
+    $"{Observation.Telescope?.Manufacturer} {Observation.Telescope?.Model}";
+
+    private string title => Observation == null ? string.Empty :
+    $"{Observation.Target?.Name} at {Observation.Telescope?.FocalLengthMM} mm on {Observation.ObservationDate.DateTime.ToShortDateString()}";
+}

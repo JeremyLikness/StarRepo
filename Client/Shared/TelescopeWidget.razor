@@ -1,0 +1,127 @@
+﻿@inject StarClient StarClient
+
+<div class="row border border-dark p-3">
+    <div class="col">
+        @if (!string.IsNullOrWhiteSpace(message))
+        {
+            <p class="alert @(success ? "alert-success" : "alert-danger")">
+                @if(success)
+                {
+                    <i class="oi oi-check"></i>
+                }
+                else
+                {
+                    <i class="oi oi-circle-x"></i>
+                }
+                <span>&nbsp;</span>@message
+            </p>
+        }
+        @if (isEditMode)
+        {
+            <button class="btn btn-sm btn-success" 
+                title="Save" @onclick="@(async () => await SaveAsync())">
+                <i class="oi oi-check">Save</i>
+            </button><span>&nbsp;</span>
+            <button class="btn btn-sm btn-danger" title="Cancel" @onclick="@CancelEdit">
+                <i class="oi oi-x">Cancel</i>
+            </button><span>&nbsp;</span>
+        }        
+        else
+        {
+            <button class="btn btn-sm btn-primary" title="Edit" @onclick="@SetEditMode">
+                <i class="oi oi-pencil">Edit</i>
+            </button>
+            <span>&nbsp;</span>            
+        }
+        
+        @if (Scope != null)
+        {
+        <label for="manufacturer" class="">
+            Manufacturer:
+            <input disabled="@(!isEditMode)" id="manufacturer" @bind-value="@Scope.Manufacturer"/>
+        </label>
+        <label for="model">
+            Model:
+            <input disabled="@(!isEditMode)" id="model" @bind-value="@Scope.Model"/>
+        </label>
+        <label for="focallen">
+            Focal Length (mm):
+            <input disabled="@(!isEditMode)" id="focallen" @bind-value="@Scope.FocalLengthMM"/>
+        </label>
+        <label for="aperture">
+            Aperture (mm):
+            <input disabled="@(!isEditMode)" id="aperture" @bind-value="@Scope.ApertureMM"/>
+        </label>
+        <label for="fstop">
+            F-Stop:
+            <input disabled="@(!isEditMode)" id="fstop" @bind-value="@Scope.FStop"/>
+        </label>
+        }
+    </div>
+</div>
+<div class="row"><div class="col">&nbsp;</div></div>
+@code {
+    private Telescope? original = null;
+
+    [Parameter]
+    public Telescope? Scope { get; set; }
+
+    bool isEditMode = false;
+    bool success = false;
+    string? message = null;
+
+    protected override void OnInitialized()
+    {
+        isEditMode = false;
+        original = null;
+        base.OnInitialized();
+    }
+
+    private void SetEditMode()
+    {
+        isEditMode = true;
+        original = new Telescope
+        {
+            Id = Scope.Id,
+            Manufacturer = Scope.Manufacturer,
+            Model = Scope.Model,
+            FocalLengthMM = Scope.FocalLengthMM,
+            ApertureMM = Scope.ApertureMM
+        };
+        message = null;
+        success = false;
+    }
+
+    private void CancelEdit()
+    {
+        isEditMode = false;
+        Scope = original;
+        original = null;
+    }
+
+    private async Task SaveAsync()
+    {
+        isEditMode = false;
+        message = null;
+
+        try
+        {
+            var result = await StarClient.UpsertTelescope.ExecuteAsync(new TelescopeInput
+            {
+                Id = Scope.Id,
+                Manufacturer = Scope.Manufacturer,
+                Model = Scope.Model,
+                FocalLengthMM = Scope.FocalLengthMM,
+                ApertureMM = Scope.ApertureMM,
+                FStop = Scope.FStop
+            });
+            success = result.Data.ModifyTelescope.Success.Value;
+            message = result.Data.ModifyTelescope.Message;
+        }    
+        catch (Exception ex)
+        {
+            success = false;
+            message = $"An unexpected error occurred: {ex.Message}";
+        }
+    }
+}

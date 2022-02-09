@@ -1,0 +1,51 @@
+﻿@inject StarClient StarClient
+
+@if (valid)
+{
+    if (loaded)
+    {
+        <img alt="@Description" src="@imageContent"/>
+    }
+    else
+    {
+        <div title="Loading"><i class="oi oi-cloud-download"></i></div>
+    }
+}
+else
+{
+    <div title="Invalid image"><i class="oi oi-x"></i></div>
+}
+
+@code {
+    [Parameter]
+    public Guid? Id { get; set; }
+
+    [Parameter]
+    public string? Description { get; set; }
+
+    private string? imageContent = null;
+
+    bool loaded = false;
+    bool valid = false;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        loaded = valid = false;
+        imageContent = null;
+        if (Id != null && Id.Value != default)
+        {
+            valid = true;
+            var result = await StarClient.GetThumbnail.ExecuteAsync(Id.Value);
+            if (result == null || result.Data == null || result.Errors.Any())
+            {
+                valid = false;
+            }
+            else
+            {
+                loaded = true;
+                imageContent = result.Data.Observations.First().Thumbnail;
+            }
+        }
+        await base.OnParametersSetAsync();
+    }
+}

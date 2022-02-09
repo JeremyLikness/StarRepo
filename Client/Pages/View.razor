@@ -1,8 +1,95 @@
 ﻿@page "/View/{ObservationId}"
+@using StarRepo.Client.GraphQL
+@inject StarClientService StarClientService
+@inject StarClient StarClient
 
-<h3>View</h3>
+<PageTitle>@title</PageTitle>
+<div class="container-fluid">    
+    @if (!valid)
+    {
+        <div class="row">
+            <div class="col-12">
+                <div class="alert alert-danger">
+                    <i class="oi oi-circle-x"></i> Invalid id or image not found.
+                </div>
+            </div>
+        </div>
+    }
+    @if (loading)
+    {
+        <div class="row">
+            <div class="col-12">
+                <div class="alert alert-info">
+                    <i class="oi oi-cloud-download"></i> Loading...
+                </div>
+            </div>
+        </div>
+    }
+    @if (valid && !loading && observation != null && !string.IsNullOrWhiteSpace(image))
+    {
+        <div class="card bg-dark text-white">
+            <img class="card-img" src="@image" alt="@title">
+  <div class="card-img-overlay">
+        <h5 class="card-title">@header</h5>
+        <p class="card-text">@title</p>    
+        <p class="card-text">@observation.Target!.Description</p>
+  </div>
+</div>
+    }
+</div>
 
 @code {
+    private bool valid = true;
+    private bool loading = false;
+    private Observation? observation;
+    private string? image = string.Empty;
+    private string dateStr => observation!.ObservationDate.ToString("yyyy-MM-d");
+    private bool show = true;
+
+    private string header => observation == null ? string.Empty :
+    $"{observation.Target?.Name} at {observation.Telescope?.FocalLengthMM} mm";    
+
+    private string title => observation == null ? "View Observation" :
+    $"by {observation.Telescope?.Manufacturer} {observation.Telescope?.Model} on {dateStr}";
+
     [Parameter]
     public string? ObservationId { get; set; }
+
+    protected async override Task OnParametersSetAsync()
+    {
+        valid = true;
+        loading = false;
+        observation = null;
+        image = string.Empty;
+
+        if (Guid.TryParse(ObservationId, out Guid id))
+        {
+            loading = true;
+            observation = await StarClientService.GetObservationAsync(id);
+            if (observation != null)
+            {
+                var imageResult = await StarClient.GetImage.ExecuteAsync(id);
+                if (imageResult == null || imageResult.Data == null || imageResult.Errors.Any())
+                {
+                    valid = false;
+                }
+                else
+                {
+                    image = imageResult.Data.Observations.First().Image;
+                }
+            }
+            else
+            {
+                valid = false;
+            }
+        }
+        else
+        {
+            valid = false;
+        }
+        loading = false;
+        await base.OnParametersSetAsync();
+    }
+
+    private void Toggle() => show = !show;
 }

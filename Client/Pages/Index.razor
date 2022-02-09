@@ -1,23 +1,149 @@
 ﻿@page "/"
 @inject GraphQL.StarClientService StarClientService
+@inject NavigationManager Navigation
 
 <PageTitle>Star Repo</PageTitle>
 
 <h1>Star Repo</h1>
 
-@if (scopes != null)
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <label for="sort">Sort by:
+                <select disabled="@loading" id="sort" @oninput="@(async args =>  await SortChangeAsync(args))">
+                    <option value="0" selected="selected">Date</option>
+                    <option value="1">Target Name</option>
+                    <option value="2">Telescope</option>
+                </select>
+            </label>
+            <button class="btn btn-primary btn-sm"
+                disabled="@loading"
+                @onclick="async () => await ToggleSortAsync()">
+                @if (sortAscending)
+                {
+                    <i class="oi oi-caret-top"></i>
+                }
+                else
+                {
+                    <i class="oi oi-caret-bottom"></i>
+                }
+            </button>
+            <label for="telescope">Filter telescope:
+                <select id="telescope" disabled="@loading" @oninput="@(async args =>  await FilterChangeAsync(args))">
+                    <option value="" selected="selected">None</option>
+                    @if (telescopes != null)
+                    {
+                        foreach(var telescope in telescopes)
+                        {
+                            <option value="@telescope.Id">@telescope.Manufacturer @telescope.Model</option>
+                        }
+                    }
+                </select>
+            </label>            
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+@if (!string.IsNullOrWhiteSpace(errorMsg))
 {
-    foreach (var scope in scopes)
-    {
-        <p>(@scope.Manufacturer) @scope.Model (@scope.FocalLengthMM mm / @scope.ApertureMM mm ) f-@scope.FStop</p>
-    }
+                <div class="alert alert-danger"><i class="oi oi-circle-x"></i> @errorMsg</div>
 }
-@code {
-    private Telescope[]? scopes = null;
+else 
+{
+    if (loading)
+    {
+               <div class="alert alert-info"><i class="oi oi-cloud-download"></i> Loading...</div>
+    }
+    else
+    {
+        if (observations != null && observations.Length > 0)
+        {
+              <div class="alert alert-info"><i class="oi oi-circle-check"></i> Found @observations.Length observation(s).</div>
+        }
+        else
+        {
+              <div class="alert alert-warning"><i class="oi oi-warning"></i> No observations were found.</div>
+        }
+    }
+ }           
+        </div>
+    </div>      
+    @if (observations != null && observations.Length > 0)
+    {
+        <div class="row">
+            <div class="col-12">
+                @foreach (var observation in observations)
+                {
+                    <ObservationCard @key="@observation.Id" Observation="@observation"/>
+                }
+            </div>
+        </div>
+    }
+</div>
 
+@code {
+    private Observation[]? observations = null;
+    private Telescope[]? telescopes = null;
+    private Guid? telescopeId = null;
+    private string? errorMsg = null;
+    private bool loading = false;
+    private int sort = 0;
+    private bool sortAscending = true;
+    
     protected override async Task OnInitializedAsync()
     {
-        scopes = null;
-        scopes = await StarClientService.GetTelescopesAsync();
+        await RefreshAsync();
+        await base.OnInitializedAsync();
     }
+
+    private async Task RefreshAsync()
+    {
+        observations = null;
+        errorMsg = null;
+        loading = false;        
+        try
+        {
+            loading = true;
+            observations = await StarClientService.GetObservationsAsync(sort, sortAscending, telescopeId);
+            telescopes = await StarClientService.GetTelescopesAsync();
+        }
+        catch(Exception ex)
+        {
+            errorMsg = $"An unexpected error occurred: {ex.Message}";
+        }
+        finally
+        {
+            loading = false;
+        }
+    }
+
+    private async Task SortChangeAsync(EventArgs e)
+    {
+        var args = (ChangeEventArgs)e;
+        if (int.TryParse(args.Value?.ToString(), out int idx))
+        {
+            sort = idx;
+            await RefreshAsync();
+        }
+    }
+
+    private async Task ToggleSortAsync()
+    {
+        sortAscending = !sortAscending;
+        await RefreshAsync();
+    }
+
+    private async Task FilterChangeAsync(EventArgs e)
+    {
+        var args = (ChangeEventArgs)e;
+        if (Guid.TryParse(args.Value?.ToString(), out Guid id))
+        {
+            telescopeId = id;            
+        }
+        else
+        {
+            telescopeId = null;
+        }
+        await RefreshAsync();
+    }    
 }

@@ -1,0 +1,17 @@
+﻿query getObservations(
+  $order: [ObservationSortInput!],
+  $where: ObservationFilterInput) {
+  observations(order: $order, where: $where) {
+    id,
+    observationDate,
+    telescope {
+      manufacturer,
+      model,
+      focalLengthMM
+    },
+    target {
+      name,
+      description
+    }
+  }
+}

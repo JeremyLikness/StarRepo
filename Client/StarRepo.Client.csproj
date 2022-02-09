@@ -7,15 +7,27 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <GraphQL Remove="GraphQL\GetImage.graphql" />
+    <GraphQL Remove="GraphQL\GetObservations.graphql" />
     <GraphQL Remove="GraphQL\GetTelescopes.graphql" />
+    <GraphQL Remove="GraphQL\GetThumbnail.graphql" />
+    <GraphQL Remove="GraphQL\UpsertTelescope.graphql" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="GraphQL\GetImage.graphql" />
+    <None Remove="GraphQL\GetObservations.graphql" />
     <None Remove="GraphQL\GetTelescopes.graphql" />
+    <None Remove="GraphQL\GetThumbnail.graphql" />
+    <None Remove="GraphQL\UpsertTelescope.graphql" />
   </ItemGroup>
 
   <ItemGroup>
+    <AdditionalFiles Include="GraphQL\GetImage.graphql" />
+    <AdditionalFiles Include="GraphQL\GetObservations.graphql" />
     <AdditionalFiles Include="GraphQL\GetTelescopes.graphql" />
+    <AdditionalFiles Include="GraphQL\GetThumbnail.graphql" />
+    <AdditionalFiles Include="GraphQL\UpsertTelescope.graphql" />
   </ItemGroup>
 
   <ItemGroup>

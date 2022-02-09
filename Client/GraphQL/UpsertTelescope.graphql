@@ -1,0 +1,7 @@
+﻿mutation upsertTelescope($telescope: TelescopeInput!) {
+  modifyTelescope(scope: $telescope) {
+    id,
+    success,
+    message
+  }
+}

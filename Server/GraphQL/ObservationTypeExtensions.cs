@@ -36,7 +36,7 @@ namespace StarRepo.Server.GraphQL
             }
 
             var bytes = await handler.GetFileForObservationAsync(obs, isThumb);
-            return $"data:image/{obs.Extension};base64,{Convert.ToBase64String(bytes)}";
+            return $"data:image/jpeg;base64,{Convert.ToBase64String(bytes)}";
         }
     }
 }

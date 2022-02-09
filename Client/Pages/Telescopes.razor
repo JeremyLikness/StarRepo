@@ -1,7 +1,76 @@
 ﻿@page "/Telescopes"
+@using StarRepo.Client.GraphQL
+@inject StarClientService StarClientService
 
-<h3>Telescopes</h3>
+<PageTitle>Manage Lenses</PageTitle>
 
+<h1><i class="oi oi-camera-slr"></i> Manage Lenses</h1>
+
+<div class="container-fluid">
+    @if(!string.IsNullOrWhiteSpace(errorMsg))
+    {
+        <div class="row">
+            <div class="col alert alert-danger">
+                <i class="oi oi-circle-x"></i>
+                @errorMsg
+            </div>
+        </div>
+    }
+    else if(loading)
+    {
+        <div class="row">
+            <div class="col alert alert-info">
+                <i class="oi oi-cloud-download"></i>
+                Loading...
+            </div>
+        </div>
+    }
+    else
+    {
+        if (telescopes.Length < 1)
+        {
+            <div class="row">
+            <div class="col alert alert-warning">
+                <i class="oi oi-warning"></i>
+                No telescopes exist.
+            </div>
+            </div>
+        }        
+        else
+        {
+            foreach (var scope in telescopes)
+            {
+                <TelescopeWidget Scope="@scope"/>
+            }
+        }
+    }
+</div>
 @code {
+    private bool loading = false;
+    private string? errorMsg = null;
+    private Telescope[] telescopes = Array.Empty<Telescope>();
+    
+    protected async override Task OnInitializedAsync()
+    {
+        await RefreshAsync();
+        await base.OnInitializedAsync();
+    }   
 
+    private async Task RefreshAsync()
+    {
+        loading = true;
+        errorMsg = null;
+        try
+        {
+            telescopes = await StarClientService.GetTelescopesAsync();            
+        }
+        catch (Exception ex)
+        {
+            errorMsg = $"An unexpected error occured: {ex.Message}.";
+        }
+        finally
+        {
+            loading = false;
+        }
+    }
 }

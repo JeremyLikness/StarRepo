@@ -15,7 +15,11 @@ namespace Microsoft.Extensions.DependencyInjection
                 return new ClientServiceProvider(global::Microsoft.Extensions.DependencyInjection.ServiceCollectionContainerBuilderExtensions.BuildServiceProvider(serviceCollection));
             });
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton(services, sp => new global::StarRepo.GraphQL.State.StarClientStoreAccessor(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StrawberryShake.IOperationStore>(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<ClientServiceProvider>(sp)), global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StrawberryShake.IEntityStore>(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<ClientServiceProvider>(sp)), global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StrawberryShake.IEntityIdSerializer>(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<ClientServiceProvider>(sp)), global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::System.Collections.Generic.IEnumerable<global::StrawberryShake.IOperationRequestFactory>>(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<ClientServiceProvider>(sp)), global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::System.Collections.Generic.IEnumerable<global::StrawberryShake.IOperationResultDataFactory>>(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<ClientServiceProvider>(sp))));
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StarRepo.GraphQL.GetImageQuery>(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<ClientServiceProvider>(sp)));
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StarRepo.GraphQL.GetObservationsQuery>(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<ClientServiceProvider>(sp)));
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StarRepo.GraphQL.GetTelescopesQuery>(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<ClientServiceProvider>(sp)));
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StarRepo.GraphQL.GetThumbnailQuery>(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<ClientServiceProvider>(sp)));
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StarRepo.GraphQL.UpsertTelescopeMutation>(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<ClientServiceProvider>(sp)));
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StarRepo.GraphQL.StarClient>(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<ClientServiceProvider>(sp)));
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StarRepo.GraphQL.IStarClient>(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<ClientServiceProvider>(sp)));
             return new global::StrawberryShake.ClientBuilder<global::StarRepo.GraphQL.State.StarClientStoreAccessor>("StarClient", services, serviceCollection);
@@ -30,7 +34,14 @@ namespace Microsoft.Extensions.DependencyInjection
                 var clientFactory = global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::System.Net.Http.IHttpClientFactory>(parentServices);
                 return new global::StrawberryShake.Transport.Http.HttpConnection(() => clientFactory.CreateClient("StarClient"));
             });
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IEntityMapper<global::StarRepo.GraphQL.State.ObservationEntity, global::StarRepo.GraphQL.GetImage_Observations_Observation>, global::StarRepo.GraphQL.State.GetImage_Observations_ObservationFromObservationEntityMapper>(services);
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IEntityMapper<global::StarRepo.GraphQL.State.ObservationEntity, global::StarRepo.GraphQL.GetObservations_Observations_Observation>, global::StarRepo.GraphQL.State.GetObservations_Observations_ObservationFromObservationEntityMapper>(services);
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IEntityMapper<global::StarRepo.GraphQL.State.TelescopeEntity, global::StarRepo.GraphQL.GetObservations_Observations_Telescope_Telescope>, global::StarRepo.GraphQL.State.GetObservations_Observations_Telescope_TelescopeFromTelescopeEntityMapper>(services);
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IEntityMapper<global::StarRepo.GraphQL.State.TargetEntity, global::StarRepo.GraphQL.GetObservations_Observations_Target_Target>, global::StarRepo.GraphQL.State.GetObservations_Observations_Target_TargetFromTargetEntityMapper>(services);
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IEntityMapper<global::StarRepo.GraphQL.State.TelescopeEntity, global::StarRepo.GraphQL.GetTelescopes_Telescopes_Telescope>, global::StarRepo.GraphQL.State.GetTelescopes_Telescopes_TelescopeFromTelescopeEntityMapper>(services);
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IEntityMapper<global::StarRepo.GraphQL.State.ObservationEntity, global::StarRepo.GraphQL.GetThumbnail_Observations_Observation>, global::StarRepo.GraphQL.State.GetThumbnail_Observations_ObservationFromObservationEntityMapper>(services);
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IEntityMapper<global::StarRepo.GraphQL.State.TelescopeMutationResponseEntity, global::StarRepo.GraphQL.UpsertTelescope_ModifyTelescope_TelescopeMutationResponse>, global::StarRepo.GraphQL.State.UpsertTelescope_ModifyTelescope_TelescopeMutationResponseFromTelescopeMutationResponseEntityMapper>(services);
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.Serialization.ISerializer, global::StarRepo.GraphQL.SortEnumTypeSerializer>(services);
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.Serialization.ISerializer, global::StrawberryShake.Serialization.StringSerializer>(services);
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.Serialization.ISerializer, global::StrawberryShake.Serialization.BooleanSerializer>(services);
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.Serialization.ISerializer, global::StrawberryShake.Serialization.ByteSerializer>(services);
@@ -47,7 +58,33 @@ namespace Microsoft.Extensions.DependencyInjection
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.Serialization.ISerializer, global::StrawberryShake.Serialization.ByteArraySerializer>(services);
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.Serialization.ISerializer, global::StrawberryShake.Serialization.TimeSpanSerializer>(services);
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.Serialization.ISerializer, global::StrawberryShake.Serialization.JsonSerializer>(services);
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.Serialization.ISerializer, global::StarRepo.GraphQL.ObservationSortInputInputValueFormatter>(services);
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.Serialization.ISerializer, global::StarRepo.GraphQL.TelescopeSortInputInputValueFormatter>(services);
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.Serialization.ISerializer, global::StarRepo.GraphQL.TargetSortInputInputValueFormatter>(services);
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.Serialization.ISerializer, global::StarRepo.GraphQL.ObservationFilterInputInputValueFormatter>(services);
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.Serialization.ISerializer, global::StarRepo.GraphQL.ComparableGuidOperationFilterInputInputValueFormatter>(services);
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.Serialization.ISerializer, global::StarRepo.GraphQL.ComparableDateTimeOffsetOperationFilterInputInputValueFormatter>(services);
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.Serialization.ISerializer, global::StarRepo.GraphQL.StringOperationFilterInputInputValueFormatter>(services);
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.Serialization.ISerializer, global::StarRepo.GraphQL.TelescopeFilterInputInputValueFormatter>(services);
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.Serialization.ISerializer, global::StarRepo.GraphQL.ComparableInt32OperationFilterInputInputValueFormatter>(services);
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.Serialization.ISerializer, global::StarRepo.GraphQL.ComparableDoubleOperationFilterInputInputValueFormatter>(services);
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.Serialization.ISerializer, global::StarRepo.GraphQL.TargetFilterInputInputValueFormatter>(services);
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.Serialization.ISerializer, global::StarRepo.GraphQL.TelescopeInputInputValueFormatter>(services);
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.Serialization.ISerializerResolver>(services, sp => new global::StrawberryShake.Serialization.SerializerResolver(global::System.Linq.Enumerable.Concat(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::System.Collections.Generic.IEnumerable<global::StrawberryShake.Serialization.ISerializer>>(parentServices), global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::System.Collections.Generic.IEnumerable<global::StrawberryShake.Serialization.ISerializer>>(sp))));
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IOperationResultDataFactory<global::StarRepo.GraphQL.IGetImageResult>, global::StarRepo.GraphQL.State.GetImageResultFactory>(services);
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IOperationResultDataFactory>(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StrawberryShake.IOperationResultDataFactory<global::StarRepo.GraphQL.IGetImageResult>>(sp));
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IOperationRequestFactory>(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StarRepo.GraphQL.IGetImageQuery>(sp));
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IOperationResultBuilder<global::System.Text.Json.JsonDocument, global::StarRepo.GraphQL.IGetImageResult>, global::StarRepo.GraphQL.State.GetImageBuilder>(services);
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IOperationExecutor<global::StarRepo.GraphQL.IGetImageResult>>(services, sp => new global::StrawberryShake.OperationExecutor<global::System.Text.Json.JsonDocument, global::StarRepo.GraphQL.IGetImageResult>(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StrawberryShake.Transport.Http.IHttpConnection>(sp), () => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StrawberryShake.IOperationResultBuilder<global::System.Text.Json.JsonDocument, global::StarRepo.GraphQL.IGetImageResult>>(sp), global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StrawberryShake.IOperationStore>(sp), strategy));
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StarRepo.GraphQL.GetImageQuery>(services);
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StarRepo.GraphQL.IGetImageQuery>(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StarRepo.GraphQL.GetImageQuery>(sp));
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IOperationResultDataFactory<global::StarRepo.GraphQL.IGetObservationsResult>, global::StarRepo.GraphQL.State.GetObservationsResultFactory>(services);
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IOperationResultDataFactory>(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StrawberryShake.IOperationResultDataFactory<global::StarRepo.GraphQL.IGetObservationsResult>>(sp));
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IOperationRequestFactory>(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StarRepo.GraphQL.IGetObservationsQuery>(sp));
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IOperationResultBuilder<global::System.Text.Json.JsonDocument, global::StarRepo.GraphQL.IGetObservationsResult>, global::StarRepo.GraphQL.State.GetObservationsBuilder>(services);
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IOperationExecutor<global::StarRepo.GraphQL.IGetObservationsResult>>(services, sp => new global::StrawberryShake.OperationExecutor<global::System.Text.Json.JsonDocument, global::StarRepo.GraphQL.IGetObservationsResult>(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StrawberryShake.Transport.Http.IHttpConnection>(sp), () => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StrawberryShake.IOperationResultBuilder<global::System.Text.Json.JsonDocument, global::StarRepo.GraphQL.IGetObservationsResult>>(sp), global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StrawberryShake.IOperationStore>(sp), strategy));
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StarRepo.GraphQL.GetObservationsQuery>(services);
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StarRepo.GraphQL.IGetObservationsQuery>(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StarRepo.GraphQL.GetObservationsQuery>(sp));
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IOperationResultDataFactory<global::StarRepo.GraphQL.IGetTelescopesResult>, global::StarRepo.GraphQL.State.GetTelescopesResultFactory>(services);
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IOperationResultDataFactory>(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StrawberryShake.IOperationResultDataFactory<global::StarRepo.GraphQL.IGetTelescopesResult>>(sp));
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IOperationRequestFactory>(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StarRepo.GraphQL.IGetTelescopesQuery>(sp));
@@ -55,6 +92,20 @@ namespace Microsoft.Extensions.DependencyInjection
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IOperationExecutor<global::StarRepo.GraphQL.IGetTelescopesResult>>(services, sp => new global::StrawberryShake.OperationExecutor<global::System.Text.Json.JsonDocument, global::StarRepo.GraphQL.IGetTelescopesResult>(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StrawberryShake.Transport.Http.IHttpConnection>(sp), () => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StrawberryShake.IOperationResultBuilder<global::System.Text.Json.JsonDocument, global::StarRepo.GraphQL.IGetTelescopesResult>>(sp), global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StrawberryShake.IOperationStore>(sp), strategy));
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StarRepo.GraphQL.GetTelescopesQuery>(services);
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StarRepo.GraphQL.IGetTelescopesQuery>(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StarRepo.GraphQL.GetTelescopesQuery>(sp));
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IOperationResultDataFactory<global::StarRepo.GraphQL.IGetThumbnailResult>, global::StarRepo.GraphQL.State.GetThumbnailResultFactory>(services);
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IOperationResultDataFactory>(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StrawberryShake.IOperationResultDataFactory<global::StarRepo.GraphQL.IGetThumbnailResult>>(sp));
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IOperationRequestFactory>(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StarRepo.GraphQL.IGetThumbnailQuery>(sp));
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IOperationResultBuilder<global::System.Text.Json.JsonDocument, global::StarRepo.GraphQL.IGetThumbnailResult>, global::StarRepo.GraphQL.State.GetThumbnailBuilder>(services);
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IOperationExecutor<global::StarRepo.GraphQL.IGetThumbnailResult>>(services, sp => new global::StrawberryShake.OperationExecutor<global::System.Text.Json.JsonDocument, global::StarRepo.GraphQL.IGetThumbnailResult>(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StrawberryShake.Transport.Http.IHttpConnection>(sp), () => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StrawberryShake.IOperationResultBuilder<global::System.Text.Json.JsonDocument, global::StarRepo.GraphQL.IGetThumbnailResult>>(sp), global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StrawberryShake.IOperationStore>(sp), strategy));
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StarRepo.GraphQL.GetThumbnailQuery>(services);
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StarRepo.GraphQL.IGetThumbnailQuery>(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StarRepo.GraphQL.GetThumbnailQuery>(sp));
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IOperationResultDataFactory<global::StarRepo.GraphQL.IUpsertTelescopeResult>, global::StarRepo.GraphQL.State.UpsertTelescopeResultFactory>(services);
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IOperationResultDataFactory>(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StrawberryShake.IOperationResultDataFactory<global::StarRepo.GraphQL.IUpsertTelescopeResult>>(sp));
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IOperationRequestFactory>(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StarRepo.GraphQL.IUpsertTelescopeMutation>(sp));
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IOperationResultBuilder<global::System.Text.Json.JsonDocument, global::StarRepo.GraphQL.IUpsertTelescopeResult>, global::StarRepo.GraphQL.State.UpsertTelescopeBuilder>(services);
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IOperationExecutor<global::StarRepo.GraphQL.IUpsertTelescopeResult>>(services, sp => new global::StrawberryShake.OperationExecutor<global::System.Text.Json.JsonDocument, global::StarRepo.GraphQL.IUpsertTelescopeResult>(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StrawberryShake.Transport.Http.IHttpConnection>(sp), () => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StrawberryShake.IOperationResultBuilder<global::System.Text.Json.JsonDocument, global::StarRepo.GraphQL.IUpsertTelescopeResult>>(sp), global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StrawberryShake.IOperationStore>(sp), strategy));
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StarRepo.GraphQL.UpsertTelescopeMutation>(services);
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StarRepo.GraphQL.IUpsertTelescopeMutation>(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StarRepo.GraphQL.UpsertTelescopeMutation>(sp));
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IEntityIdSerializer, global::StarRepo.GraphQL.State.StarClientEntityIdFactory>(services);
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StarRepo.GraphQL.StarClient>(services);
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StarRepo.GraphQL.IStarClient>(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StarRepo.GraphQL.StarClient>(sp));
@@ -87,6 +138,516 @@ namespace Microsoft.Extensions.DependencyInjection
 
 namespace StarRepo.GraphQL
 {
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class GetImageResult : global::System.IEquatable<GetImageResult>, IGetImageResult
+    {
+        public GetImageResult(global::System.Collections.Generic.IReadOnlyList<global::StarRepo.GraphQL.IGetImage_Observations> observations)
+        {
+            Observations = observations;
+        }
+
+        public global::System.Collections.Generic.IReadOnlyList<global::StarRepo.GraphQL.IGetImage_Observations> Observations { get; }
+
+        public virtual global::System.Boolean Equals(GetImageResult? other)
+        {
+            if (ReferenceEquals(null, other))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, other))
+            {
+                return true;
+            }
+
+            if (other.GetType() != GetType())
+            {
+                return false;
+            }
+
+            return (global::StrawberryShake.Helper.ComparisonHelper.SequenceEqual(Observations, other.Observations));
+        }
+
+        public override global::System.Boolean Equals(global::System.Object? obj)
+        {
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            if (obj.GetType() != GetType())
+            {
+                return false;
+            }
+
+            return Equals((GetImageResult)obj);
+        }
+
+        public override global::System.Int32 GetHashCode()
+        {
+            unchecked
+            {
+                int hash = 5;
+                foreach (var Observations_elm in Observations)
+                {
+                    hash ^= 397 * Observations_elm.GetHashCode();
+                }
+
+                return hash;
+            }
+        }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class GetImage_Observations_Observation : global::System.IEquatable<GetImage_Observations_Observation>, IGetImage_Observations_Observation
+    {
+        public GetImage_Observations_Observation(global::System.Guid fileId, global::System.String? extension, global::System.String? image)
+        {
+            FileId = fileId;
+            Extension = extension;
+            Image = image;
+        }
+
+        public global::System.Guid FileId { get; }
+
+        public global::System.String? Extension { get; }
+
+        public global::System.String? Image { get; }
+
+        public virtual global::System.Boolean Equals(GetImage_Observations_Observation? other)
+        {
+            if (ReferenceEquals(null, other))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, other))
+            {
+                return true;
+            }
+
+            if (other.GetType() != GetType())
+            {
+                return false;
+            }
+
+            return (FileId.Equals(other.FileId)) && ((Extension is null && other.Extension is null) || Extension != null && Extension.Equals(other.Extension)) && ((Image is null && other.Image is null) || Image != null && Image.Equals(other.Image));
+        }
+
+        public override global::System.Boolean Equals(global::System.Object? obj)
+        {
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            if (obj.GetType() != GetType())
+            {
+                return false;
+            }
+
+            return Equals((GetImage_Observations_Observation)obj);
+        }
+
+        public override global::System.Int32 GetHashCode()
+        {
+            unchecked
+            {
+                int hash = 5;
+                hash ^= 397 * FileId.GetHashCode();
+                if (Extension != null)
+                {
+                    hash ^= 397 * Extension.GetHashCode();
+                }
+
+                if (Image != null)
+                {
+                    hash ^= 397 * Image.GetHashCode();
+                }
+
+                return hash;
+            }
+        }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial interface IGetImageResult
+    {
+        public global::System.Collections.Generic.IReadOnlyList<global::StarRepo.GraphQL.IGetImage_Observations> Observations { get; }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial interface IGetImage_Observations
+    {
+        public global::System.Guid FileId { get; }
+
+        public global::System.String? Extension { get; }
+
+        public global::System.String? Image { get; }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial interface IGetImage_Observations_Observation : IGetImage_Observations
+    {
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class GetObservationsResult : global::System.IEquatable<GetObservationsResult>, IGetObservationsResult
+    {
+        public GetObservationsResult(global::System.Collections.Generic.IReadOnlyList<global::StarRepo.GraphQL.IGetObservations_Observations> observations)
+        {
+            Observations = observations;
+        }
+
+        public global::System.Collections.Generic.IReadOnlyList<global::StarRepo.GraphQL.IGetObservations_Observations> Observations { get; }
+
+        public virtual global::System.Boolean Equals(GetObservationsResult? other)
+        {
+            if (ReferenceEquals(null, other))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, other))
+            {
+                return true;
+            }
+
+            if (other.GetType() != GetType())
+            {
+                return false;
+            }
+
+            return (global::StrawberryShake.Helper.ComparisonHelper.SequenceEqual(Observations, other.Observations));
+        }
+
+        public override global::System.Boolean Equals(global::System.Object? obj)
+        {
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            if (obj.GetType() != GetType())
+            {
+                return false;
+            }
+
+            return Equals((GetObservationsResult)obj);
+        }
+
+        public override global::System.Int32 GetHashCode()
+        {
+            unchecked
+            {
+                int hash = 5;
+                foreach (var Observations_elm in Observations)
+                {
+                    hash ^= 397 * Observations_elm.GetHashCode();
+                }
+
+                return hash;
+            }
+        }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class GetObservations_Observations_Observation : global::System.IEquatable<GetObservations_Observations_Observation>, IGetObservations_Observations_Observation
+    {
+        public GetObservations_Observations_Observation(global::System.Guid id, global::System.DateTimeOffset observationDate, global::StarRepo.GraphQL.IGetObservations_Observations_Telescope? telescope, global::StarRepo.GraphQL.IGetObservations_Observations_Target? target)
+        {
+            Id = id;
+            ObservationDate = observationDate;
+            Telescope = telescope;
+            Target = target;
+        }
+
+        public global::System.Guid Id { get; }
+
+        public global::System.DateTimeOffset ObservationDate { get; }
+
+        public global::StarRepo.GraphQL.IGetObservations_Observations_Telescope? Telescope { get; }
+
+        public global::StarRepo.GraphQL.IGetObservations_Observations_Target? Target { get; }
+
+        public virtual global::System.Boolean Equals(GetObservations_Observations_Observation? other)
+        {
+            if (ReferenceEquals(null, other))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, other))
+            {
+                return true;
+            }
+
+            if (other.GetType() != GetType())
+            {
+                return false;
+            }
+
+            return (Id.Equals(other.Id)) && ObservationDate.Equals(other.ObservationDate) && ((Telescope is null && other.Telescope is null) || Telescope != null && Telescope.Equals(other.Telescope)) && ((Target is null && other.Target is null) || Target != null && Target.Equals(other.Target));
+        }
+
+        public override global::System.Boolean Equals(global::System.Object? obj)
+        {
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            if (obj.GetType() != GetType())
+            {
+                return false;
+            }
+
+            return Equals((GetObservations_Observations_Observation)obj);
+        }
+
+        public override global::System.Int32 GetHashCode()
+        {
+            unchecked
+            {
+                int hash = 5;
+                hash ^= 397 * Id.GetHashCode();
+                hash ^= 397 * ObservationDate.GetHashCode();
+                if (Telescope != null)
+                {
+                    hash ^= 397 * Telescope.GetHashCode();
+                }
+
+                if (Target != null)
+                {
+                    hash ^= 397 * Target.GetHashCode();
+                }
+
+                return hash;
+            }
+        }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class GetObservations_Observations_Telescope_Telescope : global::System.IEquatable<GetObservations_Observations_Telescope_Telescope>, IGetObservations_Observations_Telescope_Telescope
+    {
+        public GetObservations_Observations_Telescope_Telescope(global::System.String? manufacturer, global::System.String? model, global::System.Int32 focalLengthMM)
+        {
+            Manufacturer = manufacturer;
+            Model = model;
+            FocalLengthMM = focalLengthMM;
+        }
+
+        public global::System.String? Manufacturer { get; }
+
+        public global::System.String? Model { get; }
+
+        public global::System.Int32 FocalLengthMM { get; }
+
+        public virtual global::System.Boolean Equals(GetObservations_Observations_Telescope_Telescope? other)
+        {
+            if (ReferenceEquals(null, other))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, other))
+            {
+                return true;
+            }
+
+            if (other.GetType() != GetType())
+            {
+                return false;
+            }
+
+            return (((Manufacturer is null && other.Manufacturer is null) || Manufacturer != null && Manufacturer.Equals(other.Manufacturer))) && ((Model is null && other.Model is null) || Model != null && Model.Equals(other.Model)) && FocalLengthMM == other.FocalLengthMM;
+        }
+
+        public override global::System.Boolean Equals(global::System.Object? obj)
+        {
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            if (obj.GetType() != GetType())
+            {
+                return false;
+            }
+
+            return Equals((GetObservations_Observations_Telescope_Telescope)obj);
+        }
+
+        public override global::System.Int32 GetHashCode()
+        {
+            unchecked
+            {
+                int hash = 5;
+                if (Manufacturer != null)
+                {
+                    hash ^= 397 * Manufacturer.GetHashCode();
+                }
+
+                if (Model != null)
+                {
+                    hash ^= 397 * Model.GetHashCode();
+                }
+
+                hash ^= 397 * FocalLengthMM.GetHashCode();
+                return hash;
+            }
+        }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class GetObservations_Observations_Target_Target : global::System.IEquatable<GetObservations_Observations_Target_Target>, IGetObservations_Observations_Target_Target
+    {
+        public GetObservations_Observations_Target_Target(global::System.String? name, global::System.String? description)
+        {
+            Name = name;
+            Description = description;
+        }
+
+        public global::System.String? Name { get; }
+
+        public global::System.String? Description { get; }
+
+        public virtual global::System.Boolean Equals(GetObservations_Observations_Target_Target? other)
+        {
+            if (ReferenceEquals(null, other))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, other))
+            {
+                return true;
+            }
+
+            if (other.GetType() != GetType())
+            {
+                return false;
+            }
+
+            return (((Name is null && other.Name is null) || Name != null && Name.Equals(other.Name))) && ((Description is null && other.Description is null) || Description != null && Description.Equals(other.Description));
+        }
+
+        public override global::System.Boolean Equals(global::System.Object? obj)
+        {
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            if (obj.GetType() != GetType())
+            {
+                return false;
+            }
+
+            return Equals((GetObservations_Observations_Target_Target)obj);
+        }
+
+        public override global::System.Int32 GetHashCode()
+        {
+            unchecked
+            {
+                int hash = 5;
+                if (Name != null)
+                {
+                    hash ^= 397 * Name.GetHashCode();
+                }
+
+                if (Description != null)
+                {
+                    hash ^= 397 * Description.GetHashCode();
+                }
+
+                return hash;
+            }
+        }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial interface IGetObservationsResult
+    {
+        public global::System.Collections.Generic.IReadOnlyList<global::StarRepo.GraphQL.IGetObservations_Observations> Observations { get; }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial interface IGetObservations_Observations
+    {
+        public global::System.Guid Id { get; }
+
+        public global::System.DateTimeOffset ObservationDate { get; }
+
+        public global::StarRepo.GraphQL.IGetObservations_Observations_Telescope? Telescope { get; }
+
+        public global::StarRepo.GraphQL.IGetObservations_Observations_Target? Target { get; }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial interface IGetObservations_Observations_Observation : IGetObservations_Observations
+    {
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial interface IGetObservations_Observations_Telescope
+    {
+        public global::System.String? Manufacturer { get; }
+
+        public global::System.String? Model { get; }
+
+        public global::System.Int32 FocalLengthMM { get; }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial interface IGetObservations_Observations_Telescope_Telescope : IGetObservations_Observations_Telescope
+    {
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial interface IGetObservations_Observations_Target
+    {
+        public global::System.String? Name { get; }
+
+        public global::System.String? Description { get; }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial interface IGetObservations_Observations_Target_Target : IGetObservations_Observations_Target
+    {
+    }
+
     [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
     public partial class GetTelescopesResult : global::System.IEquatable<GetTelescopesResult>, IGetTelescopesResult
     {
@@ -262,6 +823,5467 @@ namespace StarRepo.GraphQL
     {
     }
 
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class GetThumbnailResult : global::System.IEquatable<GetThumbnailResult>, IGetThumbnailResult
+    {
+        public GetThumbnailResult(global::System.Collections.Generic.IReadOnlyList<global::StarRepo.GraphQL.IGetThumbnail_Observations> observations)
+        {
+            Observations = observations;
+        }
+
+        public global::System.Collections.Generic.IReadOnlyList<global::StarRepo.GraphQL.IGetThumbnail_Observations> Observations { get; }
+
+        public virtual global::System.Boolean Equals(GetThumbnailResult? other)
+        {
+            if (ReferenceEquals(null, other))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, other))
+            {
+                return true;
+            }
+
+            if (other.GetType() != GetType())
+            {
+                return false;
+            }
+
+            return (global::StrawberryShake.Helper.ComparisonHelper.SequenceEqual(Observations, other.Observations));
+        }
+
+        public override global::System.Boolean Equals(global::System.Object? obj)
+        {
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            if (obj.GetType() != GetType())
+            {
+                return false;
+            }
+
+            return Equals((GetThumbnailResult)obj);
+        }
+
+        public override global::System.Int32 GetHashCode()
+        {
+            unchecked
+            {
+                int hash = 5;
+                foreach (var Observations_elm in Observations)
+                {
+                    hash ^= 397 * Observations_elm.GetHashCode();
+                }
+
+                return hash;
+            }
+        }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class GetThumbnail_Observations_Observation : global::System.IEquatable<GetThumbnail_Observations_Observation>, IGetThumbnail_Observations_Observation
+    {
+        public GetThumbnail_Observations_Observation(global::System.Guid fileId, global::System.String? extension, global::System.String? thumbnail)
+        {
+            FileId = fileId;
+            Extension = extension;
+            Thumbnail = thumbnail;
+        }
+
+        public global::System.Guid FileId { get; }
+
+        public global::System.String? Extension { get; }
+
+        public global::System.String? Thumbnail { get; }
+
+        public virtual global::System.Boolean Equals(GetThumbnail_Observations_Observation? other)
+        {
+            if (ReferenceEquals(null, other))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, other))
+            {
+                return true;
+            }
+
+            if (other.GetType() != GetType())
+            {
+                return false;
+            }
+
+            return (FileId.Equals(other.FileId)) && ((Extension is null && other.Extension is null) || Extension != null && Extension.Equals(other.Extension)) && ((Thumbnail is null && other.Thumbnail is null) || Thumbnail != null && Thumbnail.Equals(other.Thumbnail));
+        }
+
+        public override global::System.Boolean Equals(global::System.Object? obj)
+        {
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            if (obj.GetType() != GetType())
+            {
+                return false;
+            }
+
+            return Equals((GetThumbnail_Observations_Observation)obj);
+        }
+
+        public override global::System.Int32 GetHashCode()
+        {
+            unchecked
+            {
+                int hash = 5;
+                hash ^= 397 * FileId.GetHashCode();
+                if (Extension != null)
+                {
+                    hash ^= 397 * Extension.GetHashCode();
+                }
+
+                if (Thumbnail != null)
+                {
+                    hash ^= 397 * Thumbnail.GetHashCode();
+                }
+
+                return hash;
+            }
+        }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial interface IGetThumbnailResult
+    {
+        public global::System.Collections.Generic.IReadOnlyList<global::StarRepo.GraphQL.IGetThumbnail_Observations> Observations { get; }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial interface IGetThumbnail_Observations
+    {
+        public global::System.Guid FileId { get; }
+
+        public global::System.String? Extension { get; }
+
+        public global::System.String? Thumbnail { get; }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial interface IGetThumbnail_Observations_Observation : IGetThumbnail_Observations
+    {
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class UpsertTelescopeResult : global::System.IEquatable<UpsertTelescopeResult>, IUpsertTelescopeResult
+    {
+        public UpsertTelescopeResult(global::StarRepo.GraphQL.IUpsertTelescope_ModifyTelescope modifyTelescope)
+        {
+            ModifyTelescope = modifyTelescope;
+        }
+
+        public global::StarRepo.GraphQL.IUpsertTelescope_ModifyTelescope ModifyTelescope { get; }
+
+        public virtual global::System.Boolean Equals(UpsertTelescopeResult? other)
+        {
+            if (ReferenceEquals(null, other))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, other))
+            {
+                return true;
+            }
+
+            if (other.GetType() != GetType())
+            {
+                return false;
+            }
+
+            return (ModifyTelescope.Equals(other.ModifyTelescope));
+        }
+
+        public override global::System.Boolean Equals(global::System.Object? obj)
+        {
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            if (obj.GetType() != GetType())
+            {
+                return false;
+            }
+
+            return Equals((UpsertTelescopeResult)obj);
+        }
+
+        public override global::System.Int32 GetHashCode()
+        {
+            unchecked
+            {
+                int hash = 5;
+                hash ^= 397 * ModifyTelescope.GetHashCode();
+                return hash;
+            }
+        }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class UpsertTelescope_ModifyTelescope_TelescopeMutationResponse : global::System.IEquatable<UpsertTelescope_ModifyTelescope_TelescopeMutationResponse>, IUpsertTelescope_ModifyTelescope_TelescopeMutationResponse
+    {
+        public UpsertTelescope_ModifyTelescope_TelescopeMutationResponse(global::System.Guid? id, global::System.Boolean? success, global::System.String? message)
+        {
+            Id = id;
+            Success = success;
+            Message = message;
+        }
+
+        public global::System.Guid? Id { get; }
+
+        public global::System.Boolean? Success { get; }
+
+        public global::System.String? Message { get; }
+
+        public virtual global::System.Boolean Equals(UpsertTelescope_ModifyTelescope_TelescopeMutationResponse? other)
+        {
+            if (ReferenceEquals(null, other))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, other))
+            {
+                return true;
+            }
+
+            if (other.GetType() != GetType())
+            {
+                return false;
+            }
+
+            return (((Id is null && other.Id is null) || Id != null && Id.Equals(other.Id))) && Success == other.Success && ((Message is null && other.Message is null) || Message != null && Message.Equals(other.Message));
+        }
+
+        public override global::System.Boolean Equals(global::System.Object? obj)
+        {
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            if (obj.GetType() != GetType())
+            {
+                return false;
+            }
+
+            return Equals((UpsertTelescope_ModifyTelescope_TelescopeMutationResponse)obj);
+        }
+
+        public override global::System.Int32 GetHashCode()
+        {
+            unchecked
+            {
+                int hash = 5;
+                if (Id != null)
+                {
+                    hash ^= 397 * Id.GetHashCode();
+                }
+
+                if (Success != null)
+                {
+                    hash ^= 397 * Success.GetHashCode();
+                }
+
+                if (Message != null)
+                {
+                    hash ^= 397 * Message.GetHashCode();
+                }
+
+                return hash;
+            }
+        }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial interface IUpsertTelescopeResult
+    {
+        public global::StarRepo.GraphQL.IUpsertTelescope_ModifyTelescope ModifyTelescope { get; }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial interface IUpsertTelescope_ModifyTelescope
+    {
+        public global::System.Guid? Id { get; }
+
+        public global::System.Boolean? Success { get; }
+
+        public global::System.String? Message { get; }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial interface IUpsertTelescope_ModifyTelescope_TelescopeMutationResponse : IUpsertTelescope_ModifyTelescope
+    {
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class ObservationSortInputInputValueFormatter : global::StrawberryShake.Serialization.IInputObjectFormatter
+    {
+        private global::StrawberryShake.Serialization.IInputValueFormatter _sortEnumTypeFormatter = default !;
+        private global::StrawberryShake.Serialization.IInputValueFormatter _telescopeSortInputFormatter = default !;
+        private global::StrawberryShake.Serialization.IInputValueFormatter _targetSortInputFormatter = default !;
+        public global::System.String TypeName => "ObservationSortInput";
+        public void Initialize(global::StrawberryShake.Serialization.ISerializerResolver serializerResolver)
+        {
+            _sortEnumTypeFormatter = serializerResolver.GetInputValueFormatter("SortEnumType");
+            _telescopeSortInputFormatter = serializerResolver.GetInputValueFormatter("TelescopeSortInput");
+            _targetSortInputFormatter = serializerResolver.GetInputValueFormatter("TargetSortInput");
+        }
+
+        public global::System.Object? Format(global::System.Object? runtimeValue)
+        {
+            if (runtimeValue is null)
+            {
+                return null;
+            }
+
+            var input = runtimeValue as global::StarRepo.GraphQL.ObservationSortInput;
+            var inputInfo = runtimeValue as global::StarRepo.GraphQL.State.IObservationSortInputInfo;
+            if (input is null || inputInfo is null)
+            {
+                throw new global::System.ArgumentException(nameof(runtimeValue));
+            }
+
+            var fields = new global::System.Collections.Generic.List<global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>>();
+            if (inputInfo.IsIdSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("id", FormatId(input.Id)));
+            }
+
+            if (inputInfo.IsObservationDateSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("observationDate", FormatObservationDate(input.ObservationDate)));
+            }
+
+            if (inputInfo.IsExtensionSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("extension", FormatExtension(input.Extension)));
+            }
+
+            if (inputInfo.IsFileIdSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("fileId", FormatFileId(input.FileId)));
+            }
+
+            if (inputInfo.IsTelescopeSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("telescope", FormatTelescope(input.Telescope)));
+            }
+
+            if (inputInfo.IsTargetSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("target", FormatTarget(input.Target)));
+            }
+
+            return fields;
+        }
+
+        private global::System.Object? FormatId(global::StarRepo.GraphQL.SortEnumType? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _sortEnumTypeFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatObservationDate(global::StarRepo.GraphQL.SortEnumType? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _sortEnumTypeFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatExtension(global::StarRepo.GraphQL.SortEnumType? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _sortEnumTypeFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatFileId(global::StarRepo.GraphQL.SortEnumType? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _sortEnumTypeFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatTelescope(global::StarRepo.GraphQL.TelescopeSortInput? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _telescopeSortInputFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatTarget(global::StarRepo.GraphQL.TargetSortInput? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _targetSortInputFormatter.Format(input);
+            }
+        }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class ObservationSortInput : global::StarRepo.GraphQL.State.IObservationSortInputInfo, global::System.IEquatable<ObservationSortInput>
+    {
+        public override global::System.Boolean Equals(global::System.Object? obj)
+        {
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            if (obj.GetType() != GetType())
+            {
+                return false;
+            }
+
+            return Equals((ObservationSortInput)obj);
+        }
+
+        public virtual global::System.Boolean Equals(ObservationSortInput? other)
+        {
+            if (ReferenceEquals(null, other))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, other))
+            {
+                return true;
+            }
+
+            if (other.GetType() != GetType())
+            {
+                return false;
+            }
+
+            return (((Id is null && other.Id is null) || Id != null && Id.Equals(other.Id))) && ((ObservationDate is null && other.ObservationDate is null) || ObservationDate != null && ObservationDate.Equals(other.ObservationDate)) && ((Extension is null && other.Extension is null) || Extension != null && Extension.Equals(other.Extension)) && ((FileId is null && other.FileId is null) || FileId != null && FileId.Equals(other.FileId)) && ((Telescope is null && other.Telescope is null) || Telescope != null && Telescope.Equals(other.Telescope)) && ((Target is null && other.Target is null) || Target != null && Target.Equals(other.Target));
+        }
+
+        public override global::System.Int32 GetHashCode()
+        {
+            unchecked
+            {
+                int hash = 5;
+                if (Id != null)
+                {
+                    hash ^= 397 * Id.GetHashCode();
+                }
+
+                if (ObservationDate != null)
+                {
+                    hash ^= 397 * ObservationDate.GetHashCode();
+                }
+
+                if (Extension != null)
+                {
+                    hash ^= 397 * Extension.GetHashCode();
+                }
+
+                if (FileId != null)
+                {
+                    hash ^= 397 * FileId.GetHashCode();
+                }
+
+                if (Telescope != null)
+                {
+                    hash ^= 397 * Telescope.GetHashCode();
+                }
+
+                if (Target != null)
+                {
+                    hash ^= 397 * Target.GetHashCode();
+                }
+
+                return hash;
+            }
+        }
+
+        private global::StarRepo.GraphQL.SortEnumType? _value_id;
+        private global::System.Boolean _set_id;
+        private global::StarRepo.GraphQL.SortEnumType? _value_observationDate;
+        private global::System.Boolean _set_observationDate;
+        private global::StarRepo.GraphQL.SortEnumType? _value_extension;
+        private global::System.Boolean _set_extension;
+        private global::StarRepo.GraphQL.SortEnumType? _value_fileId;
+        private global::System.Boolean _set_fileId;
+        private global::StarRepo.GraphQL.TelescopeSortInput? _value_telescope;
+        private global::System.Boolean _set_telescope;
+        private global::StarRepo.GraphQL.TargetSortInput? _value_target;
+        private global::System.Boolean _set_target;
+        public global::StarRepo.GraphQL.SortEnumType? Id
+        {
+            get => _value_id;
+            set
+            {
+                _set_id = true;
+                _value_id = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IObservationSortInputInfo.IsIdSet => _set_id;
+        public global::StarRepo.GraphQL.SortEnumType? ObservationDate
+        {
+            get => _value_observationDate;
+            set
+            {
+                _set_observationDate = true;
+                _value_observationDate = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IObservationSortInputInfo.IsObservationDateSet => _set_observationDate;
+        public global::StarRepo.GraphQL.SortEnumType? Extension
+        {
+            get => _value_extension;
+            set
+            {
+                _set_extension = true;
+                _value_extension = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IObservationSortInputInfo.IsExtensionSet => _set_extension;
+        public global::StarRepo.GraphQL.SortEnumType? FileId
+        {
+            get => _value_fileId;
+            set
+            {
+                _set_fileId = true;
+                _value_fileId = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IObservationSortInputInfo.IsFileIdSet => _set_fileId;
+        public global::StarRepo.GraphQL.TelescopeSortInput? Telescope
+        {
+            get => _value_telescope;
+            set
+            {
+                _set_telescope = true;
+                _value_telescope = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IObservationSortInputInfo.IsTelescopeSet => _set_telescope;
+        public global::StarRepo.GraphQL.TargetSortInput? Target
+        {
+            get => _value_target;
+            set
+            {
+                _set_target = true;
+                _value_target = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IObservationSortInputInfo.IsTargetSet => _set_target;
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class TelescopeSortInputInputValueFormatter : global::StrawberryShake.Serialization.IInputObjectFormatter
+    {
+        private global::StrawberryShake.Serialization.IInputValueFormatter _sortEnumTypeFormatter = default !;
+        public global::System.String TypeName => "TelescopeSortInput";
+        public void Initialize(global::StrawberryShake.Serialization.ISerializerResolver serializerResolver)
+        {
+            _sortEnumTypeFormatter = serializerResolver.GetInputValueFormatter("SortEnumType");
+        }
+
+        public global::System.Object? Format(global::System.Object? runtimeValue)
+        {
+            if (runtimeValue is null)
+            {
+                return null;
+            }
+
+            var input = runtimeValue as global::StarRepo.GraphQL.TelescopeSortInput;
+            var inputInfo = runtimeValue as global::StarRepo.GraphQL.State.ITelescopeSortInputInfo;
+            if (input is null || inputInfo is null)
+            {
+                throw new global::System.ArgumentException(nameof(runtimeValue));
+            }
+
+            var fields = new global::System.Collections.Generic.List<global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>>();
+            if (inputInfo.IsIdSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("id", FormatId(input.Id)));
+            }
+
+            if (inputInfo.IsManufacturerSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("manufacturer", FormatManufacturer(input.Manufacturer)));
+            }
+
+            if (inputInfo.IsModelSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("model", FormatModel(input.Model)));
+            }
+
+            if (inputInfo.IsFocalLengthMMSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("focalLengthMM", FormatFocalLengthMM(input.FocalLengthMM)));
+            }
+
+            if (inputInfo.IsApertureMMSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("apertureMM", FormatApertureMM(input.ApertureMM)));
+            }
+
+            if (inputInfo.IsFStopSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("fStop", FormatFStop(input.FStop)));
+            }
+
+            return fields;
+        }
+
+        private global::System.Object? FormatId(global::StarRepo.GraphQL.SortEnumType? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _sortEnumTypeFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatManufacturer(global::StarRepo.GraphQL.SortEnumType? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _sortEnumTypeFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatModel(global::StarRepo.GraphQL.SortEnumType? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _sortEnumTypeFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatFocalLengthMM(global::StarRepo.GraphQL.SortEnumType? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _sortEnumTypeFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatApertureMM(global::StarRepo.GraphQL.SortEnumType? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _sortEnumTypeFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatFStop(global::StarRepo.GraphQL.SortEnumType? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _sortEnumTypeFormatter.Format(input);
+            }
+        }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class TelescopeSortInput : global::StarRepo.GraphQL.State.ITelescopeSortInputInfo, global::System.IEquatable<TelescopeSortInput>
+    {
+        public override global::System.Boolean Equals(global::System.Object? obj)
+        {
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            if (obj.GetType() != GetType())
+            {
+                return false;
+            }
+
+            return Equals((TelescopeSortInput)obj);
+        }
+
+        public virtual global::System.Boolean Equals(TelescopeSortInput? other)
+        {
+            if (ReferenceEquals(null, other))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, other))
+            {
+                return true;
+            }
+
+            if (other.GetType() != GetType())
+            {
+                return false;
+            }
+
+            return (((Id is null && other.Id is null) || Id != null && Id.Equals(other.Id))) && ((Manufacturer is null && other.Manufacturer is null) || Manufacturer != null && Manufacturer.Equals(other.Manufacturer)) && ((Model is null && other.Model is null) || Model != null && Model.Equals(other.Model)) && ((FocalLengthMM is null && other.FocalLengthMM is null) || FocalLengthMM != null && FocalLengthMM.Equals(other.FocalLengthMM)) && ((ApertureMM is null && other.ApertureMM is null) || ApertureMM != null && ApertureMM.Equals(other.ApertureMM)) && ((FStop is null && other.FStop is null) || FStop != null && FStop.Equals(other.FStop));
+        }
+
+        public override global::System.Int32 GetHashCode()
+        {
+            unchecked
+            {
+                int hash = 5;
+                if (Id != null)
+                {
+                    hash ^= 397 * Id.GetHashCode();
+                }
+
+                if (Manufacturer != null)
+                {
+                    hash ^= 397 * Manufacturer.GetHashCode();
+                }
+
+                if (Model != null)
+                {
+                    hash ^= 397 * Model.GetHashCode();
+                }
+
+                if (FocalLengthMM != null)
+                {
+                    hash ^= 397 * FocalLengthMM.GetHashCode();
+                }
+
+                if (ApertureMM != null)
+                {
+                    hash ^= 397 * ApertureMM.GetHashCode();
+                }
+
+                if (FStop != null)
+                {
+                    hash ^= 397 * FStop.GetHashCode();
+                }
+
+                return hash;
+            }
+        }
+
+        private global::StarRepo.GraphQL.SortEnumType? _value_id;
+        private global::System.Boolean _set_id;
+        private global::StarRepo.GraphQL.SortEnumType? _value_manufacturer;
+        private global::System.Boolean _set_manufacturer;
+        private global::StarRepo.GraphQL.SortEnumType? _value_model;
+        private global::System.Boolean _set_model;
+        private global::StarRepo.GraphQL.SortEnumType? _value_focalLengthMM;
+        private global::System.Boolean _set_focalLengthMM;
+        private global::StarRepo.GraphQL.SortEnumType? _value_apertureMM;
+        private global::System.Boolean _set_apertureMM;
+        private global::StarRepo.GraphQL.SortEnumType? _value_fStop;
+        private global::System.Boolean _set_fStop;
+        public global::StarRepo.GraphQL.SortEnumType? Id
+        {
+            get => _value_id;
+            set
+            {
+                _set_id = true;
+                _value_id = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.ITelescopeSortInputInfo.IsIdSet => _set_id;
+        public global::StarRepo.GraphQL.SortEnumType? Manufacturer
+        {
+            get => _value_manufacturer;
+            set
+            {
+                _set_manufacturer = true;
+                _value_manufacturer = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.ITelescopeSortInputInfo.IsManufacturerSet => _set_manufacturer;
+        public global::StarRepo.GraphQL.SortEnumType? Model
+        {
+            get => _value_model;
+            set
+            {
+                _set_model = true;
+                _value_model = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.ITelescopeSortInputInfo.IsModelSet => _set_model;
+        public global::StarRepo.GraphQL.SortEnumType? FocalLengthMM
+        {
+            get => _value_focalLengthMM;
+            set
+            {
+                _set_focalLengthMM = true;
+                _value_focalLengthMM = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.ITelescopeSortInputInfo.IsFocalLengthMMSet => _set_focalLengthMM;
+        public global::StarRepo.GraphQL.SortEnumType? ApertureMM
+        {
+            get => _value_apertureMM;
+            set
+            {
+                _set_apertureMM = true;
+                _value_apertureMM = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.ITelescopeSortInputInfo.IsApertureMMSet => _set_apertureMM;
+        public global::StarRepo.GraphQL.SortEnumType? FStop
+        {
+            get => _value_fStop;
+            set
+            {
+                _set_fStop = true;
+                _value_fStop = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.ITelescopeSortInputInfo.IsFStopSet => _set_fStop;
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class TargetSortInputInputValueFormatter : global::StrawberryShake.Serialization.IInputObjectFormatter
+    {
+        private global::StrawberryShake.Serialization.IInputValueFormatter _sortEnumTypeFormatter = default !;
+        public global::System.String TypeName => "TargetSortInput";
+        public void Initialize(global::StrawberryShake.Serialization.ISerializerResolver serializerResolver)
+        {
+            _sortEnumTypeFormatter = serializerResolver.GetInputValueFormatter("SortEnumType");
+        }
+
+        public global::System.Object? Format(global::System.Object? runtimeValue)
+        {
+            if (runtimeValue is null)
+            {
+                return null;
+            }
+
+            var input = runtimeValue as global::StarRepo.GraphQL.TargetSortInput;
+            var inputInfo = runtimeValue as global::StarRepo.GraphQL.State.ITargetSortInputInfo;
+            if (input is null || inputInfo is null)
+            {
+                throw new global::System.ArgumentException(nameof(runtimeValue));
+            }
+
+            var fields = new global::System.Collections.Generic.List<global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>>();
+            if (inputInfo.IsIdSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("id", FormatId(input.Id)));
+            }
+
+            if (inputInfo.IsNameSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("name", FormatName(input.Name)));
+            }
+
+            if (inputInfo.IsDescriptionSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("description", FormatDescription(input.Description)));
+            }
+
+            return fields;
+        }
+
+        private global::System.Object? FormatId(global::StarRepo.GraphQL.SortEnumType? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _sortEnumTypeFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatName(global::StarRepo.GraphQL.SortEnumType? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _sortEnumTypeFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatDescription(global::StarRepo.GraphQL.SortEnumType? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _sortEnumTypeFormatter.Format(input);
+            }
+        }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class TargetSortInput : global::StarRepo.GraphQL.State.ITargetSortInputInfo, global::System.IEquatable<TargetSortInput>
+    {
+        public override global::System.Boolean Equals(global::System.Object? obj)
+        {
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            if (obj.GetType() != GetType())
+            {
+                return false;
+            }
+
+            return Equals((TargetSortInput)obj);
+        }
+
+        public virtual global::System.Boolean Equals(TargetSortInput? other)
+        {
+            if (ReferenceEquals(null, other))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, other))
+            {
+                return true;
+            }
+
+            if (other.GetType() != GetType())
+            {
+                return false;
+            }
+
+            return (((Id is null && other.Id is null) || Id != null && Id.Equals(other.Id))) && ((Name is null && other.Name is null) || Name != null && Name.Equals(other.Name)) && ((Description is null && other.Description is null) || Description != null && Description.Equals(other.Description));
+        }
+
+        public override global::System.Int32 GetHashCode()
+        {
+            unchecked
+            {
+                int hash = 5;
+                if (Id != null)
+                {
+                    hash ^= 397 * Id.GetHashCode();
+                }
+
+                if (Name != null)
+                {
+                    hash ^= 397 * Name.GetHashCode();
+                }
+
+                if (Description != null)
+                {
+                    hash ^= 397 * Description.GetHashCode();
+                }
+
+                return hash;
+            }
+        }
+
+        private global::StarRepo.GraphQL.SortEnumType? _value_id;
+        private global::System.Boolean _set_id;
+        private global::StarRepo.GraphQL.SortEnumType? _value_name;
+        private global::System.Boolean _set_name;
+        private global::StarRepo.GraphQL.SortEnumType? _value_description;
+        private global::System.Boolean _set_description;
+        public global::StarRepo.GraphQL.SortEnumType? Id
+        {
+            get => _value_id;
+            set
+            {
+                _set_id = true;
+                _value_id = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.ITargetSortInputInfo.IsIdSet => _set_id;
+        public global::StarRepo.GraphQL.SortEnumType? Name
+        {
+            get => _value_name;
+            set
+            {
+                _set_name = true;
+                _value_name = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.ITargetSortInputInfo.IsNameSet => _set_name;
+        public global::StarRepo.GraphQL.SortEnumType? Description
+        {
+            get => _value_description;
+            set
+            {
+                _set_description = true;
+                _value_description = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.ITargetSortInputInfo.IsDescriptionSet => _set_description;
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class ObservationFilterInputInputValueFormatter : global::StrawberryShake.Serialization.IInputObjectFormatter
+    {
+        private global::StrawberryShake.Serialization.IInputValueFormatter _observationFilterInputFormatter = default !;
+        private global::StrawberryShake.Serialization.IInputValueFormatter _comparableGuidOperationFilterInputFormatter = default !;
+        private global::StrawberryShake.Serialization.IInputValueFormatter _comparableDateTimeOffsetOperationFilterInputFormatter = default !;
+        private global::StrawberryShake.Serialization.IInputValueFormatter _stringOperationFilterInputFormatter = default !;
+        private global::StrawberryShake.Serialization.IInputValueFormatter _telescopeFilterInputFormatter = default !;
+        private global::StrawberryShake.Serialization.IInputValueFormatter _targetFilterInputFormatter = default !;
+        public global::System.String TypeName => "ObservationFilterInput";
+        public void Initialize(global::StrawberryShake.Serialization.ISerializerResolver serializerResolver)
+        {
+            _observationFilterInputFormatter = serializerResolver.GetInputValueFormatter("ObservationFilterInput");
+            _comparableGuidOperationFilterInputFormatter = serializerResolver.GetInputValueFormatter("ComparableGuidOperationFilterInput");
+            _comparableDateTimeOffsetOperationFilterInputFormatter = serializerResolver.GetInputValueFormatter("ComparableDateTimeOffsetOperationFilterInput");
+            _stringOperationFilterInputFormatter = serializerResolver.GetInputValueFormatter("StringOperationFilterInput");
+            _telescopeFilterInputFormatter = serializerResolver.GetInputValueFormatter("TelescopeFilterInput");
+            _targetFilterInputFormatter = serializerResolver.GetInputValueFormatter("TargetFilterInput");
+        }
+
+        public global::System.Object? Format(global::System.Object? runtimeValue)
+        {
+            if (runtimeValue is null)
+            {
+                return null;
+            }
+
+            var input = runtimeValue as global::StarRepo.GraphQL.ObservationFilterInput;
+            var inputInfo = runtimeValue as global::StarRepo.GraphQL.State.IObservationFilterInputInfo;
+            if (input is null || inputInfo is null)
+            {
+                throw new global::System.ArgumentException(nameof(runtimeValue));
+            }
+
+            var fields = new global::System.Collections.Generic.List<global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>>();
+            if (inputInfo.IsAndSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("and", FormatAnd(input.And)));
+            }
+
+            if (inputInfo.IsOrSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("or", FormatOr(input.Or)));
+            }
+
+            if (inputInfo.IsIdSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("id", FormatId(input.Id)));
+            }
+
+            if (inputInfo.IsObservationDateSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("observationDate", FormatObservationDate(input.ObservationDate)));
+            }
+
+            if (inputInfo.IsExtensionSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("extension", FormatExtension(input.Extension)));
+            }
+
+            if (inputInfo.IsFileIdSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("fileId", FormatFileId(input.FileId)));
+            }
+
+            if (inputInfo.IsTelescopeSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("telescope", FormatTelescope(input.Telescope)));
+            }
+
+            if (inputInfo.IsTargetSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("target", FormatTarget(input.Target)));
+            }
+
+            return fields;
+        }
+
+        private global::System.Object? FormatAnd(global::System.Collections.Generic.IReadOnlyList<global::StarRepo.GraphQL.ObservationFilterInput>? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                var input_list = new global::System.Collections.Generic.List<global::System.Object?>();
+                foreach (var input_elm in input)
+                {
+                    if (input_elm is null)
+                    {
+                        throw new global::System.ArgumentNullException(nameof(input_elm));
+                    }
+
+                    input_list.Add(_observationFilterInputFormatter.Format(input_elm));
+                }
+
+                return input_list;
+            }
+        }
+
+        private global::System.Object? FormatOr(global::System.Collections.Generic.IReadOnlyList<global::StarRepo.GraphQL.ObservationFilterInput>? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                var input_list = new global::System.Collections.Generic.List<global::System.Object?>();
+                foreach (var input_elm in input)
+                {
+                    if (input_elm is null)
+                    {
+                        throw new global::System.ArgumentNullException(nameof(input_elm));
+                    }
+
+                    input_list.Add(_observationFilterInputFormatter.Format(input_elm));
+                }
+
+                return input_list;
+            }
+        }
+
+        private global::System.Object? FormatId(global::StarRepo.GraphQL.ComparableGuidOperationFilterInput? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _comparableGuidOperationFilterInputFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatObservationDate(global::StarRepo.GraphQL.ComparableDateTimeOffsetOperationFilterInput? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _comparableDateTimeOffsetOperationFilterInputFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatExtension(global::StarRepo.GraphQL.StringOperationFilterInput? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _stringOperationFilterInputFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatFileId(global::StarRepo.GraphQL.ComparableGuidOperationFilterInput? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _comparableGuidOperationFilterInputFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatTelescope(global::StarRepo.GraphQL.TelescopeFilterInput? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _telescopeFilterInputFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatTarget(global::StarRepo.GraphQL.TargetFilterInput? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _targetFilterInputFormatter.Format(input);
+            }
+        }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class ObservationFilterInput : global::StarRepo.GraphQL.State.IObservationFilterInputInfo, global::System.IEquatable<ObservationFilterInput>
+    {
+        public override global::System.Boolean Equals(global::System.Object? obj)
+        {
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            if (obj.GetType() != GetType())
+            {
+                return false;
+            }
+
+            return Equals((ObservationFilterInput)obj);
+        }
+
+        public virtual global::System.Boolean Equals(ObservationFilterInput? other)
+        {
+            if (ReferenceEquals(null, other))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, other))
+            {
+                return true;
+            }
+
+            if (other.GetType() != GetType())
+            {
+                return false;
+            }
+
+            return (global::StrawberryShake.Helper.ComparisonHelper.SequenceEqual(And, other.And)) && global::StrawberryShake.Helper.ComparisonHelper.SequenceEqual(Or, other.Or) && ((Id is null && other.Id is null) || Id != null && Id.Equals(other.Id)) && ((ObservationDate is null && other.ObservationDate is null) || ObservationDate != null && ObservationDate.Equals(other.ObservationDate)) && ((Extension is null && other.Extension is null) || Extension != null && Extension.Equals(other.Extension)) && ((FileId is null && other.FileId is null) || FileId != null && FileId.Equals(other.FileId)) && ((Telescope is null && other.Telescope is null) || Telescope != null && Telescope.Equals(other.Telescope)) && ((Target is null && other.Target is null) || Target != null && Target.Equals(other.Target));
+        }
+
+        public override global::System.Int32 GetHashCode()
+        {
+            unchecked
+            {
+                int hash = 5;
+                if (And != null)
+                {
+                    foreach (var And_elm in And)
+                    {
+                        hash ^= 397 * And_elm.GetHashCode();
+                    }
+                }
+
+                if (Or != null)
+                {
+                    foreach (var Or_elm in Or)
+                    {
+                        hash ^= 397 * Or_elm.GetHashCode();
+                    }
+                }
+
+                if (Id != null)
+                {
+                    hash ^= 397 * Id.GetHashCode();
+                }
+
+                if (ObservationDate != null)
+                {
+                    hash ^= 397 * ObservationDate.GetHashCode();
+                }
+
+                if (Extension != null)
+                {
+                    hash ^= 397 * Extension.GetHashCode();
+                }
+
+                if (FileId != null)
+                {
+                    hash ^= 397 * FileId.GetHashCode();
+                }
+
+                if (Telescope != null)
+                {
+                    hash ^= 397 * Telescope.GetHashCode();
+                }
+
+                if (Target != null)
+                {
+                    hash ^= 397 * Target.GetHashCode();
+                }
+
+                return hash;
+            }
+        }
+
+        private global::System.Collections.Generic.IReadOnlyList<global::StarRepo.GraphQL.ObservationFilterInput>? _value_and;
+        private global::System.Boolean _set_and;
+        private global::System.Collections.Generic.IReadOnlyList<global::StarRepo.GraphQL.ObservationFilterInput>? _value_or;
+        private global::System.Boolean _set_or;
+        private global::StarRepo.GraphQL.ComparableGuidOperationFilterInput? _value_id;
+        private global::System.Boolean _set_id;
+        private global::StarRepo.GraphQL.ComparableDateTimeOffsetOperationFilterInput? _value_observationDate;
+        private global::System.Boolean _set_observationDate;
+        private global::StarRepo.GraphQL.StringOperationFilterInput? _value_extension;
+        private global::System.Boolean _set_extension;
+        private global::StarRepo.GraphQL.ComparableGuidOperationFilterInput? _value_fileId;
+        private global::System.Boolean _set_fileId;
+        private global::StarRepo.GraphQL.TelescopeFilterInput? _value_telescope;
+        private global::System.Boolean _set_telescope;
+        private global::StarRepo.GraphQL.TargetFilterInput? _value_target;
+        private global::System.Boolean _set_target;
+        public global::System.Collections.Generic.IReadOnlyList<global::StarRepo.GraphQL.ObservationFilterInput>? And
+        {
+            get => _value_and;
+            set
+            {
+                _set_and = true;
+                _value_and = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IObservationFilterInputInfo.IsAndSet => _set_and;
+        public global::System.Collections.Generic.IReadOnlyList<global::StarRepo.GraphQL.ObservationFilterInput>? Or
+        {
+            get => _value_or;
+            set
+            {
+                _set_or = true;
+                _value_or = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IObservationFilterInputInfo.IsOrSet => _set_or;
+        public global::StarRepo.GraphQL.ComparableGuidOperationFilterInput? Id
+        {
+            get => _value_id;
+            set
+            {
+                _set_id = true;
+                _value_id = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IObservationFilterInputInfo.IsIdSet => _set_id;
+        public global::StarRepo.GraphQL.ComparableDateTimeOffsetOperationFilterInput? ObservationDate
+        {
+            get => _value_observationDate;
+            set
+            {
+                _set_observationDate = true;
+                _value_observationDate = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IObservationFilterInputInfo.IsObservationDateSet => _set_observationDate;
+        public global::StarRepo.GraphQL.StringOperationFilterInput? Extension
+        {
+            get => _value_extension;
+            set
+            {
+                _set_extension = true;
+                _value_extension = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IObservationFilterInputInfo.IsExtensionSet => _set_extension;
+        public global::StarRepo.GraphQL.ComparableGuidOperationFilterInput? FileId
+        {
+            get => _value_fileId;
+            set
+            {
+                _set_fileId = true;
+                _value_fileId = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IObservationFilterInputInfo.IsFileIdSet => _set_fileId;
+        public global::StarRepo.GraphQL.TelescopeFilterInput? Telescope
+        {
+            get => _value_telescope;
+            set
+            {
+                _set_telescope = true;
+                _value_telescope = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IObservationFilterInputInfo.IsTelescopeSet => _set_telescope;
+        public global::StarRepo.GraphQL.TargetFilterInput? Target
+        {
+            get => _value_target;
+            set
+            {
+                _set_target = true;
+                _value_target = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IObservationFilterInputInfo.IsTargetSet => _set_target;
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class ComparableGuidOperationFilterInputInputValueFormatter : global::StrawberryShake.Serialization.IInputObjectFormatter
+    {
+        private global::StrawberryShake.Serialization.IInputValueFormatter _uUIDFormatter = default !;
+        public global::System.String TypeName => "ComparableGuidOperationFilterInput";
+        public void Initialize(global::StrawberryShake.Serialization.ISerializerResolver serializerResolver)
+        {
+            _uUIDFormatter = serializerResolver.GetInputValueFormatter("UUID");
+        }
+
+        public global::System.Object? Format(global::System.Object? runtimeValue)
+        {
+            if (runtimeValue is null)
+            {
+                return null;
+            }
+
+            var input = runtimeValue as global::StarRepo.GraphQL.ComparableGuidOperationFilterInput;
+            var inputInfo = runtimeValue as global::StarRepo.GraphQL.State.IComparableGuidOperationFilterInputInfo;
+            if (input is null || inputInfo is null)
+            {
+                throw new global::System.ArgumentException(nameof(runtimeValue));
+            }
+
+            var fields = new global::System.Collections.Generic.List<global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>>();
+            if (inputInfo.IsEqSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("eq", FormatEq(input.Eq)));
+            }
+
+            if (inputInfo.IsNeqSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("neq", FormatNeq(input.Neq)));
+            }
+
+            if (inputInfo.IsInSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("in", FormatIn(input.In)));
+            }
+
+            if (inputInfo.IsNinSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("nin", FormatNin(input.Nin)));
+            }
+
+            if (inputInfo.IsGtSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("gt", FormatGt(input.Gt)));
+            }
+
+            if (inputInfo.IsNgtSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("ngt", FormatNgt(input.Ngt)));
+            }
+
+            if (inputInfo.IsGteSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("gte", FormatGte(input.Gte)));
+            }
+
+            if (inputInfo.IsNgteSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("ngte", FormatNgte(input.Ngte)));
+            }
+
+            if (inputInfo.IsLtSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("lt", FormatLt(input.Lt)));
+            }
+
+            if (inputInfo.IsNltSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("nlt", FormatNlt(input.Nlt)));
+            }
+
+            if (inputInfo.IsLteSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("lte", FormatLte(input.Lte)));
+            }
+
+            if (inputInfo.IsNlteSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("nlte", FormatNlte(input.Nlte)));
+            }
+
+            return fields;
+        }
+
+        private global::System.Object? FormatEq(global::System.Guid? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _uUIDFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatNeq(global::System.Guid? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _uUIDFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatIn(global::System.Collections.Generic.IReadOnlyList<global::System.Guid>? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                var input_list = new global::System.Collections.Generic.List<global::System.Object?>();
+                foreach (var input_elm in input)
+                {
+                    input_list.Add(_uUIDFormatter.Format(input_elm));
+                }
+
+                return input_list;
+            }
+        }
+
+        private global::System.Object? FormatNin(global::System.Collections.Generic.IReadOnlyList<global::System.Guid>? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                var input_list = new global::System.Collections.Generic.List<global::System.Object?>();
+                foreach (var input_elm in input)
+                {
+                    input_list.Add(_uUIDFormatter.Format(input_elm));
+                }
+
+                return input_list;
+            }
+        }
+
+        private global::System.Object? FormatGt(global::System.Guid? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _uUIDFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatNgt(global::System.Guid? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _uUIDFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatGte(global::System.Guid? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _uUIDFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatNgte(global::System.Guid? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _uUIDFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatLt(global::System.Guid? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _uUIDFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatNlt(global::System.Guid? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _uUIDFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatLte(global::System.Guid? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _uUIDFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatNlte(global::System.Guid? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _uUIDFormatter.Format(input);
+            }
+        }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class ComparableGuidOperationFilterInput : global::StarRepo.GraphQL.State.IComparableGuidOperationFilterInputInfo, global::System.IEquatable<ComparableGuidOperationFilterInput>
+    {
+        public override global::System.Boolean Equals(global::System.Object? obj)
+        {
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            if (obj.GetType() != GetType())
+            {
+                return false;
+            }
+
+            return Equals((ComparableGuidOperationFilterInput)obj);
+        }
+
+        public virtual global::System.Boolean Equals(ComparableGuidOperationFilterInput? other)
+        {
+            if (ReferenceEquals(null, other))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, other))
+            {
+                return true;
+            }
+
+            if (other.GetType() != GetType())
+            {
+                return false;
+            }
+
+            return (((Eq is null && other.Eq is null) || Eq != null && Eq.Equals(other.Eq))) && ((Neq is null && other.Neq is null) || Neq != null && Neq.Equals(other.Neq)) && global::StrawberryShake.Helper.ComparisonHelper.SequenceEqual(In, other.In) && global::StrawberryShake.Helper.ComparisonHelper.SequenceEqual(Nin, other.Nin) && ((Gt is null && other.Gt is null) || Gt != null && Gt.Equals(other.Gt)) && ((Ngt is null && other.Ngt is null) || Ngt != null && Ngt.Equals(other.Ngt)) && ((Gte is null && other.Gte is null) || Gte != null && Gte.Equals(other.Gte)) && ((Ngte is null && other.Ngte is null) || Ngte != null && Ngte.Equals(other.Ngte)) && ((Lt is null && other.Lt is null) || Lt != null && Lt.Equals(other.Lt)) && ((Nlt is null && other.Nlt is null) || Nlt != null && Nlt.Equals(other.Nlt)) && ((Lte is null && other.Lte is null) || Lte != null && Lte.Equals(other.Lte)) && ((Nlte is null && other.Nlte is null) || Nlte != null && Nlte.Equals(other.Nlte));
+        }
+
+        public override global::System.Int32 GetHashCode()
+        {
+            unchecked
+            {
+                int hash = 5;
+                if (Eq != null)
+                {
+                    hash ^= 397 * Eq.GetHashCode();
+                }
+
+                if (Neq != null)
+                {
+                    hash ^= 397 * Neq.GetHashCode();
+                }
+
+                if (In != null)
+                {
+                    foreach (var In_elm in In)
+                    {
+                        hash ^= 397 * In_elm.GetHashCode();
+                    }
+                }
+
+                if (Nin != null)
+                {
+                    foreach (var Nin_elm in Nin)
+                    {
+                        hash ^= 397 * Nin_elm.GetHashCode();
+                    }
+                }
+
+                if (Gt != null)
+                {
+                    hash ^= 397 * Gt.GetHashCode();
+                }
+
+                if (Ngt != null)
+                {
+                    hash ^= 397 * Ngt.GetHashCode();
+                }
+
+                if (Gte != null)
+                {
+                    hash ^= 397 * Gte.GetHashCode();
+                }
+
+                if (Ngte != null)
+                {
+                    hash ^= 397 * Ngte.GetHashCode();
+                }
+
+                if (Lt != null)
+                {
+                    hash ^= 397 * Lt.GetHashCode();
+                }
+
+                if (Nlt != null)
+                {
+                    hash ^= 397 * Nlt.GetHashCode();
+                }
+
+                if (Lte != null)
+                {
+                    hash ^= 397 * Lte.GetHashCode();
+                }
+
+                if (Nlte != null)
+                {
+                    hash ^= 397 * Nlte.GetHashCode();
+                }
+
+                return hash;
+            }
+        }
+
+        private global::System.Guid? _value_eq;
+        private global::System.Boolean _set_eq;
+        private global::System.Guid? _value_neq;
+        private global::System.Boolean _set_neq;
+        private global::System.Collections.Generic.IReadOnlyList<global::System.Guid>? _value_in;
+        private global::System.Boolean _set_in;
+        private global::System.Collections.Generic.IReadOnlyList<global::System.Guid>? _value_nin;
+        private global::System.Boolean _set_nin;
+        private global::System.Guid? _value_gt;
+        private global::System.Boolean _set_gt;
+        private global::System.Guid? _value_ngt;
+        private global::System.Boolean _set_ngt;
+        private global::System.Guid? _value_gte;
+        private global::System.Boolean _set_gte;
+        private global::System.Guid? _value_ngte;
+        private global::System.Boolean _set_ngte;
+        private global::System.Guid? _value_lt;
+        private global::System.Boolean _set_lt;
+        private global::System.Guid? _value_nlt;
+        private global::System.Boolean _set_nlt;
+        private global::System.Guid? _value_lte;
+        private global::System.Boolean _set_lte;
+        private global::System.Guid? _value_nlte;
+        private global::System.Boolean _set_nlte;
+        public global::System.Guid? Eq
+        {
+            get => _value_eq;
+            set
+            {
+                _set_eq = true;
+                _value_eq = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IComparableGuidOperationFilterInputInfo.IsEqSet => _set_eq;
+        public global::System.Guid? Neq
+        {
+            get => _value_neq;
+            set
+            {
+                _set_neq = true;
+                _value_neq = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IComparableGuidOperationFilterInputInfo.IsNeqSet => _set_neq;
+        public global::System.Collections.Generic.IReadOnlyList<global::System.Guid>? In
+        {
+            get => _value_in;
+            set
+            {
+                _set_in = true;
+                _value_in = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IComparableGuidOperationFilterInputInfo.IsInSet => _set_in;
+        public global::System.Collections.Generic.IReadOnlyList<global::System.Guid>? Nin
+        {
+            get => _value_nin;
+            set
+            {
+                _set_nin = true;
+                _value_nin = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IComparableGuidOperationFilterInputInfo.IsNinSet => _set_nin;
+        public global::System.Guid? Gt
+        {
+            get => _value_gt;
+            set
+            {
+                _set_gt = true;
+                _value_gt = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IComparableGuidOperationFilterInputInfo.IsGtSet => _set_gt;
+        public global::System.Guid? Ngt
+        {
+            get => _value_ngt;
+            set
+            {
+                _set_ngt = true;
+                _value_ngt = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IComparableGuidOperationFilterInputInfo.IsNgtSet => _set_ngt;
+        public global::System.Guid? Gte
+        {
+            get => _value_gte;
+            set
+            {
+                _set_gte = true;
+                _value_gte = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IComparableGuidOperationFilterInputInfo.IsGteSet => _set_gte;
+        public global::System.Guid? Ngte
+        {
+            get => _value_ngte;
+            set
+            {
+                _set_ngte = true;
+                _value_ngte = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IComparableGuidOperationFilterInputInfo.IsNgteSet => _set_ngte;
+        public global::System.Guid? Lt
+        {
+            get => _value_lt;
+            set
+            {
+                _set_lt = true;
+                _value_lt = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IComparableGuidOperationFilterInputInfo.IsLtSet => _set_lt;
+        public global::System.Guid? Nlt
+        {
+            get => _value_nlt;
+            set
+            {
+                _set_nlt = true;
+                _value_nlt = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IComparableGuidOperationFilterInputInfo.IsNltSet => _set_nlt;
+        public global::System.Guid? Lte
+        {
+            get => _value_lte;
+            set
+            {
+                _set_lte = true;
+                _value_lte = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IComparableGuidOperationFilterInputInfo.IsLteSet => _set_lte;
+        public global::System.Guid? Nlte
+        {
+            get => _value_nlte;
+            set
+            {
+                _set_nlte = true;
+                _value_nlte = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IComparableGuidOperationFilterInputInfo.IsNlteSet => _set_nlte;
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class ComparableDateTimeOffsetOperationFilterInputInputValueFormatter : global::StrawberryShake.Serialization.IInputObjectFormatter
+    {
+        private global::StrawberryShake.Serialization.IInputValueFormatter _dateTimeFormatter = default !;
+        public global::System.String TypeName => "ComparableDateTimeOffsetOperationFilterInput";
+        public void Initialize(global::StrawberryShake.Serialization.ISerializerResolver serializerResolver)
+        {
+            _dateTimeFormatter = serializerResolver.GetInputValueFormatter("DateTime");
+        }
+
+        public global::System.Object? Format(global::System.Object? runtimeValue)
+        {
+            if (runtimeValue is null)
+            {
+                return null;
+            }
+
+            var input = runtimeValue as global::StarRepo.GraphQL.ComparableDateTimeOffsetOperationFilterInput;
+            var inputInfo = runtimeValue as global::StarRepo.GraphQL.State.IComparableDateTimeOffsetOperationFilterInputInfo;
+            if (input is null || inputInfo is null)
+            {
+                throw new global::System.ArgumentException(nameof(runtimeValue));
+            }
+
+            var fields = new global::System.Collections.Generic.List<global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>>();
+            if (inputInfo.IsEqSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("eq", FormatEq(input.Eq)));
+            }
+
+            if (inputInfo.IsNeqSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("neq", FormatNeq(input.Neq)));
+            }
+
+            if (inputInfo.IsInSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("in", FormatIn(input.In)));
+            }
+
+            if (inputInfo.IsNinSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("nin", FormatNin(input.Nin)));
+            }
+
+            if (inputInfo.IsGtSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("gt", FormatGt(input.Gt)));
+            }
+
+            if (inputInfo.IsNgtSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("ngt", FormatNgt(input.Ngt)));
+            }
+
+            if (inputInfo.IsGteSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("gte", FormatGte(input.Gte)));
+            }
+
+            if (inputInfo.IsNgteSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("ngte", FormatNgte(input.Ngte)));
+            }
+
+            if (inputInfo.IsLtSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("lt", FormatLt(input.Lt)));
+            }
+
+            if (inputInfo.IsNltSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("nlt", FormatNlt(input.Nlt)));
+            }
+
+            if (inputInfo.IsLteSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("lte", FormatLte(input.Lte)));
+            }
+
+            if (inputInfo.IsNlteSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("nlte", FormatNlte(input.Nlte)));
+            }
+
+            return fields;
+        }
+
+        private global::System.Object? FormatEq(global::System.DateTimeOffset? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _dateTimeFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatNeq(global::System.DateTimeOffset? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _dateTimeFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatIn(global::System.Collections.Generic.IReadOnlyList<global::System.DateTimeOffset>? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                var input_list = new global::System.Collections.Generic.List<global::System.Object?>();
+                foreach (var input_elm in input)
+                {
+                    input_list.Add(_dateTimeFormatter.Format(input_elm));
+                }
+
+                return input_list;
+            }
+        }
+
+        private global::System.Object? FormatNin(global::System.Collections.Generic.IReadOnlyList<global::System.DateTimeOffset>? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                var input_list = new global::System.Collections.Generic.List<global::System.Object?>();
+                foreach (var input_elm in input)
+                {
+                    input_list.Add(_dateTimeFormatter.Format(input_elm));
+                }
+
+                return input_list;
+            }
+        }
+
+        private global::System.Object? FormatGt(global::System.DateTimeOffset? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _dateTimeFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatNgt(global::System.DateTimeOffset? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _dateTimeFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatGte(global::System.DateTimeOffset? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _dateTimeFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatNgte(global::System.DateTimeOffset? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _dateTimeFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatLt(global::System.DateTimeOffset? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _dateTimeFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatNlt(global::System.DateTimeOffset? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _dateTimeFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatLte(global::System.DateTimeOffset? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _dateTimeFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatNlte(global::System.DateTimeOffset? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _dateTimeFormatter.Format(input);
+            }
+        }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class ComparableDateTimeOffsetOperationFilterInput : global::StarRepo.GraphQL.State.IComparableDateTimeOffsetOperationFilterInputInfo, global::System.IEquatable<ComparableDateTimeOffsetOperationFilterInput>
+    {
+        public override global::System.Boolean Equals(global::System.Object? obj)
+        {
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            if (obj.GetType() != GetType())
+            {
+                return false;
+            }
+
+            return Equals((ComparableDateTimeOffsetOperationFilterInput)obj);
+        }
+
+        public virtual global::System.Boolean Equals(ComparableDateTimeOffsetOperationFilterInput? other)
+        {
+            if (ReferenceEquals(null, other))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, other))
+            {
+                return true;
+            }
+
+            if (other.GetType() != GetType())
+            {
+                return false;
+            }
+
+            return (((Eq is null && other.Eq is null) || Eq != null && Eq.Equals(other.Eq))) && ((Neq is null && other.Neq is null) || Neq != null && Neq.Equals(other.Neq)) && global::StrawberryShake.Helper.ComparisonHelper.SequenceEqual(In, other.In) && global::StrawberryShake.Helper.ComparisonHelper.SequenceEqual(Nin, other.Nin) && ((Gt is null && other.Gt is null) || Gt != null && Gt.Equals(other.Gt)) && ((Ngt is null && other.Ngt is null) || Ngt != null && Ngt.Equals(other.Ngt)) && ((Gte is null && other.Gte is null) || Gte != null && Gte.Equals(other.Gte)) && ((Ngte is null && other.Ngte is null) || Ngte != null && Ngte.Equals(other.Ngte)) && ((Lt is null && other.Lt is null) || Lt != null && Lt.Equals(other.Lt)) && ((Nlt is null && other.Nlt is null) || Nlt != null && Nlt.Equals(other.Nlt)) && ((Lte is null && other.Lte is null) || Lte != null && Lte.Equals(other.Lte)) && ((Nlte is null && other.Nlte is null) || Nlte != null && Nlte.Equals(other.Nlte));
+        }
+
+        public override global::System.Int32 GetHashCode()
+        {
+            unchecked
+            {
+                int hash = 5;
+                if (Eq != null)
+                {
+                    hash ^= 397 * Eq.GetHashCode();
+                }
+
+                if (Neq != null)
+                {
+                    hash ^= 397 * Neq.GetHashCode();
+                }
+
+                if (In != null)
+                {
+                    foreach (var In_elm in In)
+                    {
+                        hash ^= 397 * In_elm.GetHashCode();
+                    }
+                }
+
+                if (Nin != null)
+                {
+                    foreach (var Nin_elm in Nin)
+                    {
+                        hash ^= 397 * Nin_elm.GetHashCode();
+                    }
+                }
+
+                if (Gt != null)
+                {
+                    hash ^= 397 * Gt.GetHashCode();
+                }
+
+                if (Ngt != null)
+                {
+                    hash ^= 397 * Ngt.GetHashCode();
+                }
+
+                if (Gte != null)
+                {
+                    hash ^= 397 * Gte.GetHashCode();
+                }
+
+                if (Ngte != null)
+                {
+                    hash ^= 397 * Ngte.GetHashCode();
+                }
+
+                if (Lt != null)
+                {
+                    hash ^= 397 * Lt.GetHashCode();
+                }
+
+                if (Nlt != null)
+                {
+                    hash ^= 397 * Nlt.GetHashCode();
+                }
+
+                if (Lte != null)
+                {
+                    hash ^= 397 * Lte.GetHashCode();
+                }
+
+                if (Nlte != null)
+                {
+                    hash ^= 397 * Nlte.GetHashCode();
+                }
+
+                return hash;
+            }
+        }
+
+        private global::System.DateTimeOffset? _value_eq;
+        private global::System.Boolean _set_eq;
+        private global::System.DateTimeOffset? _value_neq;
+        private global::System.Boolean _set_neq;
+        private global::System.Collections.Generic.IReadOnlyList<global::System.DateTimeOffset>? _value_in;
+        private global::System.Boolean _set_in;
+        private global::System.Collections.Generic.IReadOnlyList<global::System.DateTimeOffset>? _value_nin;
+        private global::System.Boolean _set_nin;
+        private global::System.DateTimeOffset? _value_gt;
+        private global::System.Boolean _set_gt;
+        private global::System.DateTimeOffset? _value_ngt;
+        private global::System.Boolean _set_ngt;
+        private global::System.DateTimeOffset? _value_gte;
+        private global::System.Boolean _set_gte;
+        private global::System.DateTimeOffset? _value_ngte;
+        private global::System.Boolean _set_ngte;
+        private global::System.DateTimeOffset? _value_lt;
+        private global::System.Boolean _set_lt;
+        private global::System.DateTimeOffset? _value_nlt;
+        private global::System.Boolean _set_nlt;
+        private global::System.DateTimeOffset? _value_lte;
+        private global::System.Boolean _set_lte;
+        private global::System.DateTimeOffset? _value_nlte;
+        private global::System.Boolean _set_nlte;
+        public global::System.DateTimeOffset? Eq
+        {
+            get => _value_eq;
+            set
+            {
+                _set_eq = true;
+                _value_eq = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IComparableDateTimeOffsetOperationFilterInputInfo.IsEqSet => _set_eq;
+        public global::System.DateTimeOffset? Neq
+        {
+            get => _value_neq;
+            set
+            {
+                _set_neq = true;
+                _value_neq = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IComparableDateTimeOffsetOperationFilterInputInfo.IsNeqSet => _set_neq;
+        public global::System.Collections.Generic.IReadOnlyList<global::System.DateTimeOffset>? In
+        {
+            get => _value_in;
+            set
+            {
+                _set_in = true;
+                _value_in = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IComparableDateTimeOffsetOperationFilterInputInfo.IsInSet => _set_in;
+        public global::System.Collections.Generic.IReadOnlyList<global::System.DateTimeOffset>? Nin
+        {
+            get => _value_nin;
+            set
+            {
+                _set_nin = true;
+                _value_nin = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IComparableDateTimeOffsetOperationFilterInputInfo.IsNinSet => _set_nin;
+        public global::System.DateTimeOffset? Gt
+        {
+            get => _value_gt;
+            set
+            {
+                _set_gt = true;
+                _value_gt = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IComparableDateTimeOffsetOperationFilterInputInfo.IsGtSet => _set_gt;
+        public global::System.DateTimeOffset? Ngt
+        {
+            get => _value_ngt;
+            set
+            {
+                _set_ngt = true;
+                _value_ngt = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IComparableDateTimeOffsetOperationFilterInputInfo.IsNgtSet => _set_ngt;
+        public global::System.DateTimeOffset? Gte
+        {
+            get => _value_gte;
+            set
+            {
+                _set_gte = true;
+                _value_gte = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IComparableDateTimeOffsetOperationFilterInputInfo.IsGteSet => _set_gte;
+        public global::System.DateTimeOffset? Ngte
+        {
+            get => _value_ngte;
+            set
+            {
+                _set_ngte = true;
+                _value_ngte = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IComparableDateTimeOffsetOperationFilterInputInfo.IsNgteSet => _set_ngte;
+        public global::System.DateTimeOffset? Lt
+        {
+            get => _value_lt;
+            set
+            {
+                _set_lt = true;
+                _value_lt = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IComparableDateTimeOffsetOperationFilterInputInfo.IsLtSet => _set_lt;
+        public global::System.DateTimeOffset? Nlt
+        {
+            get => _value_nlt;
+            set
+            {
+                _set_nlt = true;
+                _value_nlt = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IComparableDateTimeOffsetOperationFilterInputInfo.IsNltSet => _set_nlt;
+        public global::System.DateTimeOffset? Lte
+        {
+            get => _value_lte;
+            set
+            {
+                _set_lte = true;
+                _value_lte = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IComparableDateTimeOffsetOperationFilterInputInfo.IsLteSet => _set_lte;
+        public global::System.DateTimeOffset? Nlte
+        {
+            get => _value_nlte;
+            set
+            {
+                _set_nlte = true;
+                _value_nlte = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IComparableDateTimeOffsetOperationFilterInputInfo.IsNlteSet => _set_nlte;
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class StringOperationFilterInputInputValueFormatter : global::StrawberryShake.Serialization.IInputObjectFormatter
+    {
+        private global::StrawberryShake.Serialization.IInputValueFormatter _stringOperationFilterInputFormatter = default !;
+        private global::StrawberryShake.Serialization.IInputValueFormatter _stringFormatter = default !;
+        public global::System.String TypeName => "StringOperationFilterInput";
+        public void Initialize(global::StrawberryShake.Serialization.ISerializerResolver serializerResolver)
+        {
+            _stringOperationFilterInputFormatter = serializerResolver.GetInputValueFormatter("StringOperationFilterInput");
+            _stringFormatter = serializerResolver.GetInputValueFormatter("String");
+        }
+
+        public global::System.Object? Format(global::System.Object? runtimeValue)
+        {
+            if (runtimeValue is null)
+            {
+                return null;
+            }
+
+            var input = runtimeValue as global::StarRepo.GraphQL.StringOperationFilterInput;
+            var inputInfo = runtimeValue as global::StarRepo.GraphQL.State.IStringOperationFilterInputInfo;
+            if (input is null || inputInfo is null)
+            {
+                throw new global::System.ArgumentException(nameof(runtimeValue));
+            }
+
+            var fields = new global::System.Collections.Generic.List<global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>>();
+            if (inputInfo.IsAndSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("and", FormatAnd(input.And)));
+            }
+
+            if (inputInfo.IsOrSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("or", FormatOr(input.Or)));
+            }
+
+            if (inputInfo.IsEqSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("eq", FormatEq(input.Eq)));
+            }
+
+            if (inputInfo.IsNeqSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("neq", FormatNeq(input.Neq)));
+            }
+
+            if (inputInfo.IsContainsSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("contains", FormatContains(input.Contains)));
+            }
+
+            if (inputInfo.IsNcontainsSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("ncontains", FormatNcontains(input.Ncontains)));
+            }
+
+            if (inputInfo.IsInSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("in", FormatIn(input.In)));
+            }
+
+            if (inputInfo.IsNinSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("nin", FormatNin(input.Nin)));
+            }
+
+            if (inputInfo.IsStartsWithSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("startsWith", FormatStartsWith(input.StartsWith)));
+            }
+
+            if (inputInfo.IsNstartsWithSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("nstartsWith", FormatNstartsWith(input.NstartsWith)));
+            }
+
+            if (inputInfo.IsEndsWithSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("endsWith", FormatEndsWith(input.EndsWith)));
+            }
+
+            if (inputInfo.IsNendsWithSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("nendsWith", FormatNendsWith(input.NendsWith)));
+            }
+
+            return fields;
+        }
+
+        private global::System.Object? FormatAnd(global::System.Collections.Generic.IReadOnlyList<global::StarRepo.GraphQL.StringOperationFilterInput>? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                var input_list = new global::System.Collections.Generic.List<global::System.Object?>();
+                foreach (var input_elm in input)
+                {
+                    if (input_elm is null)
+                    {
+                        throw new global::System.ArgumentNullException(nameof(input_elm));
+                    }
+
+                    input_list.Add(_stringOperationFilterInputFormatter.Format(input_elm));
+                }
+
+                return input_list;
+            }
+        }
+
+        private global::System.Object? FormatOr(global::System.Collections.Generic.IReadOnlyList<global::StarRepo.GraphQL.StringOperationFilterInput>? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                var input_list = new global::System.Collections.Generic.List<global::System.Object?>();
+                foreach (var input_elm in input)
+                {
+                    if (input_elm is null)
+                    {
+                        throw new global::System.ArgumentNullException(nameof(input_elm));
+                    }
+
+                    input_list.Add(_stringOperationFilterInputFormatter.Format(input_elm));
+                }
+
+                return input_list;
+            }
+        }
+
+        private global::System.Object? FormatEq(global::System.String? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _stringFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatNeq(global::System.String? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _stringFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatContains(global::System.String? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _stringFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatNcontains(global::System.String? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _stringFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatIn(global::System.Collections.Generic.IReadOnlyList<global::System.String?>? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                var input_list = new global::System.Collections.Generic.List<global::System.Object?>();
+                foreach (var input_elm in input)
+                {
+                    if (input_elm is null)
+                    {
+                        input_list.Add(input_elm);
+                    }
+                    else
+                    {
+                        input_list.Add(_stringFormatter.Format(input_elm));
+                    }
+                }
+
+                return input_list;
+            }
+        }
+
+        private global::System.Object? FormatNin(global::System.Collections.Generic.IReadOnlyList<global::System.String?>? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                var input_list = new global::System.Collections.Generic.List<global::System.Object?>();
+                foreach (var input_elm in input)
+                {
+                    if (input_elm is null)
+                    {
+                        input_list.Add(input_elm);
+                    }
+                    else
+                    {
+                        input_list.Add(_stringFormatter.Format(input_elm));
+                    }
+                }
+
+                return input_list;
+            }
+        }
+
+        private global::System.Object? FormatStartsWith(global::System.String? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _stringFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatNstartsWith(global::System.String? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _stringFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatEndsWith(global::System.String? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _stringFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatNendsWith(global::System.String? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _stringFormatter.Format(input);
+            }
+        }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class StringOperationFilterInput : global::StarRepo.GraphQL.State.IStringOperationFilterInputInfo, global::System.IEquatable<StringOperationFilterInput>
+    {
+        public override global::System.Boolean Equals(global::System.Object? obj)
+        {
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            if (obj.GetType() != GetType())
+            {
+                return false;
+            }
+
+            return Equals((StringOperationFilterInput)obj);
+        }
+
+        public virtual global::System.Boolean Equals(StringOperationFilterInput? other)
+        {
+            if (ReferenceEquals(null, other))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, other))
+            {
+                return true;
+            }
+
+            if (other.GetType() != GetType())
+            {
+                return false;
+            }
+
+            return (global::StrawberryShake.Helper.ComparisonHelper.SequenceEqual(And, other.And)) && global::StrawberryShake.Helper.ComparisonHelper.SequenceEqual(Or, other.Or) && ((Eq is null && other.Eq is null) || Eq != null && Eq.Equals(other.Eq)) && ((Neq is null && other.Neq is null) || Neq != null && Neq.Equals(other.Neq)) && ((Contains is null && other.Contains is null) || Contains != null && Contains.Equals(other.Contains)) && ((Ncontains is null && other.Ncontains is null) || Ncontains != null && Ncontains.Equals(other.Ncontains)) && global::StrawberryShake.Helper.ComparisonHelper.SequenceEqual(In, other.In) && global::StrawberryShake.Helper.ComparisonHelper.SequenceEqual(Nin, other.Nin) && ((StartsWith is null && other.StartsWith is null) || StartsWith != null && StartsWith.Equals(other.StartsWith)) && ((NstartsWith is null && other.NstartsWith is null) || NstartsWith != null && NstartsWith.Equals(other.NstartsWith)) && ((EndsWith is null && other.EndsWith is null) || EndsWith != null && EndsWith.Equals(other.EndsWith)) && ((NendsWith is null && other.NendsWith is null) || NendsWith != null && NendsWith.Equals(other.NendsWith));
+        }
+
+        public override global::System.Int32 GetHashCode()
+        {
+            unchecked
+            {
+                int hash = 5;
+                if (And != null)
+                {
+                    foreach (var And_elm in And)
+                    {
+                        hash ^= 397 * And_elm.GetHashCode();
+                    }
+                }
+
+                if (Or != null)
+                {
+                    foreach (var Or_elm in Or)
+                    {
+                        hash ^= 397 * Or_elm.GetHashCode();
+                    }
+                }
+
+                if (Eq != null)
+                {
+                    hash ^= 397 * Eq.GetHashCode();
+                }
+
+                if (Neq != null)
+                {
+                    hash ^= 397 * Neq.GetHashCode();
+                }
+
+                if (Contains != null)
+                {
+                    hash ^= 397 * Contains.GetHashCode();
+                }
+
+                if (Ncontains != null)
+                {
+                    hash ^= 397 * Ncontains.GetHashCode();
+                }
+
+                if (In != null)
+                {
+                    foreach (var In_elm in In)
+                    {
+                        if (In_elm != null)
+                        {
+                            hash ^= 397 * In_elm.GetHashCode();
+                        }
+                    }
+                }
+
+                if (Nin != null)
+                {
+                    foreach (var Nin_elm in Nin)
+                    {
+                        if (Nin_elm != null)
+                        {
+                            hash ^= 397 * Nin_elm.GetHashCode();
+                        }
+                    }
+                }
+
+                if (StartsWith != null)
+                {
+                    hash ^= 397 * StartsWith.GetHashCode();
+                }
+
+                if (NstartsWith != null)
+                {
+                    hash ^= 397 * NstartsWith.GetHashCode();
+                }
+
+                if (EndsWith != null)
+                {
+                    hash ^= 397 * EndsWith.GetHashCode();
+                }
+
+                if (NendsWith != null)
+                {
+                    hash ^= 397 * NendsWith.GetHashCode();
+                }
+
+                return hash;
+            }
+        }
+
+        private global::System.Collections.Generic.IReadOnlyList<global::StarRepo.GraphQL.StringOperationFilterInput>? _value_and;
+        private global::System.Boolean _set_and;
+        private global::System.Collections.Generic.IReadOnlyList<global::StarRepo.GraphQL.StringOperationFilterInput>? _value_or;
+        private global::System.Boolean _set_or;
+        private global::System.String? _value_eq;
+        private global::System.Boolean _set_eq;
+        private global::System.String? _value_neq;
+        private global::System.Boolean _set_neq;
+        private global::System.String? _value_contains;
+        private global::System.Boolean _set_contains;
+        private global::System.String? _value_ncontains;
+        private global::System.Boolean _set_ncontains;
+        private global::System.Collections.Generic.IReadOnlyList<global::System.String?>? _value_in;
+        private global::System.Boolean _set_in;
+        private global::System.Collections.Generic.IReadOnlyList<global::System.String?>? _value_nin;
+        private global::System.Boolean _set_nin;
+        private global::System.String? _value_startsWith;
+        private global::System.Boolean _set_startsWith;
+        private global::System.String? _value_nstartsWith;
+        private global::System.Boolean _set_nstartsWith;
+        private global::System.String? _value_endsWith;
+        private global::System.Boolean _set_endsWith;
+        private global::System.String? _value_nendsWith;
+        private global::System.Boolean _set_nendsWith;
+        public global::System.Collections.Generic.IReadOnlyList<global::StarRepo.GraphQL.StringOperationFilterInput>? And
+        {
+            get => _value_and;
+            set
+            {
+                _set_and = true;
+                _value_and = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IStringOperationFilterInputInfo.IsAndSet => _set_and;
+        public global::System.Collections.Generic.IReadOnlyList<global::StarRepo.GraphQL.StringOperationFilterInput>? Or
+        {
+            get => _value_or;
+            set
+            {
+                _set_or = true;
+                _value_or = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IStringOperationFilterInputInfo.IsOrSet => _set_or;
+        public global::System.String? Eq
+        {
+            get => _value_eq;
+            set
+            {
+                _set_eq = true;
+                _value_eq = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IStringOperationFilterInputInfo.IsEqSet => _set_eq;
+        public global::System.String? Neq
+        {
+            get => _value_neq;
+            set
+            {
+                _set_neq = true;
+                _value_neq = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IStringOperationFilterInputInfo.IsNeqSet => _set_neq;
+        public global::System.String? Contains
+        {
+            get => _value_contains;
+            set
+            {
+                _set_contains = true;
+                _value_contains = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IStringOperationFilterInputInfo.IsContainsSet => _set_contains;
+        public global::System.String? Ncontains
+        {
+            get => _value_ncontains;
+            set
+            {
+                _set_ncontains = true;
+                _value_ncontains = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IStringOperationFilterInputInfo.IsNcontainsSet => _set_ncontains;
+        public global::System.Collections.Generic.IReadOnlyList<global::System.String?>? In
+        {
+            get => _value_in;
+            set
+            {
+                _set_in = true;
+                _value_in = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IStringOperationFilterInputInfo.IsInSet => _set_in;
+        public global::System.Collections.Generic.IReadOnlyList<global::System.String?>? Nin
+        {
+            get => _value_nin;
+            set
+            {
+                _set_nin = true;
+                _value_nin = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IStringOperationFilterInputInfo.IsNinSet => _set_nin;
+        public global::System.String? StartsWith
+        {
+            get => _value_startsWith;
+            set
+            {
+                _set_startsWith = true;
+                _value_startsWith = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IStringOperationFilterInputInfo.IsStartsWithSet => _set_startsWith;
+        public global::System.String? NstartsWith
+        {
+            get => _value_nstartsWith;
+            set
+            {
+                _set_nstartsWith = true;
+                _value_nstartsWith = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IStringOperationFilterInputInfo.IsNstartsWithSet => _set_nstartsWith;
+        public global::System.String? EndsWith
+        {
+            get => _value_endsWith;
+            set
+            {
+                _set_endsWith = true;
+                _value_endsWith = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IStringOperationFilterInputInfo.IsEndsWithSet => _set_endsWith;
+        public global::System.String? NendsWith
+        {
+            get => _value_nendsWith;
+            set
+            {
+                _set_nendsWith = true;
+                _value_nendsWith = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IStringOperationFilterInputInfo.IsNendsWithSet => _set_nendsWith;
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class TelescopeFilterInputInputValueFormatter : global::StrawberryShake.Serialization.IInputObjectFormatter
+    {
+        private global::StrawberryShake.Serialization.IInputValueFormatter _telescopeFilterInputFormatter = default !;
+        private global::StrawberryShake.Serialization.IInputValueFormatter _comparableGuidOperationFilterInputFormatter = default !;
+        private global::StrawberryShake.Serialization.IInputValueFormatter _stringOperationFilterInputFormatter = default !;
+        private global::StrawberryShake.Serialization.IInputValueFormatter _comparableInt32OperationFilterInputFormatter = default !;
+        private global::StrawberryShake.Serialization.IInputValueFormatter _comparableDoubleOperationFilterInputFormatter = default !;
+        public global::System.String TypeName => "TelescopeFilterInput";
+        public void Initialize(global::StrawberryShake.Serialization.ISerializerResolver serializerResolver)
+        {
+            _telescopeFilterInputFormatter = serializerResolver.GetInputValueFormatter("TelescopeFilterInput");
+            _comparableGuidOperationFilterInputFormatter = serializerResolver.GetInputValueFormatter("ComparableGuidOperationFilterInput");
+            _stringOperationFilterInputFormatter = serializerResolver.GetInputValueFormatter("StringOperationFilterInput");
+            _comparableInt32OperationFilterInputFormatter = serializerResolver.GetInputValueFormatter("ComparableInt32OperationFilterInput");
+            _comparableDoubleOperationFilterInputFormatter = serializerResolver.GetInputValueFormatter("ComparableDoubleOperationFilterInput");
+        }
+
+        public global::System.Object? Format(global::System.Object? runtimeValue)
+        {
+            if (runtimeValue is null)
+            {
+                return null;
+            }
+
+            var input = runtimeValue as global::StarRepo.GraphQL.TelescopeFilterInput;
+            var inputInfo = runtimeValue as global::StarRepo.GraphQL.State.ITelescopeFilterInputInfo;
+            if (input is null || inputInfo is null)
+            {
+                throw new global::System.ArgumentException(nameof(runtimeValue));
+            }
+
+            var fields = new global::System.Collections.Generic.List<global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>>();
+            if (inputInfo.IsAndSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("and", FormatAnd(input.And)));
+            }
+
+            if (inputInfo.IsOrSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("or", FormatOr(input.Or)));
+            }
+
+            if (inputInfo.IsIdSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("id", FormatId(input.Id)));
+            }
+
+            if (inputInfo.IsManufacturerSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("manufacturer", FormatManufacturer(input.Manufacturer)));
+            }
+
+            if (inputInfo.IsModelSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("model", FormatModel(input.Model)));
+            }
+
+            if (inputInfo.IsFocalLengthMMSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("focalLengthMM", FormatFocalLengthMM(input.FocalLengthMM)));
+            }
+
+            if (inputInfo.IsApertureMMSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("apertureMM", FormatApertureMM(input.ApertureMM)));
+            }
+
+            if (inputInfo.IsFStopSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("fStop", FormatFStop(input.FStop)));
+            }
+
+            return fields;
+        }
+
+        private global::System.Object? FormatAnd(global::System.Collections.Generic.IReadOnlyList<global::StarRepo.GraphQL.TelescopeFilterInput>? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                var input_list = new global::System.Collections.Generic.List<global::System.Object?>();
+                foreach (var input_elm in input)
+                {
+                    if (input_elm is null)
+                    {
+                        throw new global::System.ArgumentNullException(nameof(input_elm));
+                    }
+
+                    input_list.Add(_telescopeFilterInputFormatter.Format(input_elm));
+                }
+
+                return input_list;
+            }
+        }
+
+        private global::System.Object? FormatOr(global::System.Collections.Generic.IReadOnlyList<global::StarRepo.GraphQL.TelescopeFilterInput>? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                var input_list = new global::System.Collections.Generic.List<global::System.Object?>();
+                foreach (var input_elm in input)
+                {
+                    if (input_elm is null)
+                    {
+                        throw new global::System.ArgumentNullException(nameof(input_elm));
+                    }
+
+                    input_list.Add(_telescopeFilterInputFormatter.Format(input_elm));
+                }
+
+                return input_list;
+            }
+        }
+
+        private global::System.Object? FormatId(global::StarRepo.GraphQL.ComparableGuidOperationFilterInput? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _comparableGuidOperationFilterInputFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatManufacturer(global::StarRepo.GraphQL.StringOperationFilterInput? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _stringOperationFilterInputFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatModel(global::StarRepo.GraphQL.StringOperationFilterInput? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _stringOperationFilterInputFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatFocalLengthMM(global::StarRepo.GraphQL.ComparableInt32OperationFilterInput? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _comparableInt32OperationFilterInputFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatApertureMM(global::StarRepo.GraphQL.ComparableInt32OperationFilterInput? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _comparableInt32OperationFilterInputFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatFStop(global::StarRepo.GraphQL.ComparableDoubleOperationFilterInput? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _comparableDoubleOperationFilterInputFormatter.Format(input);
+            }
+        }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class TelescopeFilterInput : global::StarRepo.GraphQL.State.ITelescopeFilterInputInfo, global::System.IEquatable<TelescopeFilterInput>
+    {
+        public override global::System.Boolean Equals(global::System.Object? obj)
+        {
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            if (obj.GetType() != GetType())
+            {
+                return false;
+            }
+
+            return Equals((TelescopeFilterInput)obj);
+        }
+
+        public virtual global::System.Boolean Equals(TelescopeFilterInput? other)
+        {
+            if (ReferenceEquals(null, other))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, other))
+            {
+                return true;
+            }
+
+            if (other.GetType() != GetType())
+            {
+                return false;
+            }
+
+            return (global::StrawberryShake.Helper.ComparisonHelper.SequenceEqual(And, other.And)) && global::StrawberryShake.Helper.ComparisonHelper.SequenceEqual(Or, other.Or) && ((Id is null && other.Id is null) || Id != null && Id.Equals(other.Id)) && ((Manufacturer is null && other.Manufacturer is null) || Manufacturer != null && Manufacturer.Equals(other.Manufacturer)) && ((Model is null && other.Model is null) || Model != null && Model.Equals(other.Model)) && ((FocalLengthMM is null && other.FocalLengthMM is null) || FocalLengthMM != null && FocalLengthMM.Equals(other.FocalLengthMM)) && ((ApertureMM is null && other.ApertureMM is null) || ApertureMM != null && ApertureMM.Equals(other.ApertureMM)) && ((FStop is null && other.FStop is null) || FStop != null && FStop.Equals(other.FStop));
+        }
+
+        public override global::System.Int32 GetHashCode()
+        {
+            unchecked
+            {
+                int hash = 5;
+                if (And != null)
+                {
+                    foreach (var And_elm in And)
+                    {
+                        hash ^= 397 * And_elm.GetHashCode();
+                    }
+                }
+
+                if (Or != null)
+                {
+                    foreach (var Or_elm in Or)
+                    {
+                        hash ^= 397 * Or_elm.GetHashCode();
+                    }
+                }
+
+                if (Id != null)
+                {
+                    hash ^= 397 * Id.GetHashCode();
+                }
+
+                if (Manufacturer != null)
+                {
+                    hash ^= 397 * Manufacturer.GetHashCode();
+                }
+
+                if (Model != null)
+                {
+                    hash ^= 397 * Model.GetHashCode();
+                }
+
+                if (FocalLengthMM != null)
+                {
+                    hash ^= 397 * FocalLengthMM.GetHashCode();
+                }
+
+                if (ApertureMM != null)
+                {
+                    hash ^= 397 * ApertureMM.GetHashCode();
+                }
+
+                if (FStop != null)
+                {
+                    hash ^= 397 * FStop.GetHashCode();
+                }
+
+                return hash;
+            }
+        }
+
+        private global::System.Collections.Generic.IReadOnlyList<global::StarRepo.GraphQL.TelescopeFilterInput>? _value_and;
+        private global::System.Boolean _set_and;
+        private global::System.Collections.Generic.IReadOnlyList<global::StarRepo.GraphQL.TelescopeFilterInput>? _value_or;
+        private global::System.Boolean _set_or;
+        private global::StarRepo.GraphQL.ComparableGuidOperationFilterInput? _value_id;
+        private global::System.Boolean _set_id;
+        private global::StarRepo.GraphQL.StringOperationFilterInput? _value_manufacturer;
+        private global::System.Boolean _set_manufacturer;
+        private global::StarRepo.GraphQL.StringOperationFilterInput? _value_model;
+        private global::System.Boolean _set_model;
+        private global::StarRepo.GraphQL.ComparableInt32OperationFilterInput? _value_focalLengthMM;
+        private global::System.Boolean _set_focalLengthMM;
+        private global::StarRepo.GraphQL.ComparableInt32OperationFilterInput? _value_apertureMM;
+        private global::System.Boolean _set_apertureMM;
+        private global::StarRepo.GraphQL.ComparableDoubleOperationFilterInput? _value_fStop;
+        private global::System.Boolean _set_fStop;
+        public global::System.Collections.Generic.IReadOnlyList<global::StarRepo.GraphQL.TelescopeFilterInput>? And
+        {
+            get => _value_and;
+            set
+            {
+                _set_and = true;
+                _value_and = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.ITelescopeFilterInputInfo.IsAndSet => _set_and;
+        public global::System.Collections.Generic.IReadOnlyList<global::StarRepo.GraphQL.TelescopeFilterInput>? Or
+        {
+            get => _value_or;
+            set
+            {
+                _set_or = true;
+                _value_or = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.ITelescopeFilterInputInfo.IsOrSet => _set_or;
+        public global::StarRepo.GraphQL.ComparableGuidOperationFilterInput? Id
+        {
+            get => _value_id;
+            set
+            {
+                _set_id = true;
+                _value_id = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.ITelescopeFilterInputInfo.IsIdSet => _set_id;
+        public global::StarRepo.GraphQL.StringOperationFilterInput? Manufacturer
+        {
+            get => _value_manufacturer;
+            set
+            {
+                _set_manufacturer = true;
+                _value_manufacturer = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.ITelescopeFilterInputInfo.IsManufacturerSet => _set_manufacturer;
+        public global::StarRepo.GraphQL.StringOperationFilterInput? Model
+        {
+            get => _value_model;
+            set
+            {
+                _set_model = true;
+                _value_model = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.ITelescopeFilterInputInfo.IsModelSet => _set_model;
+        public global::StarRepo.GraphQL.ComparableInt32OperationFilterInput? FocalLengthMM
+        {
+            get => _value_focalLengthMM;
+            set
+            {
+                _set_focalLengthMM = true;
+                _value_focalLengthMM = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.ITelescopeFilterInputInfo.IsFocalLengthMMSet => _set_focalLengthMM;
+        public global::StarRepo.GraphQL.ComparableInt32OperationFilterInput? ApertureMM
+        {
+            get => _value_apertureMM;
+            set
+            {
+                _set_apertureMM = true;
+                _value_apertureMM = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.ITelescopeFilterInputInfo.IsApertureMMSet => _set_apertureMM;
+        public global::StarRepo.GraphQL.ComparableDoubleOperationFilterInput? FStop
+        {
+            get => _value_fStop;
+            set
+            {
+                _set_fStop = true;
+                _value_fStop = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.ITelescopeFilterInputInfo.IsFStopSet => _set_fStop;
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class ComparableInt32OperationFilterInputInputValueFormatter : global::StrawberryShake.Serialization.IInputObjectFormatter
+    {
+        private global::StrawberryShake.Serialization.IInputValueFormatter _intFormatter = default !;
+        public global::System.String TypeName => "ComparableInt32OperationFilterInput";
+        public void Initialize(global::StrawberryShake.Serialization.ISerializerResolver serializerResolver)
+        {
+            _intFormatter = serializerResolver.GetInputValueFormatter("Int");
+        }
+
+        public global::System.Object? Format(global::System.Object? runtimeValue)
+        {
+            if (runtimeValue is null)
+            {
+                return null;
+            }
+
+            var input = runtimeValue as global::StarRepo.GraphQL.ComparableInt32OperationFilterInput;
+            var inputInfo = runtimeValue as global::StarRepo.GraphQL.State.IComparableInt32OperationFilterInputInfo;
+            if (input is null || inputInfo is null)
+            {
+                throw new global::System.ArgumentException(nameof(runtimeValue));
+            }
+
+            var fields = new global::System.Collections.Generic.List<global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>>();
+            if (inputInfo.IsEqSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("eq", FormatEq(input.Eq)));
+            }
+
+            if (inputInfo.IsNeqSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("neq", FormatNeq(input.Neq)));
+            }
+
+            if (inputInfo.IsInSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("in", FormatIn(input.In)));
+            }
+
+            if (inputInfo.IsNinSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("nin", FormatNin(input.Nin)));
+            }
+
+            if (inputInfo.IsGtSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("gt", FormatGt(input.Gt)));
+            }
+
+            if (inputInfo.IsNgtSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("ngt", FormatNgt(input.Ngt)));
+            }
+
+            if (inputInfo.IsGteSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("gte", FormatGte(input.Gte)));
+            }
+
+            if (inputInfo.IsNgteSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("ngte", FormatNgte(input.Ngte)));
+            }
+
+            if (inputInfo.IsLtSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("lt", FormatLt(input.Lt)));
+            }
+
+            if (inputInfo.IsNltSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("nlt", FormatNlt(input.Nlt)));
+            }
+
+            if (inputInfo.IsLteSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("lte", FormatLte(input.Lte)));
+            }
+
+            if (inputInfo.IsNlteSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("nlte", FormatNlte(input.Nlte)));
+            }
+
+            return fields;
+        }
+
+        private global::System.Object? FormatEq(global::System.Int32? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _intFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatNeq(global::System.Int32? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _intFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatIn(global::System.Collections.Generic.IReadOnlyList<global::System.Int32>? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                var input_list = new global::System.Collections.Generic.List<global::System.Object?>();
+                foreach (var input_elm in input)
+                {
+                    input_list.Add(_intFormatter.Format(input_elm));
+                }
+
+                return input_list;
+            }
+        }
+
+        private global::System.Object? FormatNin(global::System.Collections.Generic.IReadOnlyList<global::System.Int32>? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                var input_list = new global::System.Collections.Generic.List<global::System.Object?>();
+                foreach (var input_elm in input)
+                {
+                    input_list.Add(_intFormatter.Format(input_elm));
+                }
+
+                return input_list;
+            }
+        }
+
+        private global::System.Object? FormatGt(global::System.Int32? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _intFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatNgt(global::System.Int32? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _intFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatGte(global::System.Int32? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _intFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatNgte(global::System.Int32? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _intFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatLt(global::System.Int32? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _intFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatNlt(global::System.Int32? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _intFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatLte(global::System.Int32? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _intFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatNlte(global::System.Int32? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _intFormatter.Format(input);
+            }
+        }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class ComparableInt32OperationFilterInput : global::StarRepo.GraphQL.State.IComparableInt32OperationFilterInputInfo, global::System.IEquatable<ComparableInt32OperationFilterInput>
+    {
+        public override global::System.Boolean Equals(global::System.Object? obj)
+        {
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            if (obj.GetType() != GetType())
+            {
+                return false;
+            }
+
+            return Equals((ComparableInt32OperationFilterInput)obj);
+        }
+
+        public virtual global::System.Boolean Equals(ComparableInt32OperationFilterInput? other)
+        {
+            if (ReferenceEquals(null, other))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, other))
+            {
+                return true;
+            }
+
+            if (other.GetType() != GetType())
+            {
+                return false;
+            }
+
+            return (Eq == other.Eq) && Neq == other.Neq && global::StrawberryShake.Helper.ComparisonHelper.SequenceEqual(In, other.In) && global::StrawberryShake.Helper.ComparisonHelper.SequenceEqual(Nin, other.Nin) && Gt == other.Gt && Ngt == other.Ngt && Gte == other.Gte && Ngte == other.Ngte && Lt == other.Lt && Nlt == other.Nlt && Lte == other.Lte && Nlte == other.Nlte;
+        }
+
+        public override global::System.Int32 GetHashCode()
+        {
+            unchecked
+            {
+                int hash = 5;
+                if (Eq != null)
+                {
+                    hash ^= 397 * Eq.GetHashCode();
+                }
+
+                if (Neq != null)
+                {
+                    hash ^= 397 * Neq.GetHashCode();
+                }
+
+                if (In != null)
+                {
+                    foreach (var In_elm in In)
+                    {
+                        hash ^= 397 * In_elm.GetHashCode();
+                    }
+                }
+
+                if (Nin != null)
+                {
+                    foreach (var Nin_elm in Nin)
+                    {
+                        hash ^= 397 * Nin_elm.GetHashCode();
+                    }
+                }
+
+                if (Gt != null)
+                {
+                    hash ^= 397 * Gt.GetHashCode();
+                }
+
+                if (Ngt != null)
+                {
+                    hash ^= 397 * Ngt.GetHashCode();
+                }
+
+                if (Gte != null)
+                {
+                    hash ^= 397 * Gte.GetHashCode();
+                }
+
+                if (Ngte != null)
+                {
+                    hash ^= 397 * Ngte.GetHashCode();
+                }
+
+                if (Lt != null)
+                {
+                    hash ^= 397 * Lt.GetHashCode();
+                }
+
+                if (Nlt != null)
+                {
+                    hash ^= 397 * Nlt.GetHashCode();
+                }
+
+                if (Lte != null)
+                {
+                    hash ^= 397 * Lte.GetHashCode();
+                }
+
+                if (Nlte != null)
+                {
+                    hash ^= 397 * Nlte.GetHashCode();
+                }
+
+                return hash;
+            }
+        }
+
+        private global::System.Int32? _value_eq;
+        private global::System.Boolean _set_eq;
+        private global::System.Int32? _value_neq;
+        private global::System.Boolean _set_neq;
+        private global::System.Collections.Generic.IReadOnlyList<global::System.Int32>? _value_in;
+        private global::System.Boolean _set_in;
+        private global::System.Collections.Generic.IReadOnlyList<global::System.Int32>? _value_nin;
+        private global::System.Boolean _set_nin;
+        private global::System.Int32? _value_gt;
+        private global::System.Boolean _set_gt;
+        private global::System.Int32? _value_ngt;
+        private global::System.Boolean _set_ngt;
+        private global::System.Int32? _value_gte;
+        private global::System.Boolean _set_gte;
+        private global::System.Int32? _value_ngte;
+        private global::System.Boolean _set_ngte;
+        private global::System.Int32? _value_lt;
+        private global::System.Boolean _set_lt;
+        private global::System.Int32? _value_nlt;
+        private global::System.Boolean _set_nlt;
+        private global::System.Int32? _value_lte;
+        private global::System.Boolean _set_lte;
+        private global::System.Int32? _value_nlte;
+        private global::System.Boolean _set_nlte;
+        public global::System.Int32? Eq
+        {
+            get => _value_eq;
+            set
+            {
+                _set_eq = true;
+                _value_eq = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IComparableInt32OperationFilterInputInfo.IsEqSet => _set_eq;
+        public global::System.Int32? Neq
+        {
+            get => _value_neq;
+            set
+            {
+                _set_neq = true;
+                _value_neq = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IComparableInt32OperationFilterInputInfo.IsNeqSet => _set_neq;
+        public global::System.Collections.Generic.IReadOnlyList<global::System.Int32>? In
+        {
+            get => _value_in;
+            set
+            {
+                _set_in = true;
+                _value_in = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IComparableInt32OperationFilterInputInfo.IsInSet => _set_in;
+        public global::System.Collections.Generic.IReadOnlyList<global::System.Int32>? Nin
+        {
+            get => _value_nin;
+            set
+            {
+                _set_nin = true;
+                _value_nin = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IComparableInt32OperationFilterInputInfo.IsNinSet => _set_nin;
+        public global::System.Int32? Gt
+        {
+            get => _value_gt;
+            set
+            {
+                _set_gt = true;
+                _value_gt = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IComparableInt32OperationFilterInputInfo.IsGtSet => _set_gt;
+        public global::System.Int32? Ngt
+        {
+            get => _value_ngt;
+            set
+            {
+                _set_ngt = true;
+                _value_ngt = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IComparableInt32OperationFilterInputInfo.IsNgtSet => _set_ngt;
+        public global::System.Int32? Gte
+        {
+            get => _value_gte;
+            set
+            {
+                _set_gte = true;
+                _value_gte = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IComparableInt32OperationFilterInputInfo.IsGteSet => _set_gte;
+        public global::System.Int32? Ngte
+        {
+            get => _value_ngte;
+            set
+            {
+                _set_ngte = true;
+                _value_ngte = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IComparableInt32OperationFilterInputInfo.IsNgteSet => _set_ngte;
+        public global::System.Int32? Lt
+        {
+            get => _value_lt;
+            set
+            {
+                _set_lt = true;
+                _value_lt = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IComparableInt32OperationFilterInputInfo.IsLtSet => _set_lt;
+        public global::System.Int32? Nlt
+        {
+            get => _value_nlt;
+            set
+            {
+                _set_nlt = true;
+                _value_nlt = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IComparableInt32OperationFilterInputInfo.IsNltSet => _set_nlt;
+        public global::System.Int32? Lte
+        {
+            get => _value_lte;
+            set
+            {
+                _set_lte = true;
+                _value_lte = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IComparableInt32OperationFilterInputInfo.IsLteSet => _set_lte;
+        public global::System.Int32? Nlte
+        {
+            get => _value_nlte;
+            set
+            {
+                _set_nlte = true;
+                _value_nlte = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IComparableInt32OperationFilterInputInfo.IsNlteSet => _set_nlte;
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class ComparableDoubleOperationFilterInputInputValueFormatter : global::StrawberryShake.Serialization.IInputObjectFormatter
+    {
+        private global::StrawberryShake.Serialization.IInputValueFormatter _floatFormatter = default !;
+        public global::System.String TypeName => "ComparableDoubleOperationFilterInput";
+        public void Initialize(global::StrawberryShake.Serialization.ISerializerResolver serializerResolver)
+        {
+            _floatFormatter = serializerResolver.GetInputValueFormatter("Float");
+        }
+
+        public global::System.Object? Format(global::System.Object? runtimeValue)
+        {
+            if (runtimeValue is null)
+            {
+                return null;
+            }
+
+            var input = runtimeValue as global::StarRepo.GraphQL.ComparableDoubleOperationFilterInput;
+            var inputInfo = runtimeValue as global::StarRepo.GraphQL.State.IComparableDoubleOperationFilterInputInfo;
+            if (input is null || inputInfo is null)
+            {
+                throw new global::System.ArgumentException(nameof(runtimeValue));
+            }
+
+            var fields = new global::System.Collections.Generic.List<global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>>();
+            if (inputInfo.IsEqSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("eq", FormatEq(input.Eq)));
+            }
+
+            if (inputInfo.IsNeqSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("neq", FormatNeq(input.Neq)));
+            }
+
+            if (inputInfo.IsInSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("in", FormatIn(input.In)));
+            }
+
+            if (inputInfo.IsNinSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("nin", FormatNin(input.Nin)));
+            }
+
+            if (inputInfo.IsGtSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("gt", FormatGt(input.Gt)));
+            }
+
+            if (inputInfo.IsNgtSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("ngt", FormatNgt(input.Ngt)));
+            }
+
+            if (inputInfo.IsGteSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("gte", FormatGte(input.Gte)));
+            }
+
+            if (inputInfo.IsNgteSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("ngte", FormatNgte(input.Ngte)));
+            }
+
+            if (inputInfo.IsLtSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("lt", FormatLt(input.Lt)));
+            }
+
+            if (inputInfo.IsNltSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("nlt", FormatNlt(input.Nlt)));
+            }
+
+            if (inputInfo.IsLteSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("lte", FormatLte(input.Lte)));
+            }
+
+            if (inputInfo.IsNlteSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("nlte", FormatNlte(input.Nlte)));
+            }
+
+            return fields;
+        }
+
+        private global::System.Object? FormatEq(global::System.Double? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _floatFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatNeq(global::System.Double? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _floatFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatIn(global::System.Collections.Generic.IReadOnlyList<global::System.Double>? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                var input_list = new global::System.Collections.Generic.List<global::System.Object?>();
+                foreach (var input_elm in input)
+                {
+                    input_list.Add(_floatFormatter.Format(input_elm));
+                }
+
+                return input_list;
+            }
+        }
+
+        private global::System.Object? FormatNin(global::System.Collections.Generic.IReadOnlyList<global::System.Double>? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                var input_list = new global::System.Collections.Generic.List<global::System.Object?>();
+                foreach (var input_elm in input)
+                {
+                    input_list.Add(_floatFormatter.Format(input_elm));
+                }
+
+                return input_list;
+            }
+        }
+
+        private global::System.Object? FormatGt(global::System.Double? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _floatFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatNgt(global::System.Double? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _floatFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatGte(global::System.Double? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _floatFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatNgte(global::System.Double? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _floatFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatLt(global::System.Double? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _floatFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatNlt(global::System.Double? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _floatFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatLte(global::System.Double? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _floatFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatNlte(global::System.Double? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _floatFormatter.Format(input);
+            }
+        }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class ComparableDoubleOperationFilterInput : global::StarRepo.GraphQL.State.IComparableDoubleOperationFilterInputInfo, global::System.IEquatable<ComparableDoubleOperationFilterInput>
+    {
+        public override global::System.Boolean Equals(global::System.Object? obj)
+        {
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            if (obj.GetType() != GetType())
+            {
+                return false;
+            }
+
+            return Equals((ComparableDoubleOperationFilterInput)obj);
+        }
+
+        public virtual global::System.Boolean Equals(ComparableDoubleOperationFilterInput? other)
+        {
+            if (ReferenceEquals(null, other))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, other))
+            {
+                return true;
+            }
+
+            if (other.GetType() != GetType())
+            {
+                return false;
+            }
+
+            return (Eq == other.Eq) && Neq == other.Neq && global::StrawberryShake.Helper.ComparisonHelper.SequenceEqual(In, other.In) && global::StrawberryShake.Helper.ComparisonHelper.SequenceEqual(Nin, other.Nin) && Gt == other.Gt && Ngt == other.Ngt && Gte == other.Gte && Ngte == other.Ngte && Lt == other.Lt && Nlt == other.Nlt && Lte == other.Lte && Nlte == other.Nlte;
+        }
+
+        public override global::System.Int32 GetHashCode()
+        {
+            unchecked
+            {
+                int hash = 5;
+                if (Eq != null)
+                {
+                    hash ^= 397 * Eq.GetHashCode();
+                }
+
+                if (Neq != null)
+                {
+                    hash ^= 397 * Neq.GetHashCode();
+                }
+
+                if (In != null)
+                {
+                    foreach (var In_elm in In)
+                    {
+                        hash ^= 397 * In_elm.GetHashCode();
+                    }
+                }
+
+                if (Nin != null)
+                {
+                    foreach (var Nin_elm in Nin)
+                    {
+                        hash ^= 397 * Nin_elm.GetHashCode();
+                    }
+                }
+
+                if (Gt != null)
+                {
+                    hash ^= 397 * Gt.GetHashCode();
+                }
+
+                if (Ngt != null)
+                {
+                    hash ^= 397 * Ngt.GetHashCode();
+                }
+
+                if (Gte != null)
+                {
+                    hash ^= 397 * Gte.GetHashCode();
+                }
+
+                if (Ngte != null)
+                {
+                    hash ^= 397 * Ngte.GetHashCode();
+                }
+
+                if (Lt != null)
+                {
+                    hash ^= 397 * Lt.GetHashCode();
+                }
+
+                if (Nlt != null)
+                {
+                    hash ^= 397 * Nlt.GetHashCode();
+                }
+
+                if (Lte != null)
+                {
+                    hash ^= 397 * Lte.GetHashCode();
+                }
+
+                if (Nlte != null)
+                {
+                    hash ^= 397 * Nlte.GetHashCode();
+                }
+
+                return hash;
+            }
+        }
+
+        private global::System.Double? _value_eq;
+        private global::System.Boolean _set_eq;
+        private global::System.Double? _value_neq;
+        private global::System.Boolean _set_neq;
+        private global::System.Collections.Generic.IReadOnlyList<global::System.Double>? _value_in;
+        private global::System.Boolean _set_in;
+        private global::System.Collections.Generic.IReadOnlyList<global::System.Double>? _value_nin;
+        private global::System.Boolean _set_nin;
+        private global::System.Double? _value_gt;
+        private global::System.Boolean _set_gt;
+        private global::System.Double? _value_ngt;
+        private global::System.Boolean _set_ngt;
+        private global::System.Double? _value_gte;
+        private global::System.Boolean _set_gte;
+        private global::System.Double? _value_ngte;
+        private global::System.Boolean _set_ngte;
+        private global::System.Double? _value_lt;
+        private global::System.Boolean _set_lt;
+        private global::System.Double? _value_nlt;
+        private global::System.Boolean _set_nlt;
+        private global::System.Double? _value_lte;
+        private global::System.Boolean _set_lte;
+        private global::System.Double? _value_nlte;
+        private global::System.Boolean _set_nlte;
+        public global::System.Double? Eq
+        {
+            get => _value_eq;
+            set
+            {
+                _set_eq = true;
+                _value_eq = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IComparableDoubleOperationFilterInputInfo.IsEqSet => _set_eq;
+        public global::System.Double? Neq
+        {
+            get => _value_neq;
+            set
+            {
+                _set_neq = true;
+                _value_neq = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IComparableDoubleOperationFilterInputInfo.IsNeqSet => _set_neq;
+        public global::System.Collections.Generic.IReadOnlyList<global::System.Double>? In
+        {
+            get => _value_in;
+            set
+            {
+                _set_in = true;
+                _value_in = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IComparableDoubleOperationFilterInputInfo.IsInSet => _set_in;
+        public global::System.Collections.Generic.IReadOnlyList<global::System.Double>? Nin
+        {
+            get => _value_nin;
+            set
+            {
+                _set_nin = true;
+                _value_nin = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IComparableDoubleOperationFilterInputInfo.IsNinSet => _set_nin;
+        public global::System.Double? Gt
+        {
+            get => _value_gt;
+            set
+            {
+                _set_gt = true;
+                _value_gt = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IComparableDoubleOperationFilterInputInfo.IsGtSet => _set_gt;
+        public global::System.Double? Ngt
+        {
+            get => _value_ngt;
+            set
+            {
+                _set_ngt = true;
+                _value_ngt = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IComparableDoubleOperationFilterInputInfo.IsNgtSet => _set_ngt;
+        public global::System.Double? Gte
+        {
+            get => _value_gte;
+            set
+            {
+                _set_gte = true;
+                _value_gte = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IComparableDoubleOperationFilterInputInfo.IsGteSet => _set_gte;
+        public global::System.Double? Ngte
+        {
+            get => _value_ngte;
+            set
+            {
+                _set_ngte = true;
+                _value_ngte = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IComparableDoubleOperationFilterInputInfo.IsNgteSet => _set_ngte;
+        public global::System.Double? Lt
+        {
+            get => _value_lt;
+            set
+            {
+                _set_lt = true;
+                _value_lt = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IComparableDoubleOperationFilterInputInfo.IsLtSet => _set_lt;
+        public global::System.Double? Nlt
+        {
+            get => _value_nlt;
+            set
+            {
+                _set_nlt = true;
+                _value_nlt = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IComparableDoubleOperationFilterInputInfo.IsNltSet => _set_nlt;
+        public global::System.Double? Lte
+        {
+            get => _value_lte;
+            set
+            {
+                _set_lte = true;
+                _value_lte = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IComparableDoubleOperationFilterInputInfo.IsLteSet => _set_lte;
+        public global::System.Double? Nlte
+        {
+            get => _value_nlte;
+            set
+            {
+                _set_nlte = true;
+                _value_nlte = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.IComparableDoubleOperationFilterInputInfo.IsNlteSet => _set_nlte;
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class TargetFilterInputInputValueFormatter : global::StrawberryShake.Serialization.IInputObjectFormatter
+    {
+        private global::StrawberryShake.Serialization.IInputValueFormatter _targetFilterInputFormatter = default !;
+        private global::StrawberryShake.Serialization.IInputValueFormatter _comparableGuidOperationFilterInputFormatter = default !;
+        private global::StrawberryShake.Serialization.IInputValueFormatter _stringOperationFilterInputFormatter = default !;
+        public global::System.String TypeName => "TargetFilterInput";
+        public void Initialize(global::StrawberryShake.Serialization.ISerializerResolver serializerResolver)
+        {
+            _targetFilterInputFormatter = serializerResolver.GetInputValueFormatter("TargetFilterInput");
+            _comparableGuidOperationFilterInputFormatter = serializerResolver.GetInputValueFormatter("ComparableGuidOperationFilterInput");
+            _stringOperationFilterInputFormatter = serializerResolver.GetInputValueFormatter("StringOperationFilterInput");
+        }
+
+        public global::System.Object? Format(global::System.Object? runtimeValue)
+        {
+            if (runtimeValue is null)
+            {
+                return null;
+            }
+
+            var input = runtimeValue as global::StarRepo.GraphQL.TargetFilterInput;
+            var inputInfo = runtimeValue as global::StarRepo.GraphQL.State.ITargetFilterInputInfo;
+            if (input is null || inputInfo is null)
+            {
+                throw new global::System.ArgumentException(nameof(runtimeValue));
+            }
+
+            var fields = new global::System.Collections.Generic.List<global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>>();
+            if (inputInfo.IsAndSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("and", FormatAnd(input.And)));
+            }
+
+            if (inputInfo.IsOrSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("or", FormatOr(input.Or)));
+            }
+
+            if (inputInfo.IsIdSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("id", FormatId(input.Id)));
+            }
+
+            if (inputInfo.IsNameSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("name", FormatName(input.Name)));
+            }
+
+            if (inputInfo.IsDescriptionSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("description", FormatDescription(input.Description)));
+            }
+
+            return fields;
+        }
+
+        private global::System.Object? FormatAnd(global::System.Collections.Generic.IReadOnlyList<global::StarRepo.GraphQL.TargetFilterInput>? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                var input_list = new global::System.Collections.Generic.List<global::System.Object?>();
+                foreach (var input_elm in input)
+                {
+                    if (input_elm is null)
+                    {
+                        throw new global::System.ArgumentNullException(nameof(input_elm));
+                    }
+
+                    input_list.Add(_targetFilterInputFormatter.Format(input_elm));
+                }
+
+                return input_list;
+            }
+        }
+
+        private global::System.Object? FormatOr(global::System.Collections.Generic.IReadOnlyList<global::StarRepo.GraphQL.TargetFilterInput>? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                var input_list = new global::System.Collections.Generic.List<global::System.Object?>();
+                foreach (var input_elm in input)
+                {
+                    if (input_elm is null)
+                    {
+                        throw new global::System.ArgumentNullException(nameof(input_elm));
+                    }
+
+                    input_list.Add(_targetFilterInputFormatter.Format(input_elm));
+                }
+
+                return input_list;
+            }
+        }
+
+        private global::System.Object? FormatId(global::StarRepo.GraphQL.ComparableGuidOperationFilterInput? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _comparableGuidOperationFilterInputFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatName(global::StarRepo.GraphQL.StringOperationFilterInput? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _stringOperationFilterInputFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatDescription(global::StarRepo.GraphQL.StringOperationFilterInput? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _stringOperationFilterInputFormatter.Format(input);
+            }
+        }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class TargetFilterInput : global::StarRepo.GraphQL.State.ITargetFilterInputInfo, global::System.IEquatable<TargetFilterInput>
+    {
+        public override global::System.Boolean Equals(global::System.Object? obj)
+        {
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            if (obj.GetType() != GetType())
+            {
+                return false;
+            }
+
+            return Equals((TargetFilterInput)obj);
+        }
+
+        public virtual global::System.Boolean Equals(TargetFilterInput? other)
+        {
+            if (ReferenceEquals(null, other))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, other))
+            {
+                return true;
+            }
+
+            if (other.GetType() != GetType())
+            {
+                return false;
+            }
+
+            return (global::StrawberryShake.Helper.ComparisonHelper.SequenceEqual(And, other.And)) && global::StrawberryShake.Helper.ComparisonHelper.SequenceEqual(Or, other.Or) && ((Id is null && other.Id is null) || Id != null && Id.Equals(other.Id)) && ((Name is null && other.Name is null) || Name != null && Name.Equals(other.Name)) && ((Description is null && other.Description is null) || Description != null && Description.Equals(other.Description));
+        }
+
+        public override global::System.Int32 GetHashCode()
+        {
+            unchecked
+            {
+                int hash = 5;
+                if (And != null)
+                {
+                    foreach (var And_elm in And)
+                    {
+                        hash ^= 397 * And_elm.GetHashCode();
+                    }
+                }
+
+                if (Or != null)
+                {
+                    foreach (var Or_elm in Or)
+                    {
+                        hash ^= 397 * Or_elm.GetHashCode();
+                    }
+                }
+
+                if (Id != null)
+                {
+                    hash ^= 397 * Id.GetHashCode();
+                }
+
+                if (Name != null)
+                {
+                    hash ^= 397 * Name.GetHashCode();
+                }
+
+                if (Description != null)
+                {
+                    hash ^= 397 * Description.GetHashCode();
+                }
+
+                return hash;
+            }
+        }
+
+        private global::System.Collections.Generic.IReadOnlyList<global::StarRepo.GraphQL.TargetFilterInput>? _value_and;
+        private global::System.Boolean _set_and;
+        private global::System.Collections.Generic.IReadOnlyList<global::StarRepo.GraphQL.TargetFilterInput>? _value_or;
+        private global::System.Boolean _set_or;
+        private global::StarRepo.GraphQL.ComparableGuidOperationFilterInput? _value_id;
+        private global::System.Boolean _set_id;
+        private global::StarRepo.GraphQL.StringOperationFilterInput? _value_name;
+        private global::System.Boolean _set_name;
+        private global::StarRepo.GraphQL.StringOperationFilterInput? _value_description;
+        private global::System.Boolean _set_description;
+        public global::System.Collections.Generic.IReadOnlyList<global::StarRepo.GraphQL.TargetFilterInput>? And
+        {
+            get => _value_and;
+            set
+            {
+                _set_and = true;
+                _value_and = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.ITargetFilterInputInfo.IsAndSet => _set_and;
+        public global::System.Collections.Generic.IReadOnlyList<global::StarRepo.GraphQL.TargetFilterInput>? Or
+        {
+            get => _value_or;
+            set
+            {
+                _set_or = true;
+                _value_or = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.ITargetFilterInputInfo.IsOrSet => _set_or;
+        public global::StarRepo.GraphQL.ComparableGuidOperationFilterInput? Id
+        {
+            get => _value_id;
+            set
+            {
+                _set_id = true;
+                _value_id = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.ITargetFilterInputInfo.IsIdSet => _set_id;
+        public global::StarRepo.GraphQL.StringOperationFilterInput? Name
+        {
+            get => _value_name;
+            set
+            {
+                _set_name = true;
+                _value_name = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.ITargetFilterInputInfo.IsNameSet => _set_name;
+        public global::StarRepo.GraphQL.StringOperationFilterInput? Description
+        {
+            get => _value_description;
+            set
+            {
+                _set_description = true;
+                _value_description = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.ITargetFilterInputInfo.IsDescriptionSet => _set_description;
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class TelescopeInputInputValueFormatter : global::StrawberryShake.Serialization.IInputObjectFormatter
+    {
+        private global::StrawberryShake.Serialization.IInputValueFormatter _uUIDFormatter = default !;
+        private global::StrawberryShake.Serialization.IInputValueFormatter _stringFormatter = default !;
+        private global::StrawberryShake.Serialization.IInputValueFormatter _intFormatter = default !;
+        private global::StrawberryShake.Serialization.IInputValueFormatter _floatFormatter = default !;
+        public global::System.String TypeName => "TelescopeInput";
+        public void Initialize(global::StrawberryShake.Serialization.ISerializerResolver serializerResolver)
+        {
+            _uUIDFormatter = serializerResolver.GetInputValueFormatter("UUID");
+            _stringFormatter = serializerResolver.GetInputValueFormatter("String");
+            _intFormatter = serializerResolver.GetInputValueFormatter("Int");
+            _floatFormatter = serializerResolver.GetInputValueFormatter("Float");
+        }
+
+        public global::System.Object? Format(global::System.Object? runtimeValue)
+        {
+            if (runtimeValue is null)
+            {
+                return null;
+            }
+
+            var input = runtimeValue as global::StarRepo.GraphQL.TelescopeInput;
+            var inputInfo = runtimeValue as global::StarRepo.GraphQL.State.ITelescopeInputInfo;
+            if (input is null || inputInfo is null)
+            {
+                throw new global::System.ArgumentException(nameof(runtimeValue));
+            }
+
+            var fields = new global::System.Collections.Generic.List<global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>>();
+            if (inputInfo.IsIdSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("id", FormatId(input.Id)));
+            }
+
+            if (inputInfo.IsManufacturerSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("manufacturer", FormatManufacturer(input.Manufacturer)));
+            }
+
+            if (inputInfo.IsModelSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("model", FormatModel(input.Model)));
+            }
+
+            if (inputInfo.IsFocalLengthMMSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("focalLengthMM", FormatFocalLengthMM(input.FocalLengthMM)));
+            }
+
+            if (inputInfo.IsApertureMMSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("apertureMM", FormatApertureMM(input.ApertureMM)));
+            }
+
+            if (inputInfo.IsFStopSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("fStop", FormatFStop(input.FStop)));
+            }
+
+            return fields;
+        }
+
+        private global::System.Object? FormatId(global::System.Guid input)
+        {
+            return _uUIDFormatter.Format(input);
+        }
+
+        private global::System.Object? FormatManufacturer(global::System.String? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _stringFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatModel(global::System.String? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _stringFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatFocalLengthMM(global::System.Int32 input)
+        {
+            return _intFormatter.Format(input);
+        }
+
+        private global::System.Object? FormatApertureMM(global::System.Int32 input)
+        {
+            return _intFormatter.Format(input);
+        }
+
+        private global::System.Object? FormatFStop(global::System.Double input)
+        {
+            return _floatFormatter.Format(input);
+        }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class TelescopeInput : global::StarRepo.GraphQL.State.ITelescopeInputInfo, global::System.IEquatable<TelescopeInput>
+    {
+        public override global::System.Boolean Equals(global::System.Object? obj)
+        {
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            if (obj.GetType() != GetType())
+            {
+                return false;
+            }
+
+            return Equals((TelescopeInput)obj);
+        }
+
+        public virtual global::System.Boolean Equals(TelescopeInput? other)
+        {
+            if (ReferenceEquals(null, other))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, other))
+            {
+                return true;
+            }
+
+            if (other.GetType() != GetType())
+            {
+                return false;
+            }
+
+            return (Id.Equals(other.Id)) && ((Manufacturer is null && other.Manufacturer is null) || Manufacturer != null && Manufacturer.Equals(other.Manufacturer)) && ((Model is null && other.Model is null) || Model != null && Model.Equals(other.Model)) && FocalLengthMM == other.FocalLengthMM && ApertureMM == other.ApertureMM && FStop == other.FStop;
+        }
+
+        public override global::System.Int32 GetHashCode()
+        {
+            unchecked
+            {
+                int hash = 5;
+                hash ^= 397 * Id.GetHashCode();
+                if (Manufacturer != null)
+                {
+                    hash ^= 397 * Manufacturer.GetHashCode();
+                }
+
+                if (Model != null)
+                {
+                    hash ^= 397 * Model.GetHashCode();
+                }
+
+                hash ^= 397 * FocalLengthMM.GetHashCode();
+                hash ^= 397 * ApertureMM.GetHashCode();
+                hash ^= 397 * FStop.GetHashCode();
+                return hash;
+            }
+        }
+
+        private global::System.Guid _value_id;
+        private global::System.Boolean _set_id;
+        private global::System.String? _value_manufacturer;
+        private global::System.Boolean _set_manufacturer;
+        private global::System.String? _value_model;
+        private global::System.Boolean _set_model;
+        private global::System.Int32 _value_focalLengthMM;
+        private global::System.Boolean _set_focalLengthMM;
+        private global::System.Int32 _value_apertureMM;
+        private global::System.Boolean _set_apertureMM;
+        private global::System.Double _value_fStop;
+        private global::System.Boolean _set_fStop;
+        public global::System.Guid Id
+        {
+            get => _value_id;
+            set
+            {
+                _set_id = true;
+                _value_id = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.ITelescopeInputInfo.IsIdSet => _set_id;
+        public global::System.String? Manufacturer
+        {
+            get => _value_manufacturer;
+            set
+            {
+                _set_manufacturer = true;
+                _value_manufacturer = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.ITelescopeInputInfo.IsManufacturerSet => _set_manufacturer;
+        public global::System.String? Model
+        {
+            get => _value_model;
+            set
+            {
+                _set_model = true;
+                _value_model = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.ITelescopeInputInfo.IsModelSet => _set_model;
+        public global::System.Int32 FocalLengthMM
+        {
+            get => _value_focalLengthMM;
+            set
+            {
+                _set_focalLengthMM = true;
+                _value_focalLengthMM = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.ITelescopeInputInfo.IsFocalLengthMMSet => _set_focalLengthMM;
+        public global::System.Int32 ApertureMM
+        {
+            get => _value_apertureMM;
+            set
+            {
+                _set_apertureMM = true;
+                _value_apertureMM = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.ITelescopeInputInfo.IsApertureMMSet => _set_apertureMM;
+        public global::System.Double FStop
+        {
+            get => _value_fStop;
+            set
+            {
+                _set_fStop = true;
+                _value_fStop = value;
+            }
+        }
+
+        global::System.Boolean global::StarRepo.GraphQL.State.ITelescopeInputInfo.IsFStopSet => _set_fStop;
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public enum SortEnumType
+    {
+        Asc,
+        Desc
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class SortEnumTypeSerializer : global::StrawberryShake.Serialization.IInputValueFormatter, global::StrawberryShake.Serialization.ILeafValueParser<global::System.String, SortEnumType>
+    {
+        public global::System.String TypeName => "SortEnumType";
+        public SortEnumType Parse(global::System.String serializedValue)
+        {
+            return serializedValue switch
+            {
+                "ASC" => SortEnumType.Asc,
+                "DESC" => SortEnumType.Desc,
+                _ => throw new global::StrawberryShake.GraphQLClientException()};
+        }
+
+        public global::System.Object Format(global::System.Object? runtimeValue)
+        {
+            return runtimeValue switch
+            {
+                SortEnumType.Asc => "ASC",
+                SortEnumType.Desc => "DESC",
+                _ => throw new global::StrawberryShake.GraphQLClientException()};
+        }
+    }
+
+    /// <summary>
+    /// Represents the operation service of the GetImage GraphQL operation
+    /// <code>
+    /// query GetImage($observationId: UUID!) {
+    ///   observations(where: { id: { eq: $observationId } }) {
+    ///     __typename
+    ///     fileId
+    ///     extension
+    ///     image
+    ///     ... on Observation {
+    ///       id
+    ///     }
+    ///   }
+    /// }
+    /// </code>
+    /// </summary>
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class GetImageQueryDocument : global::StrawberryShake.IDocument
+    {
+        private GetImageQueryDocument()
+        {
+        }
+
+        public static GetImageQueryDocument Instance { get; } = new GetImageQueryDocument();
+        public global::StrawberryShake.OperationKind Kind => global::StrawberryShake.OperationKind.Query;
+        public global::System.ReadOnlySpan<global::System.Byte> Body => new global::System.Byte[]{0x71, 0x75, 0x65, 0x72, 0x79, 0x20, 0x47, 0x65, 0x74, 0x49, 0x6d, 0x61, 0x67, 0x65, 0x28, 0x24, 0x6f, 0x62, 0x73, 0x65, 0x72, 0x76, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x49, 0x64, 0x3a, 0x20, 0x55, 0x55, 0x49, 0x44, 0x21, 0x29, 0x20, 0x7b, 0x20, 0x6f, 0x62, 0x73, 0x65, 0x72, 0x76, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x28, 0x77, 0x68, 0x65, 0x72, 0x65, 0x3a, 0x20, 0x7b, 0x20, 0x69, 0x64, 0x3a, 0x20, 0x7b, 0x20, 0x65, 0x71, 0x3a, 0x20, 0x24, 0x6f, 0x62, 0x73, 0x65, 0x72, 0x76, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x49, 0x64, 0x20, 0x7d, 0x20, 0x7d, 0x29, 0x20, 0x7b, 0x20, 0x5f, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x6e, 0x61, 0x6d, 0x65, 0x20, 0x66, 0x69, 0x6c, 0x65, 0x49, 0x64, 0x20, 0x65, 0x78, 0x74, 0x65, 0x6e, 0x73, 0x69, 0x6f, 0x6e, 0x20, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x20, 0x2e, 0x2e, 0x2e, 0x20, 0x6f, 0x6e, 0x20, 0x4f, 0x62, 0x73, 0x65, 0x72, 0x76, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x20, 0x7b, 0x20, 0x69, 0x64, 0x20, 0x7d, 0x20, 0x7d, 0x20, 0x7d};
+        public global::StrawberryShake.DocumentHash Hash { get; } = new global::StrawberryShake.DocumentHash("md5Hash", "cd21b9dc4f61654fbb23d11b564ecce7");
+        public override global::System.String ToString()
+        {
+#if NETSTANDARD2_0
+        return global::System.Text.Encoding.UTF8.GetString(Body.ToArray());
+#else
+            return global::System.Text.Encoding.UTF8.GetString(Body);
+#endif
+        }
+    }
+
+    /// <summary>
+    /// Represents the operation service of the GetImage GraphQL operation
+    /// <code>
+    /// query GetImage($observationId: UUID!) {
+    ///   observations(where: { id: { eq: $observationId } }) {
+    ///     __typename
+    ///     fileId
+    ///     extension
+    ///     image
+    ///     ... on Observation {
+    ///       id
+    ///     }
+    ///   }
+    /// }
+    /// </code>
+    /// </summary>
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class GetImageQuery : global::StarRepo.GraphQL.IGetImageQuery
+    {
+        private readonly global::StrawberryShake.IOperationExecutor<IGetImageResult> _operationExecutor;
+        private readonly global::StrawberryShake.Serialization.IInputValueFormatter _uUIDFormatter;
+        public GetImageQuery(global::StrawberryShake.IOperationExecutor<IGetImageResult> operationExecutor, global::StrawberryShake.Serialization.ISerializerResolver serializerResolver)
+        {
+            _operationExecutor = operationExecutor ?? throw new global::System.ArgumentNullException(nameof(operationExecutor));
+            _uUIDFormatter = serializerResolver.GetInputValueFormatter("UUID");
+        }
+
+        global::System.Type global::StrawberryShake.IOperationRequestFactory.ResultType => typeof(IGetImageResult);
+        public async global::System.Threading.Tasks.Task<global::StrawberryShake.IOperationResult<IGetImageResult>> ExecuteAsync(global::System.Guid observationId, global::System.Threading.CancellationToken cancellationToken = default)
+        {
+            var request = CreateRequest(observationId);
+            return await _operationExecutor.ExecuteAsync(request, cancellationToken).ConfigureAwait(false);
+        }
+
+        public global::System.IObservable<global::StrawberryShake.IOperationResult<IGetImageResult>> Watch(global::System.Guid observationId, global::StrawberryShake.ExecutionStrategy? strategy = null)
+        {
+            var request = CreateRequest(observationId);
+            return _operationExecutor.Watch(request, strategy);
+        }
+
+        private global::StrawberryShake.OperationRequest CreateRequest(global::System.Guid observationId)
+        {
+            var variables = new global::System.Collections.Generic.Dictionary<global::System.String, global::System.Object?>();
+            variables.Add("observationId", FormatObservationId(observationId));
+            return CreateRequest(variables);
+        }
+
+        private global::StrawberryShake.OperationRequest CreateRequest(global::System.Collections.Generic.IReadOnlyDictionary<global::System.String, global::System.Object?>? variables)
+        {
+            return new global::StrawberryShake.OperationRequest(id: GetImageQueryDocument.Instance.Hash.Value, name: "GetImage", document: GetImageQueryDocument.Instance, strategy: global::StrawberryShake.RequestStrategy.Default, variables: variables);
+        }
+
+        private global::System.Object? FormatObservationId(global::System.Guid value)
+        {
+            return _uUIDFormatter.Format(value);
+        }
+
+        global::StrawberryShake.OperationRequest global::StrawberryShake.IOperationRequestFactory.Create(global::System.Collections.Generic.IReadOnlyDictionary<global::System.String, global::System.Object?>? variables)
+        {
+            return CreateRequest(variables!);
+        }
+    }
+
+    /// <summary>
+    /// Represents the operation service of the GetImage GraphQL operation
+    /// <code>
+    /// query GetImage($observationId: UUID!) {
+    ///   observations(where: { id: { eq: $observationId } }) {
+    ///     __typename
+    ///     fileId
+    ///     extension
+    ///     image
+    ///     ... on Observation {
+    ///       id
+    ///     }
+    ///   }
+    /// }
+    /// </code>
+    /// </summary>
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial interface IGetImageQuery : global::StrawberryShake.IOperationRequestFactory
+    {
+        global::System.Threading.Tasks.Task<global::StrawberryShake.IOperationResult<IGetImageResult>> ExecuteAsync(global::System.Guid observationId, global::System.Threading.CancellationToken cancellationToken = default);
+        global::System.IObservable<global::StrawberryShake.IOperationResult<IGetImageResult>> Watch(global::System.Guid observationId, global::StrawberryShake.ExecutionStrategy? strategy = null);
+    }
+
+    /// <summary>
+    /// Represents the operation service of the GetObservations GraphQL operation
+    /// <code>
+    /// query GetObservations($order: [ObservationSortInput!], $where: ObservationFilterInput) {
+    ///   observations(order: $order, where: $where) {
+    ///     __typename
+    ///     id
+    ///     observationDate
+    ///     telescope {
+    ///       __typename
+    ///       manufacturer
+    ///       model
+    ///       focalLengthMM
+    ///       ... on Telescope {
+    ///         id
+    ///       }
+    ///     }
+    ///     target {
+    ///       __typename
+    ///       name
+    ///       description
+    ///       ... on Target {
+    ///         id
+    ///       }
+    ///     }
+    ///     ... on Observation {
+    ///       id
+    ///     }
+    ///   }
+    /// }
+    /// </code>
+    /// </summary>
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class GetObservationsQueryDocument : global::StrawberryShake.IDocument
+    {
+        private GetObservationsQueryDocument()
+        {
+        }
+
+        public static GetObservationsQueryDocument Instance { get; } = new GetObservationsQueryDocument();
+        public global::StrawberryShake.OperationKind Kind => global::StrawberryShake.OperationKind.Query;
+        public global::System.ReadOnlySpan<global::System.Byte> Body => new global::System.Byte[]{0x71, 0x75, 0x65, 0x72, 0x79, 0x20, 0x47, 0x65, 0x74, 0x4f, 0x62, 0x73, 0x65, 0x72, 0x76, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x28, 0x24, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x3a, 0x20, 0x5b, 0x4f, 0x62, 0x73, 0x65, 0x72, 0x76, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x53, 0x6f, 0x72, 0x74, 0x49, 0x6e, 0x70, 0x75, 0x74, 0x21, 0x5d, 0x2c, 0x20, 0x24, 0x77, 0x68, 0x65, 0x72, 0x65, 0x3a, 0x20, 0x4f, 0x62, 0x73, 0x65, 0x72, 0x76, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x46, 0x69, 0x6c, 0x74, 0x65, 0x72, 0x49, 0x6e, 0x70, 0x75, 0x74, 0x29, 0x20, 0x7b, 0x20, 0x6f, 0x62, 0x73, 0x65, 0x72, 0x76, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x28, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x3a, 0x20, 0x24, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x2c, 0x20, 0x77, 0x68, 0x65, 0x72, 0x65, 0x3a, 0x20, 0x24, 0x77, 0x68, 0x65, 0x72, 0x65, 0x29, 0x20, 0x7b, 0x20, 0x5f, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x6e, 0x61, 0x6d, 0x65, 0x20, 0x69, 0x64, 0x20, 0x6f, 0x62, 0x73, 0x65, 0x72, 0x76, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x44, 0x61, 0x74, 0x65, 0x20, 0x74, 0x65, 0x6c, 0x65, 0x73, 0x63, 0x6f, 0x70, 0x65, 0x20, 0x7b, 0x20, 0x5f, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x6e, 0x61, 0x6d, 0x65, 0x20, 0x6d, 0x61, 0x6e, 0x75, 0x66, 0x61, 0x63, 0x74, 0x75, 0x72, 0x65, 0x72, 0x20, 0x6d, 0x6f, 0x64, 0x65, 0x6c, 0x20, 0x66, 0x6f, 0x63, 0x61, 0x6c, 0x4c, 0x65, 0x6e, 0x67, 0x74, 0x68, 0x4d, 0x4d, 0x20, 0x2e, 0x2e, 0x2e, 0x20, 0x6f, 0x6e, 0x20, 0x54, 0x65, 0x6c, 0x65, 0x73, 0x63, 0x6f, 0x70, 0x65, 0x20, 0x7b, 0x20, 0x69, 0x64, 0x20, 0x7d, 0x20, 0x7d, 0x20, 0x74, 0x61, 0x72, 0x67, 0x65, 0x74, 0x20, 0x7b, 0x20, 0x5f, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x6e, 0x61, 0x6d, 0x65, 0x20, 0x6e, 0x61, 0x6d, 0x65, 0x20, 0x64, 0x65, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x20, 0x2e, 0x2e, 0x2e, 0x20, 0x6f, 0x6e, 0x20, 0x54, 0x61, 0x72, 0x67, 0x65, 0x74, 0x20, 0x7b, 0x20, 0x69, 0x64, 0x20, 0x7d, 0x20, 0x7d, 0x20, 0x2e, 0x2e, 0x2e, 0x20, 0x6f, 0x6e, 0x20, 0x4f, 0x62, 0x73, 0x65, 0x72, 0x76, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x20, 0x7b, 0x20, 0x69, 0x64, 0x20, 0x7d, 0x20, 0x7d, 0x20, 0x7d};
+        public global::StrawberryShake.DocumentHash Hash { get; } = new global::StrawberryShake.DocumentHash("md5Hash", "ee8dfca905fb5f814e1c704802dcac56");
+        public override global::System.String ToString()
+        {
+#if NETSTANDARD2_0
+        return global::System.Text.Encoding.UTF8.GetString(Body.ToArray());
+#else
+            return global::System.Text.Encoding.UTF8.GetString(Body);
+#endif
+        }
+    }
+
+    /// <summary>
+    /// Represents the operation service of the GetObservations GraphQL operation
+    /// <code>
+    /// query GetObservations($order: [ObservationSortInput!], $where: ObservationFilterInput) {
+    ///   observations(order: $order, where: $where) {
+    ///     __typename
+    ///     id
+    ///     observationDate
+    ///     telescope {
+    ///       __typename
+    ///       manufacturer
+    ///       model
+    ///       focalLengthMM
+    ///       ... on Telescope {
+    ///         id
+    ///       }
+    ///     }
+    ///     target {
+    ///       __typename
+    ///       name
+    ///       description
+    ///       ... on Target {
+    ///         id
+    ///       }
+    ///     }
+    ///     ... on Observation {
+    ///       id
+    ///     }
+    ///   }
+    /// }
+    /// </code>
+    /// </summary>
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class GetObservationsQuery : global::StarRepo.GraphQL.IGetObservationsQuery
+    {
+        private readonly global::StrawberryShake.IOperationExecutor<IGetObservationsResult> _operationExecutor;
+        private readonly global::StrawberryShake.Serialization.IInputValueFormatter _observationSortInputFormatter;
+        private readonly global::StrawberryShake.Serialization.IInputValueFormatter _observationFilterInputFormatter;
+        public GetObservationsQuery(global::StrawberryShake.IOperationExecutor<IGetObservationsResult> operationExecutor, global::StrawberryShake.Serialization.ISerializerResolver serializerResolver)
+        {
+            _operationExecutor = operationExecutor ?? throw new global::System.ArgumentNullException(nameof(operationExecutor));
+            _observationSortInputFormatter = serializerResolver.GetInputValueFormatter("ObservationSortInput");
+            _observationFilterInputFormatter = serializerResolver.GetInputValueFormatter("ObservationFilterInput");
+        }
+
+        global::System.Type global::StrawberryShake.IOperationRequestFactory.ResultType => typeof(IGetObservationsResult);
+        public async global::System.Threading.Tasks.Task<global::StrawberryShake.IOperationResult<IGetObservationsResult>> ExecuteAsync(global::System.Collections.Generic.IReadOnlyList<global::StarRepo.GraphQL.ObservationSortInput>? order, global::StarRepo.GraphQL.ObservationFilterInput? @where, global::System.Threading.CancellationToken cancellationToken = default)
+        {
+            var request = CreateRequest(order, @where);
+            return await _operationExecutor.ExecuteAsync(request, cancellationToken).ConfigureAwait(false);
+        }
+
+        public global::System.IObservable<global::StrawberryShake.IOperationResult<IGetObservationsResult>> Watch(global::System.Collections.Generic.IReadOnlyList<global::StarRepo.GraphQL.ObservationSortInput>? order, global::StarRepo.GraphQL.ObservationFilterInput? @where, global::StrawberryShake.ExecutionStrategy? strategy = null)
+        {
+            var request = CreateRequest(order, @where);
+            return _operationExecutor.Watch(request, strategy);
+        }
+
+        private global::StrawberryShake.OperationRequest CreateRequest(global::System.Collections.Generic.IReadOnlyList<global::StarRepo.GraphQL.ObservationSortInput>? order, global::StarRepo.GraphQL.ObservationFilterInput? @where)
+        {
+            var variables = new global::System.Collections.Generic.Dictionary<global::System.String, global::System.Object?>();
+            variables.Add("order", FormatOrder(order));
+            variables.Add("where", FormatWhere(@where));
+            return CreateRequest(variables);
+        }
+
+        private global::StrawberryShake.OperationRequest CreateRequest(global::System.Collections.Generic.IReadOnlyDictionary<global::System.String, global::System.Object?>? variables)
+        {
+            return new global::StrawberryShake.OperationRequest(id: GetObservationsQueryDocument.Instance.Hash.Value, name: "GetObservations", document: GetObservationsQueryDocument.Instance, strategy: global::StrawberryShake.RequestStrategy.Default, variables: variables);
+        }
+
+        private global::System.Object? FormatOrder(global::System.Collections.Generic.IReadOnlyList<global::StarRepo.GraphQL.ObservationSortInput>? value)
+        {
+            if (value is null)
+            {
+                return value;
+            }
+            else
+            {
+                var value_list = new global::System.Collections.Generic.List<global::System.Object?>();
+                foreach (var value_elm in value)
+                {
+                    if (value_elm is null)
+                    {
+                        throw new global::System.ArgumentNullException(nameof(value_elm));
+                    }
+
+                    value_list.Add(_observationSortInputFormatter.Format(value_elm));
+                }
+
+                return value_list;
+            }
+        }
+
+        private global::System.Object? FormatWhere(global::StarRepo.GraphQL.ObservationFilterInput? value)
+        {
+            if (value is null)
+            {
+                return value;
+            }
+            else
+            {
+                return _observationFilterInputFormatter.Format(value);
+            }
+        }
+
+        global::StrawberryShake.OperationRequest global::StrawberryShake.IOperationRequestFactory.Create(global::System.Collections.Generic.IReadOnlyDictionary<global::System.String, global::System.Object?>? variables)
+        {
+            return CreateRequest(variables!);
+        }
+    }
+
+    /// <summary>
+    /// Represents the operation service of the GetObservations GraphQL operation
+    /// <code>
+    /// query GetObservations($order: [ObservationSortInput!], $where: ObservationFilterInput) {
+    ///   observations(order: $order, where: $where) {
+    ///     __typename
+    ///     id
+    ///     observationDate
+    ///     telescope {
+    ///       __typename
+    ///       manufacturer
+    ///       model
+    ///       focalLengthMM
+    ///       ... on Telescope {
+    ///         id
+    ///       }
+    ///     }
+    ///     target {
+    ///       __typename
+    ///       name
+    ///       description
+    ///       ... on Target {
+    ///         id
+    ///       }
+    ///     }
+    ///     ... on Observation {
+    ///       id
+    ///     }
+    ///   }
+    /// }
+    /// </code>
+    /// </summary>
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial interface IGetObservationsQuery : global::StrawberryShake.IOperationRequestFactory
+    {
+        global::System.Threading.Tasks.Task<global::StrawberryShake.IOperationResult<IGetObservationsResult>> ExecuteAsync(global::System.Collections.Generic.IReadOnlyList<global::StarRepo.GraphQL.ObservationSortInput>? order, global::StarRepo.GraphQL.ObservationFilterInput? @where, global::System.Threading.CancellationToken cancellationToken = default);
+        global::System.IObservable<global::StrawberryShake.IOperationResult<IGetObservationsResult>> Watch(global::System.Collections.Generic.IReadOnlyList<global::StarRepo.GraphQL.ObservationSortInput>? order, global::StarRepo.GraphQL.ObservationFilterInput? @where, global::StrawberryShake.ExecutionStrategy? strategy = null);
+    }
+
     /// <summary>
     /// Represents the operation service of the GetTelescopes GraphQL operation
     /// <code>
@@ -383,19 +6405,282 @@ namespace StarRepo.GraphQL
     }
 
     /// <summary>
+    /// Represents the operation service of the GetThumbnail GraphQL operation
+    /// <code>
+    /// query GetThumbnail($observationId: UUID!) {
+    ///   observations(where: { id: { eq: $observationId } }) {
+    ///     __typename
+    ///     fileId
+    ///     extension
+    ///     thumbnail
+    ///     ... on Observation {
+    ///       id
+    ///     }
+    ///   }
+    /// }
+    /// </code>
+    /// </summary>
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class GetThumbnailQueryDocument : global::StrawberryShake.IDocument
+    {
+        private GetThumbnailQueryDocument()
+        {
+        }
+
+        public static GetThumbnailQueryDocument Instance { get; } = new GetThumbnailQueryDocument();
+        public global::StrawberryShake.OperationKind Kind => global::StrawberryShake.OperationKind.Query;
+        public global::System.ReadOnlySpan<global::System.Byte> Body => new global::System.Byte[]{0x71, 0x75, 0x65, 0x72, 0x79, 0x20, 0x47, 0x65, 0x74, 0x54, 0x68, 0x75, 0x6d, 0x62, 0x6e, 0x61, 0x69, 0x6c, 0x28, 0x24, 0x6f, 0x62, 0x73, 0x65, 0x72, 0x76, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x49, 0x64, 0x3a, 0x20, 0x55, 0x55, 0x49, 0x44, 0x21, 0x29, 0x20, 0x7b, 0x20, 0x6f, 0x62, 0x73, 0x65, 0x72, 0x76, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x28, 0x77, 0x68, 0x65, 0x72, 0x65, 0x3a, 0x20, 0x7b, 0x20, 0x69, 0x64, 0x3a, 0x20, 0x7b, 0x20, 0x65, 0x71, 0x3a, 0x20, 0x24, 0x6f, 0x62, 0x73, 0x65, 0x72, 0x76, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x49, 0x64, 0x20, 0x7d, 0x20, 0x7d, 0x29, 0x20, 0x7b, 0x20, 0x5f, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x6e, 0x61, 0x6d, 0x65, 0x20, 0x66, 0x69, 0x6c, 0x65, 0x49, 0x64, 0x20, 0x65, 0x78, 0x74, 0x65, 0x6e, 0x73, 0x69, 0x6f, 0x6e, 0x20, 0x74, 0x68, 0x75, 0x6d, 0x62, 0x6e, 0x61, 0x69, 0x6c, 0x20, 0x2e, 0x2e, 0x2e, 0x20, 0x6f, 0x6e, 0x20, 0x4f, 0x62, 0x73, 0x65, 0x72, 0x76, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x20, 0x7b, 0x20, 0x69, 0x64, 0x20, 0x7d, 0x20, 0x7d, 0x20, 0x7d};
+        public global::StrawberryShake.DocumentHash Hash { get; } = new global::StrawberryShake.DocumentHash("md5Hash", "5e6484c9adb701e915cebe8d986ae12c");
+        public override global::System.String ToString()
+        {
+#if NETSTANDARD2_0
+        return global::System.Text.Encoding.UTF8.GetString(Body.ToArray());
+#else
+            return global::System.Text.Encoding.UTF8.GetString(Body);
+#endif
+        }
+    }
+
+    /// <summary>
+    /// Represents the operation service of the GetThumbnail GraphQL operation
+    /// <code>
+    /// query GetThumbnail($observationId: UUID!) {
+    ///   observations(where: { id: { eq: $observationId } }) {
+    ///     __typename
+    ///     fileId
+    ///     extension
+    ///     thumbnail
+    ///     ... on Observation {
+    ///       id
+    ///     }
+    ///   }
+    /// }
+    /// </code>
+    /// </summary>
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class GetThumbnailQuery : global::StarRepo.GraphQL.IGetThumbnailQuery
+    {
+        private readonly global::StrawberryShake.IOperationExecutor<IGetThumbnailResult> _operationExecutor;
+        private readonly global::StrawberryShake.Serialization.IInputValueFormatter _uUIDFormatter;
+        public GetThumbnailQuery(global::StrawberryShake.IOperationExecutor<IGetThumbnailResult> operationExecutor, global::StrawberryShake.Serialization.ISerializerResolver serializerResolver)
+        {
+            _operationExecutor = operationExecutor ?? throw new global::System.ArgumentNullException(nameof(operationExecutor));
+            _uUIDFormatter = serializerResolver.GetInputValueFormatter("UUID");
+        }
+
+        global::System.Type global::StrawberryShake.IOperationRequestFactory.ResultType => typeof(IGetThumbnailResult);
+        public async global::System.Threading.Tasks.Task<global::StrawberryShake.IOperationResult<IGetThumbnailResult>> ExecuteAsync(global::System.Guid observationId, global::System.Threading.CancellationToken cancellationToken = default)
+        {
+            var request = CreateRequest(observationId);
+            return await _operationExecutor.ExecuteAsync(request, cancellationToken).ConfigureAwait(false);
+        }
+
+        public global::System.IObservable<global::StrawberryShake.IOperationResult<IGetThumbnailResult>> Watch(global::System.Guid observationId, global::StrawberryShake.ExecutionStrategy? strategy = null)
+        {
+            var request = CreateRequest(observationId);
+            return _operationExecutor.Watch(request, strategy);
+        }
+
+        private global::StrawberryShake.OperationRequest CreateRequest(global::System.Guid observationId)
+        {
+            var variables = new global::System.Collections.Generic.Dictionary<global::System.String, global::System.Object?>();
+            variables.Add("observationId", FormatObservationId(observationId));
+            return CreateRequest(variables);
+        }
+
+        private global::StrawberryShake.OperationRequest CreateRequest(global::System.Collections.Generic.IReadOnlyDictionary<global::System.String, global::System.Object?>? variables)
+        {
+            return new global::StrawberryShake.OperationRequest(id: GetThumbnailQueryDocument.Instance.Hash.Value, name: "GetThumbnail", document: GetThumbnailQueryDocument.Instance, strategy: global::StrawberryShake.RequestStrategy.Default, variables: variables);
+        }
+
+        private global::System.Object? FormatObservationId(global::System.Guid value)
+        {
+            return _uUIDFormatter.Format(value);
+        }
+
+        global::StrawberryShake.OperationRequest global::StrawberryShake.IOperationRequestFactory.Create(global::System.Collections.Generic.IReadOnlyDictionary<global::System.String, global::System.Object?>? variables)
+        {
+            return CreateRequest(variables!);
+        }
+    }
+
+    /// <summary>
+    /// Represents the operation service of the GetThumbnail GraphQL operation
+    /// <code>
+    /// query GetThumbnail($observationId: UUID!) {
+    ///   observations(where: { id: { eq: $observationId } }) {
+    ///     __typename
+    ///     fileId
+    ///     extension
+    ///     thumbnail
+    ///     ... on Observation {
+    ///       id
+    ///     }
+    ///   }
+    /// }
+    /// </code>
+    /// </summary>
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial interface IGetThumbnailQuery : global::StrawberryShake.IOperationRequestFactory
+    {
+        global::System.Threading.Tasks.Task<global::StrawberryShake.IOperationResult<IGetThumbnailResult>> ExecuteAsync(global::System.Guid observationId, global::System.Threading.CancellationToken cancellationToken = default);
+        global::System.IObservable<global::StrawberryShake.IOperationResult<IGetThumbnailResult>> Watch(global::System.Guid observationId, global::StrawberryShake.ExecutionStrategy? strategy = null);
+    }
+
+    /// <summary>
+    /// Represents the operation service of the UpsertTelescope GraphQL operation
+    /// <code>
+    /// mutation UpsertTelescope($telescope: TelescopeInput!) {
+    ///   modifyTelescope(scope: $telescope) {
+    ///     __typename
+    ///     id
+    ///     success
+    ///     message
+    ///     ... on TelescopeMutationResponse {
+    ///       id
+    ///     }
+    ///   }
+    /// }
+    /// </code>
+    /// </summary>
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class UpsertTelescopeMutationDocument : global::StrawberryShake.IDocument
+    {
+        private UpsertTelescopeMutationDocument()
+        {
+        }
+
+        public static UpsertTelescopeMutationDocument Instance { get; } = new UpsertTelescopeMutationDocument();
+        public global::StrawberryShake.OperationKind Kind => global::StrawberryShake.OperationKind.Mutation;
+        public global::System.ReadOnlySpan<global::System.Byte> Body => new global::System.Byte[]{0x6d, 0x75, 0x74, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x20, 0x55, 0x70, 0x73, 0x65, 0x72, 0x74, 0x54, 0x65, 0x6c, 0x65, 0x73, 0x63, 0x6f, 0x70, 0x65, 0x28, 0x24, 0x74, 0x65, 0x6c, 0x65, 0x73, 0x63, 0x6f, 0x70, 0x65, 0x3a, 0x20, 0x54, 0x65, 0x6c, 0x65, 0x73, 0x63, 0x6f, 0x70, 0x65, 0x49, 0x6e, 0x70, 0x75, 0x74, 0x21, 0x29, 0x20, 0x7b, 0x20, 0x6d, 0x6f, 0x64, 0x69, 0x66, 0x79, 0x54, 0x65, 0x6c, 0x65, 0x73, 0x63, 0x6f, 0x70, 0x65, 0x28, 0x73, 0x63, 0x6f, 0x70, 0x65, 0x3a, 0x20, 0x24, 0x74, 0x65, 0x6c, 0x65, 0x73, 0x63, 0x6f, 0x70, 0x65, 0x29, 0x20, 0x7b, 0x20, 0x5f, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x6e, 0x61, 0x6d, 0x65, 0x20, 0x69, 0x64, 0x20, 0x73, 0x75, 0x63, 0x63, 0x65, 0x73, 0x73, 0x20, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x20, 0x2e, 0x2e, 0x2e, 0x20, 0x6f, 0x6e, 0x20, 0x54, 0x65, 0x6c, 0x65, 0x73, 0x63, 0x6f, 0x70, 0x65, 0x4d, 0x75, 0x74, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x20, 0x7b, 0x20, 0x69, 0x64, 0x20, 0x7d, 0x20, 0x7d, 0x20, 0x7d};
+        public global::StrawberryShake.DocumentHash Hash { get; } = new global::StrawberryShake.DocumentHash("md5Hash", "33fa477836e5c0116d476a456397b5a9");
+        public override global::System.String ToString()
+        {
+#if NETSTANDARD2_0
+        return global::System.Text.Encoding.UTF8.GetString(Body.ToArray());
+#else
+            return global::System.Text.Encoding.UTF8.GetString(Body);
+#endif
+        }
+    }
+
+    /// <summary>
+    /// Represents the operation service of the UpsertTelescope GraphQL operation
+    /// <code>
+    /// mutation UpsertTelescope($telescope: TelescopeInput!) {
+    ///   modifyTelescope(scope: $telescope) {
+    ///     __typename
+    ///     id
+    ///     success
+    ///     message
+    ///     ... on TelescopeMutationResponse {
+    ///       id
+    ///     }
+    ///   }
+    /// }
+    /// </code>
+    /// </summary>
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class UpsertTelescopeMutation : global::StarRepo.GraphQL.IUpsertTelescopeMutation
+    {
+        private readonly global::StrawberryShake.IOperationExecutor<IUpsertTelescopeResult> _operationExecutor;
+        private readonly global::StrawberryShake.Serialization.IInputValueFormatter _telescopeInputFormatter;
+        public UpsertTelescopeMutation(global::StrawberryShake.IOperationExecutor<IUpsertTelescopeResult> operationExecutor, global::StrawberryShake.Serialization.ISerializerResolver serializerResolver)
+        {
+            _operationExecutor = operationExecutor ?? throw new global::System.ArgumentNullException(nameof(operationExecutor));
+            _telescopeInputFormatter = serializerResolver.GetInputValueFormatter("TelescopeInput");
+        }
+
+        global::System.Type global::StrawberryShake.IOperationRequestFactory.ResultType => typeof(IUpsertTelescopeResult);
+        public async global::System.Threading.Tasks.Task<global::StrawberryShake.IOperationResult<IUpsertTelescopeResult>> ExecuteAsync(global::StarRepo.GraphQL.TelescopeInput telescope, global::System.Threading.CancellationToken cancellationToken = default)
+        {
+            var request = CreateRequest(telescope);
+            return await _operationExecutor.ExecuteAsync(request, cancellationToken).ConfigureAwait(false);
+        }
+
+        public global::System.IObservable<global::StrawberryShake.IOperationResult<IUpsertTelescopeResult>> Watch(global::StarRepo.GraphQL.TelescopeInput telescope, global::StrawberryShake.ExecutionStrategy? strategy = null)
+        {
+            var request = CreateRequest(telescope);
+            return _operationExecutor.Watch(request, strategy);
+        }
+
+        private global::StrawberryShake.OperationRequest CreateRequest(global::StarRepo.GraphQL.TelescopeInput telescope)
+        {
+            var variables = new global::System.Collections.Generic.Dictionary<global::System.String, global::System.Object?>();
+            variables.Add("telescope", FormatTelescope(telescope));
+            return CreateRequest(variables);
+        }
+
+        private global::StrawberryShake.OperationRequest CreateRequest(global::System.Collections.Generic.IReadOnlyDictionary<global::System.String, global::System.Object?>? variables)
+        {
+            return new global::StrawberryShake.OperationRequest(id: UpsertTelescopeMutationDocument.Instance.Hash.Value, name: "UpsertTelescope", document: UpsertTelescopeMutationDocument.Instance, strategy: global::StrawberryShake.RequestStrategy.Default, variables: variables);
+        }
+
+        private global::System.Object? FormatTelescope(global::StarRepo.GraphQL.TelescopeInput value)
+        {
+            if (value is null)
+            {
+                throw new global::System.ArgumentNullException(nameof(value));
+            }
+
+            return _telescopeInputFormatter.Format(value);
+        }
+
+        global::StrawberryShake.OperationRequest global::StrawberryShake.IOperationRequestFactory.Create(global::System.Collections.Generic.IReadOnlyDictionary<global::System.String, global::System.Object?>? variables)
+        {
+            return CreateRequest(variables!);
+        }
+    }
+
+    /// <summary>
+    /// Represents the operation service of the UpsertTelescope GraphQL operation
+    /// <code>
+    /// mutation UpsertTelescope($telescope: TelescopeInput!) {
+    ///   modifyTelescope(scope: $telescope) {
+    ///     __typename
+    ///     id
+    ///     success
+    ///     message
+    ///     ... on TelescopeMutationResponse {
+    ///       id
+    ///     }
+    ///   }
+    /// }
+    /// </code>
+    /// </summary>
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial interface IUpsertTelescopeMutation : global::StrawberryShake.IOperationRequestFactory
+    {
+        global::System.Threading.Tasks.Task<global::StrawberryShake.IOperationResult<IUpsertTelescopeResult>> ExecuteAsync(global::StarRepo.GraphQL.TelescopeInput telescope, global::System.Threading.CancellationToken cancellationToken = default);
+        global::System.IObservable<global::StrawberryShake.IOperationResult<IUpsertTelescopeResult>> Watch(global::StarRepo.GraphQL.TelescopeInput telescope, global::StrawberryShake.ExecutionStrategy? strategy = null);
+    }
+
+    /// <summary>
     /// Represents the StarClient GraphQL client
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
     public partial class StarClient : global::StarRepo.GraphQL.IStarClient
     {
+        private readonly global::StarRepo.GraphQL.IGetImageQuery _getImage;
+        private readonly global::StarRepo.GraphQL.IGetObservationsQuery _getObservations;
         private readonly global::StarRepo.GraphQL.IGetTelescopesQuery _getTelescopes;
-        public StarClient(global::StarRepo.GraphQL.IGetTelescopesQuery getTelescopes)
+        private readonly global::StarRepo.GraphQL.IGetThumbnailQuery _getThumbnail;
+        private readonly global::StarRepo.GraphQL.IUpsertTelescopeMutation _upsertTelescope;
+        public StarClient(global::StarRepo.GraphQL.IGetImageQuery getImage, global::StarRepo.GraphQL.IGetObservationsQuery getObservations, global::StarRepo.GraphQL.IGetTelescopesQuery getTelescopes, global::StarRepo.GraphQL.IGetThumbnailQuery getThumbnail, global::StarRepo.GraphQL.IUpsertTelescopeMutation upsertTelescope)
         {
+            _getImage = getImage ?? throw new global::System.ArgumentNullException(nameof(getImage));
+            _getObservations = getObservations ?? throw new global::System.ArgumentNullException(nameof(getObservations));
             _getTelescopes = getTelescopes ?? throw new global::System.ArgumentNullException(nameof(getTelescopes));
+            _getThumbnail = getThumbnail ?? throw new global::System.ArgumentNullException(nameof(getThumbnail));
+            _upsertTelescope = upsertTelescope ?? throw new global::System.ArgumentNullException(nameof(upsertTelescope));
         }
 
         public static global::System.String ClientName => "StarClient";
+        public global::StarRepo.GraphQL.IGetImageQuery GetImage => _getImage;
+        public global::StarRepo.GraphQL.IGetObservationsQuery GetObservations => _getObservations;
         public global::StarRepo.GraphQL.IGetTelescopesQuery GetTelescopes => _getTelescopes;
+        public global::StarRepo.GraphQL.IGetThumbnailQuery GetThumbnail => _getThumbnail;
+        public global::StarRepo.GraphQL.IUpsertTelescopeMutation UpsertTelescope => _upsertTelescope;
     }
 
     /// <summary>
@@ -404,25 +6689,63 @@ namespace StarRepo.GraphQL
     [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
     public partial interface IStarClient
     {
+        global::StarRepo.GraphQL.IGetImageQuery GetImage { get; }
+
+        global::StarRepo.GraphQL.IGetObservationsQuery GetObservations { get; }
+
         global::StarRepo.GraphQL.IGetTelescopesQuery GetTelescopes { get; }
+
+        global::StarRepo.GraphQL.IGetThumbnailQuery GetThumbnail { get; }
+
+        global::StarRepo.GraphQL.IUpsertTelescopeMutation UpsertTelescope { get; }
     }
 }
 
 namespace StarRepo.GraphQL.State
 {
     [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class ObservationEntity
+    {
+        public ObservationEntity(global::System.Guid fileId = default !, global::System.String? extension = default !, global::System.String? image = default !, global::System.Guid id = default !, global::System.DateTimeOffset observationDate = default !, global::StrawberryShake.EntityId? telescope = default !, global::StrawberryShake.EntityId? target = default !, global::System.String? thumbnail = default !)
+        {
+            FileId = fileId;
+            Extension = extension;
+            Image = image;
+            Id = id;
+            ObservationDate = observationDate;
+            Telescope = telescope;
+            Target = target;
+            Thumbnail = thumbnail;
+        }
+
+        public global::System.Guid FileId { get; }
+
+        public global::System.String? Extension { get; }
+
+        public global::System.String? Image { get; }
+
+        public global::System.Guid Id { get; }
+
+        public global::System.DateTimeOffset ObservationDate { get; }
+
+        public global::StrawberryShake.EntityId? Telescope { get; }
+
+        public global::StrawberryShake.EntityId? Target { get; }
+
+        public global::System.String? Thumbnail { get; }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
     public partial class TelescopeEntity
     {
-        public TelescopeEntity(global::System.Guid id = default !, global::System.String? manufacturer = default !, global::System.String? model = default !, global::System.Int32 focalLengthMM = default !, global::System.Int32 apertureMM = default !)
+        public TelescopeEntity(global::System.String? manufacturer = default !, global::System.String? model = default !, global::System.Int32 focalLengthMM = default !, global::System.Guid id = default !, global::System.Int32 apertureMM = default !)
         {
-            Id = id;
             Manufacturer = manufacturer;
             Model = model;
             FocalLengthMM = focalLengthMM;
+            Id = id;
             ApertureMM = apertureMM;
         }
-
-        public global::System.Guid Id { get; }
 
         public global::System.String? Manufacturer { get; }
 
@@ -430,7 +6753,316 @@ namespace StarRepo.GraphQL.State
 
         public global::System.Int32 FocalLengthMM { get; }
 
+        public global::System.Guid Id { get; }
+
         public global::System.Int32 ApertureMM { get; }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class TargetEntity
+    {
+        public TargetEntity(global::System.String? name = default !, global::System.String? description = default !)
+        {
+            Name = name;
+            Description = description;
+        }
+
+        public global::System.String? Name { get; }
+
+        public global::System.String? Description { get; }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class TelescopeMutationResponseEntity
+    {
+        public TelescopeMutationResponseEntity(global::System.Guid? id = default !, global::System.Boolean? success = default !, global::System.String? message = default !)
+        {
+            Id = id;
+            Success = success;
+            Message = message;
+        }
+
+        public global::System.Guid? Id { get; }
+
+        public global::System.Boolean? Success { get; }
+
+        public global::System.String? Message { get; }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class GetImageResultFactory : global::StrawberryShake.IOperationResultDataFactory<global::StarRepo.GraphQL.GetImageResult>
+    {
+        private readonly global::StrawberryShake.IEntityStore _entityStore;
+        private readonly global::StrawberryShake.IEntityMapper<global::StarRepo.GraphQL.State.ObservationEntity, GetImage_Observations_Observation> _getImage_Observations_ObservationFromObservationEntityMapper;
+        public GetImageResultFactory(global::StrawberryShake.IEntityStore entityStore, global::StrawberryShake.IEntityMapper<global::StarRepo.GraphQL.State.ObservationEntity, GetImage_Observations_Observation> getImage_Observations_ObservationFromObservationEntityMapper)
+        {
+            _entityStore = entityStore ?? throw new global::System.ArgumentNullException(nameof(entityStore));
+            _getImage_Observations_ObservationFromObservationEntityMapper = getImage_Observations_ObservationFromObservationEntityMapper ?? throw new global::System.ArgumentNullException(nameof(getImage_Observations_ObservationFromObservationEntityMapper));
+        }
+
+        global::System.Type global::StrawberryShake.IOperationResultDataFactory.ResultType => typeof(global::StarRepo.GraphQL.IGetImageResult);
+        public GetImageResult Create(global::StrawberryShake.IOperationResultDataInfo dataInfo, global::StrawberryShake.IEntityStoreSnapshot? snapshot = null)
+        {
+            if (snapshot is null)
+            {
+                snapshot = _entityStore.CurrentSnapshot;
+            }
+
+            if (dataInfo is GetImageResultInfo info)
+            {
+                return new GetImageResult(MapNonNullableIGetImage_ObservationsNonNullableArray(info.Observations, snapshot));
+            }
+
+            throw new global::System.ArgumentException("GetImageResultInfo expected.");
+        }
+
+        private global::System.Collections.Generic.IReadOnlyList<global::StarRepo.GraphQL.IGetImage_Observations> MapNonNullableIGetImage_ObservationsNonNullableArray(global::System.Collections.Generic.IReadOnlyList<global::StrawberryShake.EntityId>? list, global::StrawberryShake.IEntityStoreSnapshot snapshot)
+        {
+            if (list is null)
+            {
+                throw new global::System.ArgumentNullException();
+            }
+
+            var observations = new global::System.Collections.Generic.List<global::StarRepo.GraphQL.IGetImage_Observations>();
+            foreach (global::StrawberryShake.EntityId child in list)
+            {
+                observations.Add(MapNonNullableIGetImage_Observations(child, snapshot));
+            }
+
+            return observations;
+        }
+
+        private global::StarRepo.GraphQL.IGetImage_Observations MapNonNullableIGetImage_Observations(global::StrawberryShake.EntityId entityId, global::StrawberryShake.IEntityStoreSnapshot snapshot)
+        {
+            if (entityId.Name.Equals("Observation", global::System.StringComparison.Ordinal))
+            {
+                return _getImage_Observations_ObservationFromObservationEntityMapper.Map(snapshot.GetEntity<global::StarRepo.GraphQL.State.ObservationEntity>(entityId) ?? throw new global::StrawberryShake.GraphQLClientException());
+            }
+
+            throw new global::System.NotSupportedException();
+        }
+
+        global::System.Object global::StrawberryShake.IOperationResultDataFactory.Create(global::StrawberryShake.IOperationResultDataInfo dataInfo, global::StrawberryShake.IEntityStoreSnapshot? snapshot)
+        {
+            return Create(dataInfo, snapshot);
+        }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class GetImageResultInfo : global::StrawberryShake.IOperationResultDataInfo
+    {
+        private readonly global::System.Collections.Generic.IReadOnlyCollection<global::StrawberryShake.EntityId> _entityIds;
+        private readonly global::System.UInt64 _version;
+        public GetImageResultInfo(global::System.Collections.Generic.IReadOnlyList<global::StrawberryShake.EntityId> observations, global::System.Collections.Generic.IReadOnlyCollection<global::StrawberryShake.EntityId> entityIds, global::System.UInt64 version)
+        {
+            Observations = observations;
+            _entityIds = entityIds ?? throw new global::System.ArgumentNullException(nameof(entityIds));
+            _version = version;
+        }
+
+        public global::System.Collections.Generic.IReadOnlyList<global::StrawberryShake.EntityId> Observations { get; }
+
+        public global::System.Collections.Generic.IReadOnlyCollection<global::StrawberryShake.EntityId> EntityIds => _entityIds;
+        public global::System.UInt64 Version => _version;
+        public global::StrawberryShake.IOperationResultDataInfo WithVersion(global::System.UInt64 version)
+        {
+            return new GetImageResultInfo(Observations, _entityIds, version);
+        }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class GetImage_Observations_ObservationFromObservationEntityMapper : global::StrawberryShake.IEntityMapper<global::StarRepo.GraphQL.State.ObservationEntity, GetImage_Observations_Observation>
+    {
+        private readonly global::StrawberryShake.IEntityStore _entityStore;
+        public GetImage_Observations_ObservationFromObservationEntityMapper(global::StrawberryShake.IEntityStore entityStore)
+        {
+            _entityStore = entityStore ?? throw new global::System.ArgumentNullException(nameof(entityStore));
+        }
+
+        public GetImage_Observations_Observation Map(global::StarRepo.GraphQL.State.ObservationEntity entity, global::StrawberryShake.IEntityStoreSnapshot? snapshot = null)
+        {
+            if (snapshot is null)
+            {
+                snapshot = _entityStore.CurrentSnapshot;
+            }
+
+            return new GetImage_Observations_Observation(entity.FileId, entity.Extension, entity.Image);
+        }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class GetObservationsResultFactory : global::StrawberryShake.IOperationResultDataFactory<global::StarRepo.GraphQL.GetObservationsResult>
+    {
+        private readonly global::StrawberryShake.IEntityStore _entityStore;
+        private readonly global::StrawberryShake.IEntityMapper<global::StarRepo.GraphQL.State.ObservationEntity, GetObservations_Observations_Observation> _getObservations_Observations_ObservationFromObservationEntityMapper;
+        public GetObservationsResultFactory(global::StrawberryShake.IEntityStore entityStore, global::StrawberryShake.IEntityMapper<global::StarRepo.GraphQL.State.ObservationEntity, GetObservations_Observations_Observation> getObservations_Observations_ObservationFromObservationEntityMapper)
+        {
+            _entityStore = entityStore ?? throw new global::System.ArgumentNullException(nameof(entityStore));
+            _getObservations_Observations_ObservationFromObservationEntityMapper = getObservations_Observations_ObservationFromObservationEntityMapper ?? throw new global::System.ArgumentNullException(nameof(getObservations_Observations_ObservationFromObservationEntityMapper));
+        }
+
+        global::System.Type global::StrawberryShake.IOperationResultDataFactory.ResultType => typeof(global::StarRepo.GraphQL.IGetObservationsResult);
+        public GetObservationsResult Create(global::StrawberryShake.IOperationResultDataInfo dataInfo, global::StrawberryShake.IEntityStoreSnapshot? snapshot = null)
+        {
+            if (snapshot is null)
+            {
+                snapshot = _entityStore.CurrentSnapshot;
+            }
+
+            if (dataInfo is GetObservationsResultInfo info)
+            {
+                return new GetObservationsResult(MapNonNullableIGetObservations_ObservationsNonNullableArray(info.Observations, snapshot));
+            }
+
+            throw new global::System.ArgumentException("GetObservationsResultInfo expected.");
+        }
+
+        private global::System.Collections.Generic.IReadOnlyList<global::StarRepo.GraphQL.IGetObservations_Observations> MapNonNullableIGetObservations_ObservationsNonNullableArray(global::System.Collections.Generic.IReadOnlyList<global::StrawberryShake.EntityId>? list, global::StrawberryShake.IEntityStoreSnapshot snapshot)
+        {
+            if (list is null)
+            {
+                throw new global::System.ArgumentNullException();
+            }
+
+            var observations = new global::System.Collections.Generic.List<global::StarRepo.GraphQL.IGetObservations_Observations>();
+            foreach (global::StrawberryShake.EntityId child in list)
+            {
+                observations.Add(MapNonNullableIGetObservations_Observations(child, snapshot));
+            }
+
+            return observations;
+        }
+
+        private global::StarRepo.GraphQL.IGetObservations_Observations MapNonNullableIGetObservations_Observations(global::StrawberryShake.EntityId entityId, global::StrawberryShake.IEntityStoreSnapshot snapshot)
+        {
+            if (entityId.Name.Equals("Observation", global::System.StringComparison.Ordinal))
+            {
+                return _getObservations_Observations_ObservationFromObservationEntityMapper.Map(snapshot.GetEntity<global::StarRepo.GraphQL.State.ObservationEntity>(entityId) ?? throw new global::StrawberryShake.GraphQLClientException());
+            }
+
+            throw new global::System.NotSupportedException();
+        }
+
+        global::System.Object global::StrawberryShake.IOperationResultDataFactory.Create(global::StrawberryShake.IOperationResultDataInfo dataInfo, global::StrawberryShake.IEntityStoreSnapshot? snapshot)
+        {
+            return Create(dataInfo, snapshot);
+        }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class GetObservationsResultInfo : global::StrawberryShake.IOperationResultDataInfo
+    {
+        private readonly global::System.Collections.Generic.IReadOnlyCollection<global::StrawberryShake.EntityId> _entityIds;
+        private readonly global::System.UInt64 _version;
+        public GetObservationsResultInfo(global::System.Collections.Generic.IReadOnlyList<global::StrawberryShake.EntityId> observations, global::System.Collections.Generic.IReadOnlyCollection<global::StrawberryShake.EntityId> entityIds, global::System.UInt64 version)
+        {
+            Observations = observations;
+            _entityIds = entityIds ?? throw new global::System.ArgumentNullException(nameof(entityIds));
+            _version = version;
+        }
+
+        public global::System.Collections.Generic.IReadOnlyList<global::StrawberryShake.EntityId> Observations { get; }
+
+        public global::System.Collections.Generic.IReadOnlyCollection<global::StrawberryShake.EntityId> EntityIds => _entityIds;
+        public global::System.UInt64 Version => _version;
+        public global::StrawberryShake.IOperationResultDataInfo WithVersion(global::System.UInt64 version)
+        {
+            return new GetObservationsResultInfo(Observations, _entityIds, version);
+        }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class GetObservations_Observations_ObservationFromObservationEntityMapper : global::StrawberryShake.IEntityMapper<global::StarRepo.GraphQL.State.ObservationEntity, GetObservations_Observations_Observation>
+    {
+        private readonly global::StrawberryShake.IEntityStore _entityStore;
+        private readonly global::StrawberryShake.IEntityMapper<global::StarRepo.GraphQL.State.TelescopeEntity, GetObservations_Observations_Telescope_Telescope> _getObservations_Observations_Telescope_TelescopeFromTelescopeEntityMapper;
+        private readonly global::StrawberryShake.IEntityMapper<global::StarRepo.GraphQL.State.TargetEntity, GetObservations_Observations_Target_Target> _getObservations_Observations_Target_TargetFromTargetEntityMapper;
+        public GetObservations_Observations_ObservationFromObservationEntityMapper(global::StrawberryShake.IEntityStore entityStore, global::StrawberryShake.IEntityMapper<global::StarRepo.GraphQL.State.TelescopeEntity, GetObservations_Observations_Telescope_Telescope> getObservations_Observations_Telescope_TelescopeFromTelescopeEntityMapper, global::StrawberryShake.IEntityMapper<global::StarRepo.GraphQL.State.TargetEntity, GetObservations_Observations_Target_Target> getObservations_Observations_Target_TargetFromTargetEntityMapper)
+        {
+            _entityStore = entityStore ?? throw new global::System.ArgumentNullException(nameof(entityStore));
+            _getObservations_Observations_Telescope_TelescopeFromTelescopeEntityMapper = getObservations_Observations_Telescope_TelescopeFromTelescopeEntityMapper ?? throw new global::System.ArgumentNullException(nameof(getObservations_Observations_Telescope_TelescopeFromTelescopeEntityMapper));
+            _getObservations_Observations_Target_TargetFromTargetEntityMapper = getObservations_Observations_Target_TargetFromTargetEntityMapper ?? throw new global::System.ArgumentNullException(nameof(getObservations_Observations_Target_TargetFromTargetEntityMapper));
+        }
+
+        public GetObservations_Observations_Observation Map(global::StarRepo.GraphQL.State.ObservationEntity entity, global::StrawberryShake.IEntityStoreSnapshot? snapshot = null)
+        {
+            if (snapshot is null)
+            {
+                snapshot = _entityStore.CurrentSnapshot;
+            }
+
+            return new GetObservations_Observations_Observation(entity.Id, entity.ObservationDate, MapIGetObservations_Observations_Telescope(entity.Telescope, snapshot), MapIGetObservations_Observations_Target(entity.Target, snapshot));
+        }
+
+        private global::StarRepo.GraphQL.IGetObservations_Observations_Telescope? MapIGetObservations_Observations_Telescope(global::StrawberryShake.EntityId? entityId, global::StrawberryShake.IEntityStoreSnapshot snapshot)
+        {
+            if (entityId is null)
+            {
+                return null;
+            }
+
+            if (entityId.Value.Name.Equals("Telescope", global::System.StringComparison.Ordinal))
+            {
+                return _getObservations_Observations_Telescope_TelescopeFromTelescopeEntityMapper.Map(snapshot.GetEntity<global::StarRepo.GraphQL.State.TelescopeEntity>(entityId.Value) ?? throw new global::StrawberryShake.GraphQLClientException());
+            }
+
+            throw new global::System.NotSupportedException();
+        }
+
+        private global::StarRepo.GraphQL.IGetObservations_Observations_Target? MapIGetObservations_Observations_Target(global::StrawberryShake.EntityId? entityId, global::StrawberryShake.IEntityStoreSnapshot snapshot)
+        {
+            if (entityId is null)
+            {
+                return null;
+            }
+
+            if (entityId.Value.Name.Equals("Target", global::System.StringComparison.Ordinal))
+            {
+                return _getObservations_Observations_Target_TargetFromTargetEntityMapper.Map(snapshot.GetEntity<global::StarRepo.GraphQL.State.TargetEntity>(entityId.Value) ?? throw new global::StrawberryShake.GraphQLClientException());
+            }
+
+            throw new global::System.NotSupportedException();
+        }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class GetObservations_Observations_Telescope_TelescopeFromTelescopeEntityMapper : global::StrawberryShake.IEntityMapper<global::StarRepo.GraphQL.State.TelescopeEntity, GetObservations_Observations_Telescope_Telescope>
+    {
+        private readonly global::StrawberryShake.IEntityStore _entityStore;
+        public GetObservations_Observations_Telescope_TelescopeFromTelescopeEntityMapper(global::StrawberryShake.IEntityStore entityStore)
+        {
+            _entityStore = entityStore ?? throw new global::System.ArgumentNullException(nameof(entityStore));
+        }
+
+        public GetObservations_Observations_Telescope_Telescope Map(global::StarRepo.GraphQL.State.TelescopeEntity entity, global::StrawberryShake.IEntityStoreSnapshot? snapshot = null)
+        {
+            if (snapshot is null)
+            {
+                snapshot = _entityStore.CurrentSnapshot;
+            }
+
+            return new GetObservations_Observations_Telescope_Telescope(entity.Manufacturer, entity.Model, entity.FocalLengthMM);
+        }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class GetObservations_Observations_Target_TargetFromTargetEntityMapper : global::StrawberryShake.IEntityMapper<global::StarRepo.GraphQL.State.TargetEntity, GetObservations_Observations_Target_Target>
+    {
+        private readonly global::StrawberryShake.IEntityStore _entityStore;
+        public GetObservations_Observations_Target_TargetFromTargetEntityMapper(global::StrawberryShake.IEntityStore entityStore)
+        {
+            _entityStore = entityStore ?? throw new global::System.ArgumentNullException(nameof(entityStore));
+        }
+
+        public GetObservations_Observations_Target_Target Map(global::StarRepo.GraphQL.State.TargetEntity entity, global::StrawberryShake.IEntityStoreSnapshot? snapshot = null)
+        {
+            if (snapshot is null)
+            {
+                snapshot = _entityStore.CurrentSnapshot;
+            }
+
+            return new GetObservations_Observations_Target_Target(entity.Name, entity.Description);
+        }
     }
 
     [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
@@ -531,6 +7163,794 @@ namespace StarRepo.GraphQL.State
             }
 
             return new GetTelescopes_Telescopes_Telescope(entity.Id, entity.Manufacturer, entity.Model, entity.FocalLengthMM, entity.ApertureMM);
+        }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class GetThumbnailResultFactory : global::StrawberryShake.IOperationResultDataFactory<global::StarRepo.GraphQL.GetThumbnailResult>
+    {
+        private readonly global::StrawberryShake.IEntityStore _entityStore;
+        private readonly global::StrawberryShake.IEntityMapper<global::StarRepo.GraphQL.State.ObservationEntity, GetThumbnail_Observations_Observation> _getThumbnail_Observations_ObservationFromObservationEntityMapper;
+        public GetThumbnailResultFactory(global::StrawberryShake.IEntityStore entityStore, global::StrawberryShake.IEntityMapper<global::StarRepo.GraphQL.State.ObservationEntity, GetThumbnail_Observations_Observation> getThumbnail_Observations_ObservationFromObservationEntityMapper)
+        {
+            _entityStore = entityStore ?? throw new global::System.ArgumentNullException(nameof(entityStore));
+            _getThumbnail_Observations_ObservationFromObservationEntityMapper = getThumbnail_Observations_ObservationFromObservationEntityMapper ?? throw new global::System.ArgumentNullException(nameof(getThumbnail_Observations_ObservationFromObservationEntityMapper));
+        }
+
+        global::System.Type global::StrawberryShake.IOperationResultDataFactory.ResultType => typeof(global::StarRepo.GraphQL.IGetThumbnailResult);
+        public GetThumbnailResult Create(global::StrawberryShake.IOperationResultDataInfo dataInfo, global::StrawberryShake.IEntityStoreSnapshot? snapshot = null)
+        {
+            if (snapshot is null)
+            {
+                snapshot = _entityStore.CurrentSnapshot;
+            }
+
+            if (dataInfo is GetThumbnailResultInfo info)
+            {
+                return new GetThumbnailResult(MapNonNullableIGetThumbnail_ObservationsNonNullableArray(info.Observations, snapshot));
+            }
+
+            throw new global::System.ArgumentException("GetThumbnailResultInfo expected.");
+        }
+
+        private global::System.Collections.Generic.IReadOnlyList<global::StarRepo.GraphQL.IGetThumbnail_Observations> MapNonNullableIGetThumbnail_ObservationsNonNullableArray(global::System.Collections.Generic.IReadOnlyList<global::StrawberryShake.EntityId>? list, global::StrawberryShake.IEntityStoreSnapshot snapshot)
+        {
+            if (list is null)
+            {
+                throw new global::System.ArgumentNullException();
+            }
+
+            var observations = new global::System.Collections.Generic.List<global::StarRepo.GraphQL.IGetThumbnail_Observations>();
+            foreach (global::StrawberryShake.EntityId child in list)
+            {
+                observations.Add(MapNonNullableIGetThumbnail_Observations(child, snapshot));
+            }
+
+            return observations;
+        }
+
+        private global::StarRepo.GraphQL.IGetThumbnail_Observations MapNonNullableIGetThumbnail_Observations(global::StrawberryShake.EntityId entityId, global::StrawberryShake.IEntityStoreSnapshot snapshot)
+        {
+            if (entityId.Name.Equals("Observation", global::System.StringComparison.Ordinal))
+            {
+                return _getThumbnail_Observations_ObservationFromObservationEntityMapper.Map(snapshot.GetEntity<global::StarRepo.GraphQL.State.ObservationEntity>(entityId) ?? throw new global::StrawberryShake.GraphQLClientException());
+            }
+
+            throw new global::System.NotSupportedException();
+        }
+
+        global::System.Object global::StrawberryShake.IOperationResultDataFactory.Create(global::StrawberryShake.IOperationResultDataInfo dataInfo, global::StrawberryShake.IEntityStoreSnapshot? snapshot)
+        {
+            return Create(dataInfo, snapshot);
+        }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class GetThumbnailResultInfo : global::StrawberryShake.IOperationResultDataInfo
+    {
+        private readonly global::System.Collections.Generic.IReadOnlyCollection<global::StrawberryShake.EntityId> _entityIds;
+        private readonly global::System.UInt64 _version;
+        public GetThumbnailResultInfo(global::System.Collections.Generic.IReadOnlyList<global::StrawberryShake.EntityId> observations, global::System.Collections.Generic.IReadOnlyCollection<global::StrawberryShake.EntityId> entityIds, global::System.UInt64 version)
+        {
+            Observations = observations;
+            _entityIds = entityIds ?? throw new global::System.ArgumentNullException(nameof(entityIds));
+            _version = version;
+        }
+
+        public global::System.Collections.Generic.IReadOnlyList<global::StrawberryShake.EntityId> Observations { get; }
+
+        public global::System.Collections.Generic.IReadOnlyCollection<global::StrawberryShake.EntityId> EntityIds => _entityIds;
+        public global::System.UInt64 Version => _version;
+        public global::StrawberryShake.IOperationResultDataInfo WithVersion(global::System.UInt64 version)
+        {
+            return new GetThumbnailResultInfo(Observations, _entityIds, version);
+        }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class GetThumbnail_Observations_ObservationFromObservationEntityMapper : global::StrawberryShake.IEntityMapper<global::StarRepo.GraphQL.State.ObservationEntity, GetThumbnail_Observations_Observation>
+    {
+        private readonly global::StrawberryShake.IEntityStore _entityStore;
+        public GetThumbnail_Observations_ObservationFromObservationEntityMapper(global::StrawberryShake.IEntityStore entityStore)
+        {
+            _entityStore = entityStore ?? throw new global::System.ArgumentNullException(nameof(entityStore));
+        }
+
+        public GetThumbnail_Observations_Observation Map(global::StarRepo.GraphQL.State.ObservationEntity entity, global::StrawberryShake.IEntityStoreSnapshot? snapshot = null)
+        {
+            if (snapshot is null)
+            {
+                snapshot = _entityStore.CurrentSnapshot;
+            }
+
+            return new GetThumbnail_Observations_Observation(entity.FileId, entity.Extension, entity.Thumbnail);
+        }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class UpsertTelescopeResultFactory : global::StrawberryShake.IOperationResultDataFactory<global::StarRepo.GraphQL.UpsertTelescopeResult>
+    {
+        private readonly global::StrawberryShake.IEntityStore _entityStore;
+        private readonly global::StrawberryShake.IEntityMapper<global::StarRepo.GraphQL.State.TelescopeMutationResponseEntity, UpsertTelescope_ModifyTelescope_TelescopeMutationResponse> _upsertTelescope_ModifyTelescope_TelescopeMutationResponseFromTelescopeMutationResponseEntityMapper;
+        public UpsertTelescopeResultFactory(global::StrawberryShake.IEntityStore entityStore, global::StrawberryShake.IEntityMapper<global::StarRepo.GraphQL.State.TelescopeMutationResponseEntity, UpsertTelescope_ModifyTelescope_TelescopeMutationResponse> upsertTelescope_ModifyTelescope_TelescopeMutationResponseFromTelescopeMutationResponseEntityMapper)
+        {
+            _entityStore = entityStore ?? throw new global::System.ArgumentNullException(nameof(entityStore));
+            _upsertTelescope_ModifyTelescope_TelescopeMutationResponseFromTelescopeMutationResponseEntityMapper = upsertTelescope_ModifyTelescope_TelescopeMutationResponseFromTelescopeMutationResponseEntityMapper ?? throw new global::System.ArgumentNullException(nameof(upsertTelescope_ModifyTelescope_TelescopeMutationResponseFromTelescopeMutationResponseEntityMapper));
+        }
+
+        global::System.Type global::StrawberryShake.IOperationResultDataFactory.ResultType => typeof(global::StarRepo.GraphQL.IUpsertTelescopeResult);
+        public UpsertTelescopeResult Create(global::StrawberryShake.IOperationResultDataInfo dataInfo, global::StrawberryShake.IEntityStoreSnapshot? snapshot = null)
+        {
+            if (snapshot is null)
+            {
+                snapshot = _entityStore.CurrentSnapshot;
+            }
+
+            if (dataInfo is UpsertTelescopeResultInfo info)
+            {
+                return new UpsertTelescopeResult(MapNonNullableIUpsertTelescope_ModifyTelescope(info.ModifyTelescope, snapshot));
+            }
+
+            throw new global::System.ArgumentException("UpsertTelescopeResultInfo expected.");
+        }
+
+        private global::StarRepo.GraphQL.IUpsertTelescope_ModifyTelescope MapNonNullableIUpsertTelescope_ModifyTelescope(global::StrawberryShake.EntityId entityId, global::StrawberryShake.IEntityStoreSnapshot snapshot)
+        {
+            if (entityId.Name.Equals("TelescopeMutationResponse", global::System.StringComparison.Ordinal))
+            {
+                return _upsertTelescope_ModifyTelescope_TelescopeMutationResponseFromTelescopeMutationResponseEntityMapper.Map(snapshot.GetEntity<global::StarRepo.GraphQL.State.TelescopeMutationResponseEntity>(entityId) ?? throw new global::StrawberryShake.GraphQLClientException());
+            }
+
+            throw new global::System.NotSupportedException();
+        }
+
+        global::System.Object global::StrawberryShake.IOperationResultDataFactory.Create(global::StrawberryShake.IOperationResultDataInfo dataInfo, global::StrawberryShake.IEntityStoreSnapshot? snapshot)
+        {
+            return Create(dataInfo, snapshot);
+        }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class UpsertTelescopeResultInfo : global::StrawberryShake.IOperationResultDataInfo
+    {
+        private readonly global::System.Collections.Generic.IReadOnlyCollection<global::StrawberryShake.EntityId> _entityIds;
+        private readonly global::System.UInt64 _version;
+        public UpsertTelescopeResultInfo(global::StrawberryShake.EntityId modifyTelescope, global::System.Collections.Generic.IReadOnlyCollection<global::StrawberryShake.EntityId> entityIds, global::System.UInt64 version)
+        {
+            ModifyTelescope = modifyTelescope;
+            _entityIds = entityIds ?? throw new global::System.ArgumentNullException(nameof(entityIds));
+            _version = version;
+        }
+
+        public global::StrawberryShake.EntityId ModifyTelescope { get; }
+
+        public global::System.Collections.Generic.IReadOnlyCollection<global::StrawberryShake.EntityId> EntityIds => _entityIds;
+        public global::System.UInt64 Version => _version;
+        public global::StrawberryShake.IOperationResultDataInfo WithVersion(global::System.UInt64 version)
+        {
+            return new UpsertTelescopeResultInfo(ModifyTelescope, _entityIds, version);
+        }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class UpsertTelescope_ModifyTelescope_TelescopeMutationResponseFromTelescopeMutationResponseEntityMapper : global::StrawberryShake.IEntityMapper<global::StarRepo.GraphQL.State.TelescopeMutationResponseEntity, UpsertTelescope_ModifyTelescope_TelescopeMutationResponse>
+    {
+        private readonly global::StrawberryShake.IEntityStore _entityStore;
+        public UpsertTelescope_ModifyTelescope_TelescopeMutationResponseFromTelescopeMutationResponseEntityMapper(global::StrawberryShake.IEntityStore entityStore)
+        {
+            _entityStore = entityStore ?? throw new global::System.ArgumentNullException(nameof(entityStore));
+        }
+
+        public UpsertTelescope_ModifyTelescope_TelescopeMutationResponse Map(global::StarRepo.GraphQL.State.TelescopeMutationResponseEntity entity, global::StrawberryShake.IEntityStoreSnapshot? snapshot = null)
+        {
+            if (snapshot is null)
+            {
+                snapshot = _entityStore.CurrentSnapshot;
+            }
+
+            return new UpsertTelescope_ModifyTelescope_TelescopeMutationResponse(entity.Id, entity.Success, entity.Message);
+        }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    internal interface IObservationSortInputInfo
+    {
+        global::System.Boolean IsIdSet { get; }
+
+        global::System.Boolean IsObservationDateSet { get; }
+
+        global::System.Boolean IsExtensionSet { get; }
+
+        global::System.Boolean IsFileIdSet { get; }
+
+        global::System.Boolean IsTelescopeSet { get; }
+
+        global::System.Boolean IsTargetSet { get; }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    internal interface ITelescopeSortInputInfo
+    {
+        global::System.Boolean IsIdSet { get; }
+
+        global::System.Boolean IsManufacturerSet { get; }
+
+        global::System.Boolean IsModelSet { get; }
+
+        global::System.Boolean IsFocalLengthMMSet { get; }
+
+        global::System.Boolean IsApertureMMSet { get; }
+
+        global::System.Boolean IsFStopSet { get; }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    internal interface ITargetSortInputInfo
+    {
+        global::System.Boolean IsIdSet { get; }
+
+        global::System.Boolean IsNameSet { get; }
+
+        global::System.Boolean IsDescriptionSet { get; }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    internal interface IObservationFilterInputInfo
+    {
+        global::System.Boolean IsAndSet { get; }
+
+        global::System.Boolean IsOrSet { get; }
+
+        global::System.Boolean IsIdSet { get; }
+
+        global::System.Boolean IsObservationDateSet { get; }
+
+        global::System.Boolean IsExtensionSet { get; }
+
+        global::System.Boolean IsFileIdSet { get; }
+
+        global::System.Boolean IsTelescopeSet { get; }
+
+        global::System.Boolean IsTargetSet { get; }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    internal interface IComparableGuidOperationFilterInputInfo
+    {
+        global::System.Boolean IsEqSet { get; }
+
+        global::System.Boolean IsNeqSet { get; }
+
+        global::System.Boolean IsInSet { get; }
+
+        global::System.Boolean IsNinSet { get; }
+
+        global::System.Boolean IsGtSet { get; }
+
+        global::System.Boolean IsNgtSet { get; }
+
+        global::System.Boolean IsGteSet { get; }
+
+        global::System.Boolean IsNgteSet { get; }
+
+        global::System.Boolean IsLtSet { get; }
+
+        global::System.Boolean IsNltSet { get; }
+
+        global::System.Boolean IsLteSet { get; }
+
+        global::System.Boolean IsNlteSet { get; }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    internal interface IComparableDateTimeOffsetOperationFilterInputInfo
+    {
+        global::System.Boolean IsEqSet { get; }
+
+        global::System.Boolean IsNeqSet { get; }
+
+        global::System.Boolean IsInSet { get; }
+
+        global::System.Boolean IsNinSet { get; }
+
+        global::System.Boolean IsGtSet { get; }
+
+        global::System.Boolean IsNgtSet { get; }
+
+        global::System.Boolean IsGteSet { get; }
+
+        global::System.Boolean IsNgteSet { get; }
+
+        global::System.Boolean IsLtSet { get; }
+
+        global::System.Boolean IsNltSet { get; }
+
+        global::System.Boolean IsLteSet { get; }
+
+        global::System.Boolean IsNlteSet { get; }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    internal interface IStringOperationFilterInputInfo
+    {
+        global::System.Boolean IsAndSet { get; }
+
+        global::System.Boolean IsOrSet { get; }
+
+        global::System.Boolean IsEqSet { get; }
+
+        global::System.Boolean IsNeqSet { get; }
+
+        global::System.Boolean IsContainsSet { get; }
+
+        global::System.Boolean IsNcontainsSet { get; }
+
+        global::System.Boolean IsInSet { get; }
+
+        global::System.Boolean IsNinSet { get; }
+
+        global::System.Boolean IsStartsWithSet { get; }
+
+        global::System.Boolean IsNstartsWithSet { get; }
+
+        global::System.Boolean IsEndsWithSet { get; }
+
+        global::System.Boolean IsNendsWithSet { get; }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    internal interface ITelescopeFilterInputInfo
+    {
+        global::System.Boolean IsAndSet { get; }
+
+        global::System.Boolean IsOrSet { get; }
+
+        global::System.Boolean IsIdSet { get; }
+
+        global::System.Boolean IsManufacturerSet { get; }
+
+        global::System.Boolean IsModelSet { get; }
+
+        global::System.Boolean IsFocalLengthMMSet { get; }
+
+        global::System.Boolean IsApertureMMSet { get; }
+
+        global::System.Boolean IsFStopSet { get; }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    internal interface IComparableInt32OperationFilterInputInfo
+    {
+        global::System.Boolean IsEqSet { get; }
+
+        global::System.Boolean IsNeqSet { get; }
+
+        global::System.Boolean IsInSet { get; }
+
+        global::System.Boolean IsNinSet { get; }
+
+        global::System.Boolean IsGtSet { get; }
+
+        global::System.Boolean IsNgtSet { get; }
+
+        global::System.Boolean IsGteSet { get; }
+
+        global::System.Boolean IsNgteSet { get; }
+
+        global::System.Boolean IsLtSet { get; }
+
+        global::System.Boolean IsNltSet { get; }
+
+        global::System.Boolean IsLteSet { get; }
+
+        global::System.Boolean IsNlteSet { get; }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    internal interface IComparableDoubleOperationFilterInputInfo
+    {
+        global::System.Boolean IsEqSet { get; }
+
+        global::System.Boolean IsNeqSet { get; }
+
+        global::System.Boolean IsInSet { get; }
+
+        global::System.Boolean IsNinSet { get; }
+
+        global::System.Boolean IsGtSet { get; }
+
+        global::System.Boolean IsNgtSet { get; }
+
+        global::System.Boolean IsGteSet { get; }
+
+        global::System.Boolean IsNgteSet { get; }
+
+        global::System.Boolean IsLtSet { get; }
+
+        global::System.Boolean IsNltSet { get; }
+
+        global::System.Boolean IsLteSet { get; }
+
+        global::System.Boolean IsNlteSet { get; }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    internal interface ITargetFilterInputInfo
+    {
+        global::System.Boolean IsAndSet { get; }
+
+        global::System.Boolean IsOrSet { get; }
+
+        global::System.Boolean IsIdSet { get; }
+
+        global::System.Boolean IsNameSet { get; }
+
+        global::System.Boolean IsDescriptionSet { get; }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    internal interface ITelescopeInputInfo
+    {
+        global::System.Boolean IsIdSet { get; }
+
+        global::System.Boolean IsManufacturerSet { get; }
+
+        global::System.Boolean IsModelSet { get; }
+
+        global::System.Boolean IsFocalLengthMMSet { get; }
+
+        global::System.Boolean IsApertureMMSet { get; }
+
+        global::System.Boolean IsFStopSet { get; }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class GetImageBuilder : global::StrawberryShake.IOperationResultBuilder<global::System.Text.Json.JsonDocument, global::StarRepo.GraphQL.IGetImageResult>
+    {
+        private readonly global::StrawberryShake.IEntityStore _entityStore;
+        private readonly global::StrawberryShake.IEntityIdSerializer _idSerializer;
+        private readonly global::StrawberryShake.IOperationResultDataFactory<global::StarRepo.GraphQL.IGetImageResult> _resultDataFactory;
+        private readonly global::StrawberryShake.Serialization.ILeafValueParser<global::System.String, global::System.Guid> _uUIDParser;
+        private readonly global::StrawberryShake.Serialization.ILeafValueParser<global::System.String, global::System.String> _stringParser;
+        public GetImageBuilder(global::StrawberryShake.IEntityStore entityStore, global::StrawberryShake.IEntityIdSerializer idSerializer, global::StrawberryShake.IOperationResultDataFactory<global::StarRepo.GraphQL.IGetImageResult> resultDataFactory, global::StrawberryShake.Serialization.ISerializerResolver serializerResolver)
+        {
+            _entityStore = entityStore ?? throw new global::System.ArgumentNullException(nameof(entityStore));
+            _idSerializer = idSerializer ?? throw new global::System.ArgumentNullException(nameof(idSerializer));
+            _resultDataFactory = resultDataFactory ?? throw new global::System.ArgumentNullException(nameof(resultDataFactory));
+            _uUIDParser = serializerResolver.GetLeafValueParser<global::System.String, global::System.Guid>("UUID") ?? throw new global::System.ArgumentException("No serializer for type `UUID` found.");
+            _stringParser = serializerResolver.GetLeafValueParser<global::System.String, global::System.String>("String") ?? throw new global::System.ArgumentException("No serializer for type `String` found.");
+        }
+
+        public global::StrawberryShake.IOperationResult<IGetImageResult> Build(global::StrawberryShake.Response<global::System.Text.Json.JsonDocument> response)
+        {
+            (IGetImageResult Result, GetImageResultInfo Info)? data = null;
+            global::System.Collections.Generic.IReadOnlyList<global::StrawberryShake.IClientError>? errors = null;
+            if (response.Exception is null)
+            {
+                try
+                {
+                    if (response.Body != null)
+                    {
+                        if (response.Body.RootElement.TryGetProperty("data", out global::System.Text.Json.JsonElement dataElement) && dataElement.ValueKind == global::System.Text.Json.JsonValueKind.Object)
+                        {
+                            data = BuildData(dataElement);
+                        }
+
+                        if (response.Body.RootElement.TryGetProperty("errors", out global::System.Text.Json.JsonElement errorsElement))
+                        {
+                            errors = global::StrawberryShake.Json.JsonErrorParser.ParseErrors(errorsElement);
+                        }
+                    }
+                }
+                catch (global::System.Exception ex)
+                {
+                    errors = new global::StrawberryShake.IClientError[]{new global::StrawberryShake.ClientError(ex.Message, exception: ex, extensions: new global::System.Collections.Generic.Dictionary<global::System.String, global::System.Object?>{{"body", response.Body?.RootElement.ToString()}})};
+                }
+            }
+            else
+            {
+                if (response.Body != null && response.Body.RootElement.TryGetProperty("errors", out global::System.Text.Json.JsonElement errorsElement))
+                {
+                    errors = global::StrawberryShake.Json.JsonErrorParser.ParseErrors(errorsElement);
+                }
+                else
+                {
+                    errors = new global::StrawberryShake.IClientError[]{new global::StrawberryShake.ClientError(response.Exception.Message, exception: response.Exception, extensions: new global::System.Collections.Generic.Dictionary<global::System.String, global::System.Object?>{{"body", response.Body?.RootElement.ToString()}})};
+                }
+            }
+
+            return new global::StrawberryShake.OperationResult<IGetImageResult>(data?.Result, data?.Info, _resultDataFactory, errors);
+        }
+
+        private (IGetImageResult, GetImageResultInfo) BuildData(global::System.Text.Json.JsonElement obj)
+        {
+            var entityIds = new global::System.Collections.Generic.HashSet<global::StrawberryShake.EntityId>();
+            global::StrawberryShake.IEntityStoreSnapshot snapshot = default !;
+            global::System.Collections.Generic.IReadOnlyList<global::StrawberryShake.EntityId> observationsId = default !;
+            _entityStore.Update(session =>
+            {
+                observationsId = UpdateNonNullableIGetImage_ObservationsEntityNonNullableArray(session, global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "observations"), entityIds);
+                snapshot = session.CurrentSnapshot;
+            });
+            var resultInfo = new GetImageResultInfo(observationsId, entityIds, snapshot.Version);
+            return (_resultDataFactory.Create(resultInfo), resultInfo);
+        }
+
+        private global::System.Collections.Generic.IReadOnlyList<global::StrawberryShake.EntityId> UpdateNonNullableIGetImage_ObservationsEntityNonNullableArray(global::StrawberryShake.IEntityStoreUpdateSession session, global::System.Text.Json.JsonElement? obj, global::System.Collections.Generic.ISet<global::StrawberryShake.EntityId> entityIds)
+        {
+            if (!obj.HasValue)
+            {
+                throw new global::System.ArgumentNullException();
+            }
+
+            var observations = new global::System.Collections.Generic.List<global::StrawberryShake.EntityId>();
+            foreach (global::System.Text.Json.JsonElement child in obj.Value.EnumerateArray())
+            {
+                observations.Add(UpdateNonNullableIGetImage_ObservationsEntity(session, child, entityIds));
+            }
+
+            return observations;
+        }
+
+        private global::StrawberryShake.EntityId UpdateNonNullableIGetImage_ObservationsEntity(global::StrawberryShake.IEntityStoreUpdateSession session, global::System.Text.Json.JsonElement? obj, global::System.Collections.Generic.ISet<global::StrawberryShake.EntityId> entityIds)
+        {
+            if (!obj.HasValue)
+            {
+                throw new global::System.ArgumentNullException();
+            }
+
+            global::StrawberryShake.EntityId entityId = _idSerializer.Parse(obj.Value);
+            entityIds.Add(entityId);
+            if (entityId.Name.Equals("Observation", global::System.StringComparison.Ordinal))
+            {
+                if (session.CurrentSnapshot.TryGetEntity(entityId, out global::StarRepo.GraphQL.State.ObservationEntity? entity))
+                {
+                    session.SetEntity(entityId, new global::StarRepo.GraphQL.State.ObservationEntity(DeserializeNonNullableGuid(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "fileId")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "extension")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "image")), entity.Id, entity.ObservationDate, entity.Telescope, entity.Target, entity.Thumbnail));
+                }
+                else
+                {
+                    session.SetEntity(entityId, new global::StarRepo.GraphQL.State.ObservationEntity(DeserializeNonNullableGuid(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "fileId")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "extension")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "image")), default !, default !, default !, default !, default !));
+                }
+
+                return entityId;
+            }
+
+            throw new global::System.NotSupportedException();
+        }
+
+        private global::System.Guid DeserializeNonNullableGuid(global::System.Text.Json.JsonElement? obj)
+        {
+            if (!obj.HasValue)
+            {
+                throw new global::System.ArgumentNullException();
+            }
+
+            return _uUIDParser.Parse(obj.Value.GetString()!);
+        }
+
+        private global::System.String? DeserializeString(global::System.Text.Json.JsonElement? obj)
+        {
+            if (!obj.HasValue)
+            {
+                return null;
+            }
+
+            return _stringParser.Parse(obj.Value.GetString()!);
+        }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class GetObservationsBuilder : global::StrawberryShake.IOperationResultBuilder<global::System.Text.Json.JsonDocument, global::StarRepo.GraphQL.IGetObservationsResult>
+    {
+        private readonly global::StrawberryShake.IEntityStore _entityStore;
+        private readonly global::StrawberryShake.IEntityIdSerializer _idSerializer;
+        private readonly global::StrawberryShake.IOperationResultDataFactory<global::StarRepo.GraphQL.IGetObservationsResult> _resultDataFactory;
+        private readonly global::StrawberryShake.Serialization.ILeafValueParser<global::System.String, global::StarRepo.GraphQL.SortEnumType> _sortEnumTypeParser;
+        private readonly global::StrawberryShake.Serialization.ILeafValueParser<global::System.String, global::System.Guid> _uUIDParser;
+        private readonly global::StrawberryShake.Serialization.ILeafValueParser<global::System.String, global::System.DateTimeOffset> _dateTimeParser;
+        private readonly global::StrawberryShake.Serialization.ILeafValueParser<global::System.String, global::System.String> _stringParser;
+        private readonly global::StrawberryShake.Serialization.ILeafValueParser<global::System.Int32, global::System.Int32> _intParser;
+        private readonly global::StrawberryShake.Serialization.ILeafValueParser<global::System.Double, global::System.Double> _floatParser;
+        public GetObservationsBuilder(global::StrawberryShake.IEntityStore entityStore, global::StrawberryShake.IEntityIdSerializer idSerializer, global::StrawberryShake.IOperationResultDataFactory<global::StarRepo.GraphQL.IGetObservationsResult> resultDataFactory, global::StrawberryShake.Serialization.ISerializerResolver serializerResolver)
+        {
+            _entityStore = entityStore ?? throw new global::System.ArgumentNullException(nameof(entityStore));
+            _idSerializer = idSerializer ?? throw new global::System.ArgumentNullException(nameof(idSerializer));
+            _resultDataFactory = resultDataFactory ?? throw new global::System.ArgumentNullException(nameof(resultDataFactory));
+            _sortEnumTypeParser = serializerResolver.GetLeafValueParser<global::System.String, global::StarRepo.GraphQL.SortEnumType>("SortEnumType") ?? throw new global::System.ArgumentException("No serializer for type `SortEnumType` found.");
+            _uUIDParser = serializerResolver.GetLeafValueParser<global::System.String, global::System.Guid>("UUID") ?? throw new global::System.ArgumentException("No serializer for type `UUID` found.");
+            _dateTimeParser = serializerResolver.GetLeafValueParser<global::System.String, global::System.DateTimeOffset>("DateTime") ?? throw new global::System.ArgumentException("No serializer for type `DateTime` found.");
+            _stringParser = serializerResolver.GetLeafValueParser<global::System.String, global::System.String>("String") ?? throw new global::System.ArgumentException("No serializer for type `String` found.");
+            _intParser = serializerResolver.GetLeafValueParser<global::System.Int32, global::System.Int32>("Int") ?? throw new global::System.ArgumentException("No serializer for type `Int` found.");
+            _floatParser = serializerResolver.GetLeafValueParser<global::System.Double, global::System.Double>("Float") ?? throw new global::System.ArgumentException("No serializer for type `Float` found.");
+        }
+
+        public global::StrawberryShake.IOperationResult<IGetObservationsResult> Build(global::StrawberryShake.Response<global::System.Text.Json.JsonDocument> response)
+        {
+            (IGetObservationsResult Result, GetObservationsResultInfo Info)? data = null;
+            global::System.Collections.Generic.IReadOnlyList<global::StrawberryShake.IClientError>? errors = null;
+            if (response.Exception is null)
+            {
+                try
+                {
+                    if (response.Body != null)
+                    {
+                        if (response.Body.RootElement.TryGetProperty("data", out global::System.Text.Json.JsonElement dataElement) && dataElement.ValueKind == global::System.Text.Json.JsonValueKind.Object)
+                        {
+                            data = BuildData(dataElement);
+                        }
+
+                        if (response.Body.RootElement.TryGetProperty("errors", out global::System.Text.Json.JsonElement errorsElement))
+                        {
+                            errors = global::StrawberryShake.Json.JsonErrorParser.ParseErrors(errorsElement);
+                        }
+                    }
+                }
+                catch (global::System.Exception ex)
+                {
+                    errors = new global::StrawberryShake.IClientError[]{new global::StrawberryShake.ClientError(ex.Message, exception: ex, extensions: new global::System.Collections.Generic.Dictionary<global::System.String, global::System.Object?>{{"body", response.Body?.RootElement.ToString()}})};
+                }
+            }
+            else
+            {
+                if (response.Body != null && response.Body.RootElement.TryGetProperty("errors", out global::System.Text.Json.JsonElement errorsElement))
+                {
+                    errors = global::StrawberryShake.Json.JsonErrorParser.ParseErrors(errorsElement);
+                }
+                else
+                {
+                    errors = new global::StrawberryShake.IClientError[]{new global::StrawberryShake.ClientError(response.Exception.Message, exception: response.Exception, extensions: new global::System.Collections.Generic.Dictionary<global::System.String, global::System.Object?>{{"body", response.Body?.RootElement.ToString()}})};
+                }
+            }
+
+            return new global::StrawberryShake.OperationResult<IGetObservationsResult>(data?.Result, data?.Info, _resultDataFactory, errors);
+        }
+
+        private (IGetObservationsResult, GetObservationsResultInfo) BuildData(global::System.Text.Json.JsonElement obj)
+        {
+            var entityIds = new global::System.Collections.Generic.HashSet<global::StrawberryShake.EntityId>();
+            global::StrawberryShake.IEntityStoreSnapshot snapshot = default !;
+            global::System.Collections.Generic.IReadOnlyList<global::StrawberryShake.EntityId> observationsId = default !;
+            _entityStore.Update(session =>
+            {
+                observationsId = UpdateNonNullableIGetObservations_ObservationsEntityNonNullableArray(session, global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "observations"), entityIds);
+                snapshot = session.CurrentSnapshot;
+            });
+            var resultInfo = new GetObservationsResultInfo(observationsId, entityIds, snapshot.Version);
+            return (_resultDataFactory.Create(resultInfo), resultInfo);
+        }
+
+        private global::System.Collections.Generic.IReadOnlyList<global::StrawberryShake.EntityId> UpdateNonNullableIGetObservations_ObservationsEntityNonNullableArray(global::StrawberryShake.IEntityStoreUpdateSession session, global::System.Text.Json.JsonElement? obj, global::System.Collections.Generic.ISet<global::StrawberryShake.EntityId> entityIds)
+        {
+            if (!obj.HasValue)
+            {
+                throw new global::System.ArgumentNullException();
+            }
+
+            var observations = new global::System.Collections.Generic.List<global::StrawberryShake.EntityId>();
+            foreach (global::System.Text.Json.JsonElement child in obj.Value.EnumerateArray())
+            {
+                observations.Add(UpdateNonNullableIGetObservations_ObservationsEntity(session, child, entityIds));
+            }
+
+            return observations;
+        }
+
+        private global::StrawberryShake.EntityId UpdateNonNullableIGetObservations_ObservationsEntity(global::StrawberryShake.IEntityStoreUpdateSession session, global::System.Text.Json.JsonElement? obj, global::System.Collections.Generic.ISet<global::StrawberryShake.EntityId> entityIds)
+        {
+            if (!obj.HasValue)
+            {
+                throw new global::System.ArgumentNullException();
+            }
+
+            global::StrawberryShake.EntityId entityId = _idSerializer.Parse(obj.Value);
+            entityIds.Add(entityId);
+            if (entityId.Name.Equals("Observation", global::System.StringComparison.Ordinal))
+            {
+                if (session.CurrentSnapshot.TryGetEntity(entityId, out global::StarRepo.GraphQL.State.ObservationEntity? entity))
+                {
+                    session.SetEntity(entityId, new global::StarRepo.GraphQL.State.ObservationEntity(entity.FileId, entity.Extension, entity.Image, DeserializeNonNullableGuid(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "id")), DeserializeNonNullableDateTimeOffset(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "observationDate")), UpdateIGetObservations_Observations_TelescopeEntity(session, global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "telescope"), entityIds), UpdateIGetObservations_Observations_TargetEntity(session, global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "target"), entityIds), entity.Thumbnail));
+                }
+                else
+                {
+                    session.SetEntity(entityId, new global::StarRepo.GraphQL.State.ObservationEntity(default !, default !, default !, DeserializeNonNullableGuid(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "id")), DeserializeNonNullableDateTimeOffset(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "observationDate")), UpdateIGetObservations_Observations_TelescopeEntity(session, global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "telescope"), entityIds), UpdateIGetObservations_Observations_TargetEntity(session, global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "target"), entityIds), default !));
+                }
+
+                return entityId;
+            }
+
+            throw new global::System.NotSupportedException();
+        }
+
+        private global::System.Guid DeserializeNonNullableGuid(global::System.Text.Json.JsonElement? obj)
+        {
+            if (!obj.HasValue)
+            {
+                throw new global::System.ArgumentNullException();
+            }
+
+            return _uUIDParser.Parse(obj.Value.GetString()!);
+        }
+
+        private global::System.DateTimeOffset DeserializeNonNullableDateTimeOffset(global::System.Text.Json.JsonElement? obj)
+        {
+            if (!obj.HasValue)
+            {
+                throw new global::System.ArgumentNullException();
+            }
+
+            return _dateTimeParser.Parse(obj.Value.GetString()!);
+        }
+
+        private global::StrawberryShake.EntityId? UpdateIGetObservations_Observations_TelescopeEntity(global::StrawberryShake.IEntityStoreUpdateSession session, global::System.Text.Json.JsonElement? obj, global::System.Collections.Generic.ISet<global::StrawberryShake.EntityId> entityIds)
+        {
+            if (!obj.HasValue)
+            {
+                return null;
+            }
+
+            global::StrawberryShake.EntityId entityId = _idSerializer.Parse(obj.Value);
+            entityIds.Add(entityId);
+            if (entityId.Name.Equals("Telescope", global::System.StringComparison.Ordinal))
+            {
+                if (session.CurrentSnapshot.TryGetEntity(entityId, out global::StarRepo.GraphQL.State.TelescopeEntity? entity))
+                {
+                    session.SetEntity(entityId, new global::StarRepo.GraphQL.State.TelescopeEntity(DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "manufacturer")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "model")), DeserializeNonNullableInt32(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "focalLengthMM")), entity.Id, entity.ApertureMM));
+                }
+                else
+                {
+                    session.SetEntity(entityId, new global::StarRepo.GraphQL.State.TelescopeEntity(DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "manufacturer")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "model")), DeserializeNonNullableInt32(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "focalLengthMM")), default !, default !));
+                }
+
+                return entityId;
+            }
+
+            throw new global::System.NotSupportedException();
+        }
+
+        private global::System.String? DeserializeString(global::System.Text.Json.JsonElement? obj)
+        {
+            if (!obj.HasValue)
+            {
+                return null;
+            }
+
+            return _stringParser.Parse(obj.Value.GetString()!);
+        }
+
+        private global::System.Int32 DeserializeNonNullableInt32(global::System.Text.Json.JsonElement? obj)
+        {
+            if (!obj.HasValue)
+            {
+                throw new global::System.ArgumentNullException();
+            }
+
+            return _intParser.Parse(obj.Value.GetInt32()!);
+        }
+
+        private global::StrawberryShake.EntityId? UpdateIGetObservations_Observations_TargetEntity(global::StrawberryShake.IEntityStoreUpdateSession session, global::System.Text.Json.JsonElement? obj, global::System.Collections.Generic.ISet<global::StrawberryShake.EntityId> entityIds)
+        {
+            if (!obj.HasValue)
+            {
+                return null;
+            }
+
+            global::StrawberryShake.EntityId entityId = _idSerializer.Parse(obj.Value);
+            entityIds.Add(entityId);
+            if (entityId.Name.Equals("Target", global::System.StringComparison.Ordinal))
+            {
+                if (session.CurrentSnapshot.TryGetEntity(entityId, out global::StarRepo.GraphQL.State.TargetEntity? entity))
+                {
+                    session.SetEntity(entityId, new global::StarRepo.GraphQL.State.TargetEntity(DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "name")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "description"))));
+                }
+                else
+                {
+                    session.SetEntity(entityId, new global::StarRepo.GraphQL.State.TargetEntity(DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "name")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "description"))));
+                }
+
+                return entityId;
+            }
+
+            throw new global::System.NotSupportedException();
         }
     }
 
@@ -637,11 +8057,11 @@ namespace StarRepo.GraphQL.State
             {
                 if (session.CurrentSnapshot.TryGetEntity(entityId, out global::StarRepo.GraphQL.State.TelescopeEntity? entity))
                 {
-                    session.SetEntity(entityId, new global::StarRepo.GraphQL.State.TelescopeEntity(DeserializeNonNullableGuid(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "id")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "manufacturer")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "model")), DeserializeNonNullableInt32(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "focalLengthMM")), DeserializeNonNullableInt32(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "apertureMM"))));
+                    session.SetEntity(entityId, new global::StarRepo.GraphQL.State.TelescopeEntity(DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "manufacturer")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "model")), DeserializeNonNullableInt32(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "focalLengthMM")), DeserializeNonNullableGuid(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "id")), DeserializeNonNullableInt32(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "apertureMM"))));
                 }
                 else
                 {
-                    session.SetEntity(entityId, new global::StarRepo.GraphQL.State.TelescopeEntity(DeserializeNonNullableGuid(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "id")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "manufacturer")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "model")), DeserializeNonNullableInt32(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "focalLengthMM")), DeserializeNonNullableInt32(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "apertureMM"))));
+                    session.SetEntity(entityId, new global::StarRepo.GraphQL.State.TelescopeEntity(DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "manufacturer")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "model")), DeserializeNonNullableInt32(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "focalLengthMM")), DeserializeNonNullableGuid(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "id")), DeserializeNonNullableInt32(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "apertureMM"))));
                 }
 
                 return entityId;
@@ -682,6 +8102,276 @@ namespace StarRepo.GraphQL.State
     }
 
     [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class GetThumbnailBuilder : global::StrawberryShake.IOperationResultBuilder<global::System.Text.Json.JsonDocument, global::StarRepo.GraphQL.IGetThumbnailResult>
+    {
+        private readonly global::StrawberryShake.IEntityStore _entityStore;
+        private readonly global::StrawberryShake.IEntityIdSerializer _idSerializer;
+        private readonly global::StrawberryShake.IOperationResultDataFactory<global::StarRepo.GraphQL.IGetThumbnailResult> _resultDataFactory;
+        private readonly global::StrawberryShake.Serialization.ILeafValueParser<global::System.String, global::System.Guid> _uUIDParser;
+        private readonly global::StrawberryShake.Serialization.ILeafValueParser<global::System.String, global::System.String> _stringParser;
+        public GetThumbnailBuilder(global::StrawberryShake.IEntityStore entityStore, global::StrawberryShake.IEntityIdSerializer idSerializer, global::StrawberryShake.IOperationResultDataFactory<global::StarRepo.GraphQL.IGetThumbnailResult> resultDataFactory, global::StrawberryShake.Serialization.ISerializerResolver serializerResolver)
+        {
+            _entityStore = entityStore ?? throw new global::System.ArgumentNullException(nameof(entityStore));
+            _idSerializer = idSerializer ?? throw new global::System.ArgumentNullException(nameof(idSerializer));
+            _resultDataFactory = resultDataFactory ?? throw new global::System.ArgumentNullException(nameof(resultDataFactory));
+            _uUIDParser = serializerResolver.GetLeafValueParser<global::System.String, global::System.Guid>("UUID") ?? throw new global::System.ArgumentException("No serializer for type `UUID` found.");
+            _stringParser = serializerResolver.GetLeafValueParser<global::System.String, global::System.String>("String") ?? throw new global::System.ArgumentException("No serializer for type `String` found.");
+        }
+
+        public global::StrawberryShake.IOperationResult<IGetThumbnailResult> Build(global::StrawberryShake.Response<global::System.Text.Json.JsonDocument> response)
+        {
+            (IGetThumbnailResult Result, GetThumbnailResultInfo Info)? data = null;
+            global::System.Collections.Generic.IReadOnlyList<global::StrawberryShake.IClientError>? errors = null;
+            if (response.Exception is null)
+            {
+                try
+                {
+                    if (response.Body != null)
+                    {
+                        if (response.Body.RootElement.TryGetProperty("data", out global::System.Text.Json.JsonElement dataElement) && dataElement.ValueKind == global::System.Text.Json.JsonValueKind.Object)
+                        {
+                            data = BuildData(dataElement);
+                        }
+
+                        if (response.Body.RootElement.TryGetProperty("errors", out global::System.Text.Json.JsonElement errorsElement))
+                        {
+                            errors = global::StrawberryShake.Json.JsonErrorParser.ParseErrors(errorsElement);
+                        }
+                    }
+                }
+                catch (global::System.Exception ex)
+                {
+                    errors = new global::StrawberryShake.IClientError[]{new global::StrawberryShake.ClientError(ex.Message, exception: ex, extensions: new global::System.Collections.Generic.Dictionary<global::System.String, global::System.Object?>{{"body", response.Body?.RootElement.ToString()}})};
+                }
+            }
+            else
+            {
+                if (response.Body != null && response.Body.RootElement.TryGetProperty("errors", out global::System.Text.Json.JsonElement errorsElement))
+                {
+                    errors = global::StrawberryShake.Json.JsonErrorParser.ParseErrors(errorsElement);
+                }
+                else
+                {
+                    errors = new global::StrawberryShake.IClientError[]{new global::StrawberryShake.ClientError(response.Exception.Message, exception: response.Exception, extensions: new global::System.Collections.Generic.Dictionary<global::System.String, global::System.Object?>{{"body", response.Body?.RootElement.ToString()}})};
+                }
+            }
+
+            return new global::StrawberryShake.OperationResult<IGetThumbnailResult>(data?.Result, data?.Info, _resultDataFactory, errors);
+        }
+
+        private (IGetThumbnailResult, GetThumbnailResultInfo) BuildData(global::System.Text.Json.JsonElement obj)
+        {
+            var entityIds = new global::System.Collections.Generic.HashSet<global::StrawberryShake.EntityId>();
+            global::StrawberryShake.IEntityStoreSnapshot snapshot = default !;
+            global::System.Collections.Generic.IReadOnlyList<global::StrawberryShake.EntityId> observationsId = default !;
+            _entityStore.Update(session =>
+            {
+                observationsId = UpdateNonNullableIGetThumbnail_ObservationsEntityNonNullableArray(session, global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "observations"), entityIds);
+                snapshot = session.CurrentSnapshot;
+            });
+            var resultInfo = new GetThumbnailResultInfo(observationsId, entityIds, snapshot.Version);
+            return (_resultDataFactory.Create(resultInfo), resultInfo);
+        }
+
+        private global::System.Collections.Generic.IReadOnlyList<global::StrawberryShake.EntityId> UpdateNonNullableIGetThumbnail_ObservationsEntityNonNullableArray(global::StrawberryShake.IEntityStoreUpdateSession session, global::System.Text.Json.JsonElement? obj, global::System.Collections.Generic.ISet<global::StrawberryShake.EntityId> entityIds)
+        {
+            if (!obj.HasValue)
+            {
+                throw new global::System.ArgumentNullException();
+            }
+
+            var observations = new global::System.Collections.Generic.List<global::StrawberryShake.EntityId>();
+            foreach (global::System.Text.Json.JsonElement child in obj.Value.EnumerateArray())
+            {
+                observations.Add(UpdateNonNullableIGetThumbnail_ObservationsEntity(session, child, entityIds));
+            }
+
+            return observations;
+        }
+
+        private global::StrawberryShake.EntityId UpdateNonNullableIGetThumbnail_ObservationsEntity(global::StrawberryShake.IEntityStoreUpdateSession session, global::System.Text.Json.JsonElement? obj, global::System.Collections.Generic.ISet<global::StrawberryShake.EntityId> entityIds)
+        {
+            if (!obj.HasValue)
+            {
+                throw new global::System.ArgumentNullException();
+            }
+
+            global::StrawberryShake.EntityId entityId = _idSerializer.Parse(obj.Value);
+            entityIds.Add(entityId);
+            if (entityId.Name.Equals("Observation", global::System.StringComparison.Ordinal))
+            {
+                if (session.CurrentSnapshot.TryGetEntity(entityId, out global::StarRepo.GraphQL.State.ObservationEntity? entity))
+                {
+                    session.SetEntity(entityId, new global::StarRepo.GraphQL.State.ObservationEntity(DeserializeNonNullableGuid(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "fileId")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "extension")), entity.Image, entity.Id, entity.ObservationDate, entity.Telescope, entity.Target, DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "thumbnail"))));
+                }
+                else
+                {
+                    session.SetEntity(entityId, new global::StarRepo.GraphQL.State.ObservationEntity(DeserializeNonNullableGuid(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "fileId")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "extension")), default !, default !, default !, default !, default !, DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "thumbnail"))));
+                }
+
+                return entityId;
+            }
+
+            throw new global::System.NotSupportedException();
+        }
+
+        private global::System.Guid DeserializeNonNullableGuid(global::System.Text.Json.JsonElement? obj)
+        {
+            if (!obj.HasValue)
+            {
+                throw new global::System.ArgumentNullException();
+            }
+
+            return _uUIDParser.Parse(obj.Value.GetString()!);
+        }
+
+        private global::System.String? DeserializeString(global::System.Text.Json.JsonElement? obj)
+        {
+            if (!obj.HasValue)
+            {
+                return null;
+            }
+
+            return _stringParser.Parse(obj.Value.GetString()!);
+        }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class UpsertTelescopeBuilder : global::StrawberryShake.IOperationResultBuilder<global::System.Text.Json.JsonDocument, global::StarRepo.GraphQL.IUpsertTelescopeResult>
+    {
+        private readonly global::StrawberryShake.IEntityStore _entityStore;
+        private readonly global::StrawberryShake.IEntityIdSerializer _idSerializer;
+        private readonly global::StrawberryShake.IOperationResultDataFactory<global::StarRepo.GraphQL.IUpsertTelescopeResult> _resultDataFactory;
+        private readonly global::StrawberryShake.Serialization.ILeafValueParser<global::System.String, global::System.Guid> _uUIDParser;
+        private readonly global::StrawberryShake.Serialization.ILeafValueParser<global::System.String, global::System.String> _stringParser;
+        private readonly global::StrawberryShake.Serialization.ILeafValueParser<global::System.Int32, global::System.Int32> _intParser;
+        private readonly global::StrawberryShake.Serialization.ILeafValueParser<global::System.Double, global::System.Double> _floatParser;
+        private readonly global::StrawberryShake.Serialization.ILeafValueParser<global::System.Boolean, global::System.Boolean> _booleanParser;
+        public UpsertTelescopeBuilder(global::StrawberryShake.IEntityStore entityStore, global::StrawberryShake.IEntityIdSerializer idSerializer, global::StrawberryShake.IOperationResultDataFactory<global::StarRepo.GraphQL.IUpsertTelescopeResult> resultDataFactory, global::StrawberryShake.Serialization.ISerializerResolver serializerResolver)
+        {
+            _entityStore = entityStore ?? throw new global::System.ArgumentNullException(nameof(entityStore));
+            _idSerializer = idSerializer ?? throw new global::System.ArgumentNullException(nameof(idSerializer));
+            _resultDataFactory = resultDataFactory ?? throw new global::System.ArgumentNullException(nameof(resultDataFactory));
+            _uUIDParser = serializerResolver.GetLeafValueParser<global::System.String, global::System.Guid>("UUID") ?? throw new global::System.ArgumentException("No serializer for type `UUID` found.");
+            _stringParser = serializerResolver.GetLeafValueParser<global::System.String, global::System.String>("String") ?? throw new global::System.ArgumentException("No serializer for type `String` found.");
+            _intParser = serializerResolver.GetLeafValueParser<global::System.Int32, global::System.Int32>("Int") ?? throw new global::System.ArgumentException("No serializer for type `Int` found.");
+            _floatParser = serializerResolver.GetLeafValueParser<global::System.Double, global::System.Double>("Float") ?? throw new global::System.ArgumentException("No serializer for type `Float` found.");
+            _booleanParser = serializerResolver.GetLeafValueParser<global::System.Boolean, global::System.Boolean>("Boolean") ?? throw new global::System.ArgumentException("No serializer for type `Boolean` found.");
+        }
+
+        public global::StrawberryShake.IOperationResult<IUpsertTelescopeResult> Build(global::StrawberryShake.Response<global::System.Text.Json.JsonDocument> response)
+        {
+            (IUpsertTelescopeResult Result, UpsertTelescopeResultInfo Info)? data = null;
+            global::System.Collections.Generic.IReadOnlyList<global::StrawberryShake.IClientError>? errors = null;
+            if (response.Exception is null)
+            {
+                try
+                {
+                    if (response.Body != null)
+                    {
+                        if (response.Body.RootElement.TryGetProperty("data", out global::System.Text.Json.JsonElement dataElement) && dataElement.ValueKind == global::System.Text.Json.JsonValueKind.Object)
+                        {
+                            data = BuildData(dataElement);
+                        }
+
+                        if (response.Body.RootElement.TryGetProperty("errors", out global::System.Text.Json.JsonElement errorsElement))
+                        {
+                            errors = global::StrawberryShake.Json.JsonErrorParser.ParseErrors(errorsElement);
+                        }
+                    }
+                }
+                catch (global::System.Exception ex)
+                {
+                    errors = new global::StrawberryShake.IClientError[]{new global::StrawberryShake.ClientError(ex.Message, exception: ex, extensions: new global::System.Collections.Generic.Dictionary<global::System.String, global::System.Object?>{{"body", response.Body?.RootElement.ToString()}})};
+                }
+            }
+            else
+            {
+                if (response.Body != null && response.Body.RootElement.TryGetProperty("errors", out global::System.Text.Json.JsonElement errorsElement))
+                {
+                    errors = global::StrawberryShake.Json.JsonErrorParser.ParseErrors(errorsElement);
+                }
+                else
+                {
+                    errors = new global::StrawberryShake.IClientError[]{new global::StrawberryShake.ClientError(response.Exception.Message, exception: response.Exception, extensions: new global::System.Collections.Generic.Dictionary<global::System.String, global::System.Object?>{{"body", response.Body?.RootElement.ToString()}})};
+                }
+            }
+
+            return new global::StrawberryShake.OperationResult<IUpsertTelescopeResult>(data?.Result, data?.Info, _resultDataFactory, errors);
+        }
+
+        private (IUpsertTelescopeResult, UpsertTelescopeResultInfo) BuildData(global::System.Text.Json.JsonElement obj)
+        {
+            var entityIds = new global::System.Collections.Generic.HashSet<global::StrawberryShake.EntityId>();
+            global::StrawberryShake.IEntityStoreSnapshot snapshot = default !;
+            global::StrawberryShake.EntityId modifyTelescopeId = default !;
+            _entityStore.Update(session =>
+            {
+                modifyTelescopeId = UpdateNonNullableIUpsertTelescope_ModifyTelescopeEntity(session, global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "modifyTelescope"), entityIds);
+                snapshot = session.CurrentSnapshot;
+            });
+            var resultInfo = new UpsertTelescopeResultInfo(modifyTelescopeId, entityIds, snapshot.Version);
+            return (_resultDataFactory.Create(resultInfo), resultInfo);
+        }
+
+        private global::StrawberryShake.EntityId UpdateNonNullableIUpsertTelescope_ModifyTelescopeEntity(global::StrawberryShake.IEntityStoreUpdateSession session, global::System.Text.Json.JsonElement? obj, global::System.Collections.Generic.ISet<global::StrawberryShake.EntityId> entityIds)
+        {
+            if (!obj.HasValue)
+            {
+                throw new global::System.ArgumentNullException();
+            }
+
+            global::StrawberryShake.EntityId entityId = _idSerializer.Parse(obj.Value);
+            entityIds.Add(entityId);
+            if (entityId.Name.Equals("TelescopeMutationResponse", global::System.StringComparison.Ordinal))
+            {
+                if (session.CurrentSnapshot.TryGetEntity(entityId, out global::StarRepo.GraphQL.State.TelescopeMutationResponseEntity? entity))
+                {
+                    session.SetEntity(entityId, new global::StarRepo.GraphQL.State.TelescopeMutationResponseEntity(DeserializeGuid(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "id")), DeserializeBoolean(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "success")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "message"))));
+                }
+                else
+                {
+                    session.SetEntity(entityId, new global::StarRepo.GraphQL.State.TelescopeMutationResponseEntity(DeserializeGuid(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "id")), DeserializeBoolean(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "success")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "message"))));
+                }
+
+                return entityId;
+            }
+
+            throw new global::System.NotSupportedException();
+        }
+
+        private global::System.Guid? DeserializeGuid(global::System.Text.Json.JsonElement? obj)
+        {
+            if (!obj.HasValue)
+            {
+                return null;
+            }
+
+            return _uUIDParser.Parse(obj.Value.GetString()!);
+        }
+
+        private global::System.Boolean? DeserializeBoolean(global::System.Text.Json.JsonElement? obj)
+        {
+            if (!obj.HasValue)
+            {
+                return null;
+            }
+
+            return _booleanParser.Parse(obj.Value.GetBoolean()!);
+        }
+
+        private global::System.String? DeserializeString(global::System.Text.Json.JsonElement? obj)
+        {
+            if (!obj.HasValue)
+            {
+                return null;
+            }
+
+            return _stringParser.Parse(obj.Value.GetString()!);
+        }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
     public partial class StarClientEntityIdFactory : global::StrawberryShake.IEntityIdSerializer
     {
         private static readonly global::System.Text.Json.JsonWriterOptions _options = new global::System.Text.Json.JsonWriterOptions()
@@ -691,7 +8381,10 @@ namespace StarRepo.GraphQL.State
             global::System.String __typename = obj.GetProperty("__typename").GetString()!;
             return __typename switch
             {
+                "Observation" => ParseObservationEntityId(obj, __typename),
                 "Telescope" => ParseTelescopeEntityId(obj, __typename),
+                "Target" => ParseTargetEntityId(obj, __typename),
+                "TelescopeMutationResponse" => ParseTelescopeMutationResponseEntityId(obj, __typename),
                 _ => throw new global::System.NotSupportedException()};
         }
 
@@ -699,8 +8392,28 @@ namespace StarRepo.GraphQL.State
         {
             return entityId.Name switch
             {
+                "Observation" => FormatObservationEntityId(entityId),
                 "Telescope" => FormatTelescopeEntityId(entityId),
+                "Target" => FormatTargetEntityId(entityId),
+                "TelescopeMutationResponse" => FormatTelescopeMutationResponseEntityId(entityId),
                 _ => throw new global::System.NotSupportedException()};
+        }
+
+        private global::StrawberryShake.EntityId ParseObservationEntityId(global::System.Text.Json.JsonElement obj, global::System.String type)
+        {
+            return new global::StrawberryShake.EntityId(type, obj.GetProperty("id").GetString()!);
+        }
+
+        private global::System.String FormatObservationEntityId(global::StrawberryShake.EntityId entityId)
+        {
+            using var writer = new global::StrawberryShake.Internal.ArrayWriter();
+            using var jsonWriter = new global::System.Text.Json.Utf8JsonWriter(writer, _options);
+            jsonWriter.WriteStartObject();
+            jsonWriter.WriteString("__typename", entityId.Name);
+            jsonWriter.WriteString("id", (global::System.String)entityId.Value);
+            jsonWriter.WriteEndObject();
+            jsonWriter.Flush();
+            return global::System.Text.Encoding.UTF8.GetString(writer.GetInternalBuffer(), 0, writer.Length);
         }
 
         private global::StrawberryShake.EntityId ParseTelescopeEntityId(global::System.Text.Json.JsonElement obj, global::System.String type)
@@ -709,6 +8422,40 @@ namespace StarRepo.GraphQL.State
         }
 
         private global::System.String FormatTelescopeEntityId(global::StrawberryShake.EntityId entityId)
+        {
+            using var writer = new global::StrawberryShake.Internal.ArrayWriter();
+            using var jsonWriter = new global::System.Text.Json.Utf8JsonWriter(writer, _options);
+            jsonWriter.WriteStartObject();
+            jsonWriter.WriteString("__typename", entityId.Name);
+            jsonWriter.WriteString("id", (global::System.String)entityId.Value);
+            jsonWriter.WriteEndObject();
+            jsonWriter.Flush();
+            return global::System.Text.Encoding.UTF8.GetString(writer.GetInternalBuffer(), 0, writer.Length);
+        }
+
+        private global::StrawberryShake.EntityId ParseTargetEntityId(global::System.Text.Json.JsonElement obj, global::System.String type)
+        {
+            return new global::StrawberryShake.EntityId(type, obj.GetProperty("id").GetString()!);
+        }
+
+        private global::System.String FormatTargetEntityId(global::StrawberryShake.EntityId entityId)
+        {
+            using var writer = new global::StrawberryShake.Internal.ArrayWriter();
+            using var jsonWriter = new global::System.Text.Json.Utf8JsonWriter(writer, _options);
+            jsonWriter.WriteStartObject();
+            jsonWriter.WriteString("__typename", entityId.Name);
+            jsonWriter.WriteString("id", (global::System.String)entityId.Value);
+            jsonWriter.WriteEndObject();
+            jsonWriter.Flush();
+            return global::System.Text.Encoding.UTF8.GetString(writer.GetInternalBuffer(), 0, writer.Length);
+        }
+
+        private global::StrawberryShake.EntityId ParseTelescopeMutationResponseEntityId(global::System.Text.Json.JsonElement obj, global::System.String type)
+        {
+            return new global::StrawberryShake.EntityId(type, obj.GetProperty("id").GetString()!);
+        }
+
+        private global::System.String FormatTelescopeMutationResponseEntityId(global::StrawberryShake.EntityId entityId)
         {
             using var writer = new global::StrawberryShake.Internal.ArrayWriter();
             using var jsonWriter = new global::System.Text.Json.Utf8JsonWriter(writer, _options);

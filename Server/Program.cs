@@ -30,6 +30,7 @@ builder.Services.AddGraphQLServer()
     .AddFiltering()
     .AddSorting()
     .AddQueryType<Query>()
+    .AddMutationType<Mutations>()
     .AddTypeExtension<ObservationTypeExtensions>();
     
 builder.Services.AddRazorPages();
