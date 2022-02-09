@@ -7,10 +7,15 @@ using StarRepo.Client.Shared;
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
-builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+var baseAddress = new Uri(builder.HostEnvironment.BaseAddress);
+var baseAddressGql = new Uri(baseAddress, "graphql");
+var uriBuilder = new UriBuilder(baseAddressGql);
+uriBuilder.Scheme = "wss";
+var baseAddressWs = uriBuilder.Uri;
+
+builder.Services.AddScoped(sp => new HttpClient { BaseAddress = baseAddress });
 builder.Services.AddStarClient() 
-    .ConfigureHttpClient(client => client.BaseAddress = new Uri($"{builder.HostEnvironment.BaseAddress}graphql"))
-    // the address for websocket must be wss://yourserver:port/graphql or ws://yourserver:port/graphql
-    .ConfigureWebSocketClient(client => client.Uri = new Uri($"{builder.HostEnvironment.BaseAddress}graphql"));
+    .ConfigureHttpClient(client => client.BaseAddress = baseAddressGql)
+    .ConfigureWebSocketClient(client => client.Uri = baseAddressWs);
 builder.Services.AddScoped<StarClientService>();
 await builder.Build().RunAsync();
