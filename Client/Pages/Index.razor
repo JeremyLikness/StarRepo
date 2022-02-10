@@ -1,7 +1,5 @@
 ﻿@page "/"
-@using StarRepo.Client.GraphQL
-@using StrawberryShake
-@inject GraphQL.StarClientService StarClientService
+@inject StarClientService StarClientService
 @inject StarClient StarClient
 @inject NavigationManager Navigation
 
@@ -94,13 +92,14 @@ else
     private bool loading = false;
     private int sort = 0;
     private bool sortAscending = true;
-    private IDisposable? watcher, observer;
+    private IDisposable? watcher;
 
     protected override async Task OnInitializedAsync()
     {
-        observer ??= new TelescopeModifiedObserver(OnNext);
-        watcher ??= StarClient.TelescopeModified.Watch().Subscribe(
-            (IObserver<IOperationResult<ITelescopeModifiedResult>>)observer);
+        watcher ??= StarClient.TelescopeModified.Watch()
+            .Where(tm => tm.IsSuccessResult())
+            .Select(tm => tm.Data!.TelescopeModified)
+            .Subscribe(tm => OnNext(tm!));
         await RefreshAsync();        
         await base.OnInitializedAsync();
     }    
@@ -176,9 +175,5 @@ else
         }        
     }
 
-    public void Dispose()
-    {
-        watcher?.Dispose();
-        observer?.Dispose();    
-    }
+    public void Dispose() => watcher?.Dispose();
 }

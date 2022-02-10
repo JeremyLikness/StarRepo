@@ -82,7 +82,7 @@
         isEditMode = true;
         original = new Telescope
         {
-            Id = Scope.Id,
+            Id = Scope!.Id,
             Manufacturer = Scope.Manufacturer,
             Model = Scope.Model,
             FocalLengthMM = Scope.FocalLengthMM,
@@ -108,14 +108,14 @@
         {
             var result = await StarClient.UpsertTelescope.ExecuteAsync(new TelescopeInput
             {
-                Id = Scope.Id,
+                Id = Scope!.Id,
                 Manufacturer = Scope.Manufacturer,
                 Model = Scope.Model,
                 FocalLengthMM = Scope.FocalLengthMM,
                 ApertureMM = Scope.ApertureMM,
                 FStop = Scope.FStop
             });
-            success = result.Data.ModifyTelescope.Success.Value;
+            success = result.Data!.ModifyTelescope.Success!.Value;
             message = result.Data.ModifyTelescope.Message;
         }    
         catch (Exception ex)
