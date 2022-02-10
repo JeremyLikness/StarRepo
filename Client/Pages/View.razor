@@ -1,6 +1,4 @@
 ﻿@page "/View/{ObservationId}"
-@using StarRepo.Client.GraphQL
-@inject StarClientService StarClientService
 @inject StarClient StarClient
 
 <PageTitle>@title</PageTitle>
@@ -41,7 +39,7 @@
 @code {
     private bool valid = true;
     private bool loading = false;
-    private Observation? observation;
+    private IGetObservation_Observations? observation;
     private string? image = string.Empty;
     private string dateStr => observation!.ObservationDate.ToString("yyyy-MM-d");
     private bool show = true;
@@ -65,18 +63,11 @@
         if (Guid.TryParse(ObservationId, out Guid id))
         {
             loading = true;
-            observation = await StarClientService.GetObservationAsync(id);
-            if (observation != null)
+            var result = await StarClient.GetObservation.ExecuteAsync(id);
+            if (result != null)
             {
-                var imageResult = await StarClient.GetImage.ExecuteAsync(id);
-                if (imageResult == null || imageResult.Data == null || imageResult.Errors.Any())
-                {
-                    valid = false;
-                }
-                else
-                {
-                    image = imageResult.Data.Observations.First().Image;
-                }
+                observation = result.Data!.Observations.First();
+                image = observation.Image;
             }
             else
             {

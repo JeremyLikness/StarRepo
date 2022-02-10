@@ -28,27 +28,8 @@ namespace StarRepo.Client.GraphQL
             }).ToArray();
         }
 
-        public async Task<Observation?> GetObservationAsync(Guid id)
-        {
-            var result = await client.GetObservations.ExecuteAsync(
-                default,
-                new ObservationFilterInput
-                {
-                    Id = new ComparableGuidOperationFilterInput
-                    {
-                        Eq = id
-                    }
-                });
-
-            if (result == null || result.Data == null || !result.Data.Observations.Any())
-            {
-                return null;
-            }
-
-            return Transform(result.Data.Observations[0]);
-        }
-
-        public async Task<Observation[]> GetObservationsAsync(int sort, bool ascending = true,
+        public async Task<(Observation[] observations, Telescope[] telescopes)>
+            GetObservationsAsync(int sort, bool ascending = true,
             Guid? telescopeId = null)
         {
             var sortInput = new ObservationSortInput();
@@ -87,7 +68,7 @@ namespace StarRepo.Client.GraphQL
 
             if (result == null || result.Data == null)
             {
-                return Array.Empty<Observation>();
+                return (Array.Empty<Observation>(), Array.Empty<Telescope>());
             }
 
             var obs = result.Data.Observations.AsQueryable();
@@ -97,7 +78,15 @@ namespace StarRepo.Client.GraphQL
                     : obs.OrderByDescending(o => o.ObservationDate);
             }
 
-            return obs.Select(Transform).ToArray();
+            return (obs.Select(Transform).ToArray(), result.Data.Telescopes.Select(t =>
+            new Telescope
+            {
+                Id = t.Id,
+                Manufacturer = t.Manufacturer,
+                Model = t.Model,
+                ApertureMM = t.ApertureMM,
+                FocalLengthMM = t.FocalLengthMM
+            }).ToArray());
         }
 
         private static Observation Transform(IGetObservations_Observations ob) =>

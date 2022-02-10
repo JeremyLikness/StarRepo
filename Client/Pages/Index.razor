@@ -112,8 +112,7 @@ else
         try
         {
             loading = true;
-            observations = await StarClientService.GetObservationsAsync(sort, sortAscending, telescopeId);
-            telescopes = await StarClientService.GetTelescopesAsync();
+            (observations, telescopes) = await StarClientService.GetObservationsAsync(sort, sortAscending, telescopeId);            
         }
         catch(Exception ex)
         {

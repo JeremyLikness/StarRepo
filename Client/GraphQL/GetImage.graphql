@@ -1,9 +1,0 @@
-﻿query getImage($observationId: UUID!) {
-  observations(where: {id: {
-    eq: $observationId
-  }}) {
-    fileId,
-    extension,
-    image
-  }
-}

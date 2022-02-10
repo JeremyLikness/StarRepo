@@ -1,0 +1,24 @@
+﻿query getObservation($observationId: UUID!) {
+  observations(
+    where: {
+        id: {
+            eq: $observationId 
+        }
+    }) {
+    id,
+    observationDate,
+    telescope {
+      id,
+      manufacturer,
+      model,
+      focalLengthMM
+    },
+    target {
+      name,
+      description
+    }
+    fileId,
+    extension,
+    image
+  }
+}
